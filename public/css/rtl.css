@@ -1,0 +1,854 @@
+/* RTL (Right-to-Left) Support for Arabic */
+
+/* Base RTL */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Arabic Font Support - Cairo - Override ALL font declarations */
+[dir="rtl"],
+[dir="rtl"] *,
+[dir="rtl"] *::before,
+[dir="rtl"] *::after {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+
+/* Specific overrides for Tussilago fonts used in main.css */
+[dir="rtl"] .hero__cont__title,
+[dir="rtl"] .hero__cont__title span,
+[dir="rtl"] .hero__cont__title__item,
+[dir="rtl"] .hero__cont__title__item span,
+[dir="rtl"] .title,
+[dir="rtl"] .title span,
+[dir="rtl"] .title__item,
+[dir="rtl"] .title__item span,
+[dir="rtl"] .quote__item__inner,
+[dir="rtl"] .quote__item__inner span,
+[dir="rtl"] .quote__item__inner i,
+[dir="rtl"] .slide-block-title,
+[dir="rtl"] .menu-item a,
+[dir="rtl"] .header__nav a,
+[dir="rtl"] .header__nav__tel,
+[dir="rtl"] .footer__title,
+[dir="rtl"] .footer__title span,
+[dir="rtl"] .footer__contacts,
+[dir="rtl"] .work-stages__item__title,
+[dir="rtl"] .work-stages__item__desc,
+[dir="rtl"] .home-owners__desc,
+[dir="rtl"] .home-owners__desc p,
+[dir="rtl"] .btn,
+[dir="rtl"] .btn span,
+[dir="rtl"] .hero__cta,
+[dir="rtl"] .hero__cta span,
+[dir="rtl"] .form-item input,
+[dir="rtl"] .form-item textarea,
+[dir="rtl"] .form-item select,
+[dir="rtl"] .form legend,
+[dir="rtl"] .language-switcher__btn,
+[dir="rtl"] .marquee-title__item,
+[dir="rtl"] .marquee-title__item span {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Headings with proper weight */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-weight: 600;
+}
+
+/* Body text */
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] a,
+[dir="rtl"] li,
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select,
+[dir="rtl"] label {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ============================================
+   HEADER RTL - Arabic Layout
+   ============================================ */
+/* Header keeps same visual layout, text flows RTL */
+
+[dir="rtl"] .header {
+  direction: ltr; /* Keep header layout LTR */
+}
+
+[dir="rtl"] .header__nav__inner {
+  text-align: right;
+}
+
+/* Arabic menu text - larger and bolder */
+[dir="rtl"] .header__nav ul.menu li a {
+  direction: rtl;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* "تواصل معنا" (Contacts) - last menu item bigger */
+[dir="rtl"] .header__nav ul.menu li:last-child a {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+[dir="rtl"] .header__nav__tel a {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+[dir="rtl"] .sub-menu {
+  text-align: right;
+}
+
+[dir="rtl"] .header__nav ul.menu .sub-menu a {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+/* Menu item arrow for RTL */
+[dir="rtl"] .menu-item-has-children > a::after {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+/* Desktop header RTL adjustments */
+@media (min-width: 1280px) {
+  [dir="rtl"] .header__cont {
+    flex-direction: row-reverse;
+  }
+
+  [dir="rtl"] .header__logo {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  [dir="rtl"] .header__right {
+    right: auto;
+    left: 0;
+    margin-left: 0;
+    margin-right: 4rem;
+  }
+
+  [dir="rtl"] .header__nav__tel {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  /* Desktop Arabic menu text */
+  [dir="rtl"] .header__nav ul.menu li a {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  /* "تواصل معنا" (Contacts) - bigger on desktop */
+  [dir="rtl"] .header__nav ul.menu li:last-child a {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  [dir="rtl"] .header__nav ul.menu {
+    flex-direction: row-reverse;
+  }
+
+  [dir="rtl"] .header__nav ul.menu li:not(:last-child) {
+    margin-right: 0;
+    margin-left: 3rem;
+  }
+
+  [dir="rtl"] .header__nav ul.menu li:nth-child(1),
+  [dir="rtl"] .header__nav ul.menu li:nth-child(2) {
+    margin-right: 0;
+    margin-left: 5rem;
+  }
+
+  [dir="rtl"] .sub-menu {
+    left: auto;
+    right: 0;
+    text-align: right;
+  }
+
+  [dir="rtl"] .header__nav ul.menu .sub-menu a {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+/* ============================================
+   HERO SECTION RTL - FIXED
+   ============================================ */
+[dir="rtl"] .hero__cont {
+  text-align: right;
+}
+
+[dir="rtl"] .hero__cont__title {
+  text-align: right;
+  align-items: flex-end;
+  font-size: 3.2rem;
+  line-height: 3.8rem;
+}
+
+/* Tablet: Arabic hero text bigger */
+@media (min-width: 768px) {
+  [dir="rtl"] .hero__cont__title {
+    font-size: 4.5rem;
+    line-height: 5.2rem;
+  }
+}
+
+/* Desktop: Arabic hero text bigger */
+@media (min-width: 1280px) {
+  [dir="rtl"] .hero__cont__title {
+    font-size: 6rem;
+    line-height: 7rem;
+  }
+}
+
+[dir="rtl"] .hero__cont__title__item {
+  text-align: right;
+}
+
+[dir="rtl"] .hero__cont__title__item span {
+  direction: rtl;
+  display: block;
+}
+
+/* Second title line RTL - mirror the left padding to right */
+[dir="rtl"] .hero__cont__title__item:nth-child(2) span {
+  padding-left: 0;
+  padding-right: 5rem;
+}
+
+/* Hero CTA - Arabic text bigger and centered in circle */
+[dir="rtl"] .hero__cta {
+  align-items: center;
+  justify-content: center;
+}
+
+[dir="rtl"] .hero__cta span {
+  text-align: center;
+  direction: rtl;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  font-weight: 600;
+  max-width: 70%;
+}
+
+[dir="rtl"] .hero__cta svg {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Desktop: Arabic CTA text larger */
+@media (min-width: 768px) {
+  [dir="rtl"] .hero__cta span {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 1024px) {
+  [dir="rtl"] .hero__cta span {
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+  }
+}
+
+[dir="rtl"] .hero__scroller {
+  /* Keep centered - no RTL change needed */
+}
+
+/* ============================================
+   GALLERY RTL
+   ============================================ */
+[dir="rtl"] .home-gallery {
+  direction: rtl;
+}
+
+[dir="rtl"] .title-link {
+  text-align: right;
+  align-items: flex-end;
+}
+
+[dir="rtl"] .title-link__name {
+  text-align: right;
+  align-items: flex-end;
+}
+
+[dir="rtl"] .title-link__dateplace {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .title-link__dateplace svg {
+  transform: scaleX(-1);
+  margin-left: 0;
+  margin-right: 15px;
+}
+
+/* Gallery Type 1 RTL - Mirror margins */
+[dir="rtl"] .home-gallery--1 .home-gallery__img--1 {
+  margin-left: 0;
+  margin-right: -2rem;
+}
+
+[dir="rtl"] .home-gallery--1 .home-gallery__img--2 {
+  margin: -6.5rem 0 0 -2rem;
+  margin-right: auto;
+  margin-left: -2rem;
+}
+
+/* Gallery Type 2 RTL - Mirror margins */
+[dir="rtl"] .home-gallery--2 .home-gallery__img--1 {
+  margin-left: 0;
+  margin-right: -2rem;
+}
+
+/* Gallery Type 3 RTL - Mirror margins */
+[dir="rtl"] .home-gallery--3 .home-gallery__img--1 {
+  margin: 0 0 0 -2rem;
+  margin-left: -2rem;
+  margin-right: auto;
+}
+
+[dir="rtl"] .home-gallery--3 .home-gallery__img--2 {
+  margin: -6.5rem -2rem 0 auto;
+}
+
+[dir="rtl"] .home-gallery--3 .home-gallery__img--2::after {
+  right: auto;
+  left: 0;
+  transform: translateX(-2.4rem) rotate(45deg);
+}
+
+/* Desktop Gallery RTL (1280px+) */
+@media only screen and (min-width: 1280px) {
+  /* Type 1 Desktop RTL - Mirror the layout */
+  [dir="rtl"] .home-gallery--1 {
+    margin-left: 0;
+    margin-right: calc((-100vw + 108rem) / 2);
+    grid-template-columns: 63rem 60rem;
+    grid-template-areas: 'img-2 img-1' 'img-2 img-1' 'title img-1';
+  }
+
+  [dir="rtl"] .home-gallery--1 .home-gallery__img--1 {
+    margin: 0 0 0 13.5rem;
+    margin-right: 0;
+  }
+
+  [dir="rtl"] .home-gallery--1 .home-gallery__img--2 {
+    margin: 0;
+  }
+
+  /* Type 2 Desktop RTL - Mirror the layout */
+  [dir="rtl"] .home-gallery--2 {
+    grid-template-columns: 81rem 1fr;
+    grid-template-areas: 'img-1 title';
+  }
+
+  [dir="rtl"] .home-gallery--2 .home-gallery__img--1 {
+    margin-right: 0;
+  }
+
+  /* Type 3 Desktop RTL - Mirror the layout */
+  [dir="rtl"] .home-gallery--3 {
+    transform: translateX(calc((-100vw + 108rem) / 2));
+    grid-template-columns: 60rem 63rem;
+    grid-template-areas: 'img-1 img-2' 'img-1 img-2' 'img-1 title';
+  }
+
+  [dir="rtl"] .home-gallery--3 .home-gallery__img--1 {
+    margin: 0 13.5rem 0 0;
+    margin-left: 0;
+  }
+
+  [dir="rtl"] .home-gallery--3 .home-gallery__img--2 {
+    margin: 0;
+  }
+
+  [dir="rtl"] .home-gallery--3 .home-gallery__img--2::after {
+    transform: translateX(-7.4rem) rotate(45deg);
+  }
+
+  [dir="rtl"] .home-gallery--3 .title-link {
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   QUOTE SECTION RTL
+   ============================================ */
+[dir="rtl"] .quote {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .quote__item {
+  text-align: right;
+}
+
+[dir="rtl"] .quote__item__inner {
+  text-align: right;
+}
+
+[dir="rtl"] .quote__item__inner i {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ============================================
+   WORK STAGES RTL
+   ============================================ */
+[dir="rtl"] .work-stages {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .work-stages__item {
+  text-align: right;
+}
+
+[dir="rtl"] .work-stages__item__title {
+  text-align: right;
+}
+
+[dir="rtl"] .work-stages__item__desc {
+  text-align: right;
+}
+
+[dir="rtl"] .work-stages__item__num {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .btn-rect {
+  left: auto;
+  right: 0;
+}
+
+/* ============================================
+   HOME OWNERS / ABOUT RTL
+   ============================================ */
+[dir="rtl"] .home-owners {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .home-owners__info {
+  text-align: right;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+[dir="rtl"] .home-owners__desc {
+  text-align: right;
+}
+
+[dir="rtl"] .home-owners__desc p {
+  text-align: right;
+}
+
+[dir="rtl"] .home-owners__photo {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* ============================================
+   MAP SECTION RTL
+   ============================================ */
+[dir="rtl"] .section-map {
+  text-align: center;
+}
+
+[dir="rtl"] .section-map .quote__item__inner {
+  text-align: center;
+}
+
+/* ============================================
+   TESTIMONIALS RTL
+   ============================================ */
+[dir="rtl"] .testimonial-cont {
+  direction: rtl;
+}
+
+[dir="rtl"] .test-title {
+  text-align: right;
+}
+
+[dir="rtl"] .slide-block {
+  text-align: right;
+}
+
+[dir="rtl"] .slide-block-title {
+  text-align: right;
+}
+
+[dir="rtl"] .slide-block-cont {
+  text-align: right;
+}
+
+[dir="rtl"] .slide-block-cont p {
+  text-align: right;
+}
+
+[dir="rtl"] .star-block {
+  justify-content: flex-end;
+}
+
+[dir="rtl"] .testimonial-controls {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .testimonial-arrow-prev,
+[dir="rtl"] .testimonial-arrow-next {
+  transform: scaleX(-1);
+}
+
+/* ============================================
+   CONTACT FORM RTL
+   ============================================ */
+[dir="rtl"] .home-form-section .title {
+  text-align: center;
+}
+
+[dir="rtl"] .form fieldset {
+  text-align: right;
+}
+
+[dir="rtl"] .form-item input,
+[dir="rtl"] .form-item select,
+[dir="rtl"] .form-item textarea {
+  text-align: right;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+[dir="rtl"] .form-item input::placeholder,
+[dir="rtl"] .form-item textarea::placeholder {
+  text-align: right;
+}
+
+[dir="rtl"] .form-submit {
+  text-align: center;
+}
+
+[dir="rtl"] .form legend {
+  text-align: center;
+}
+
+/* ============================================
+   FOOTER RTL
+   ============================================ */
+[dir="rtl"] .footer__title {
+  text-align: center;
+}
+
+[dir="rtl"] .footer__contacts {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .footer__contacts__item {
+  text-align: right;
+}
+
+[dir="rtl"] .footer__contacts__title {
+  text-align: right;
+}
+
+[dir="rtl"] .footer__contacts__item ul {
+  text-align: right;
+}
+
+[dir="rtl"] .footer__menu .menu {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .footer__social {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .footer__social a {
+  margin-left: 0;
+  margin-right: 15px;
+}
+
+[dir="rtl"] .footer__social a:first-child {
+  margin-right: 0;
+}
+
+/* ============================================
+   FIXED BUTTONS RTL - KEEP SAME POSITION AS LTR
+   ============================================ */
+/* Keep fixed-connect, order-a-call, wa-block on the RIGHT side same as English */
+[dir="rtl"] .fixed-connect {
+  /* Keep on right side - no changes */
+}
+
+[dir="rtl"] .fixed-connect span {
+  direction: rtl;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[dir="rtl"] .order-a-call {
+  /* Keep on right side - no changes */
+  direction: rtl;
+}
+
+[dir="rtl"] .wa-block {
+  /* Keep on right side - no changes */
+}
+
+/* ============================================
+   MARQUEE RTL - Keep animation direction
+   ============================================ */
+[dir="rtl"] .marquee-title {
+  direction: ltr;
+}
+
+[dir="rtl"] .marquee-title__inner {
+  direction: ltr;
+}
+
+[dir="rtl"] .marquee-title__item {
+  direction: rtl;
+}
+
+/* ============================================
+   TITLE COMPONENT RTL
+   ============================================ */
+[dir="rtl"] .title {
+  text-align: right;
+}
+
+[dir="rtl"] .title__item {
+  text-align: right;
+}
+
+[dir="rtl"] .title--inline {
+  text-align: center;
+}
+
+/* ============================================
+   BUTTONS RTL
+   ============================================ */
+[dir="rtl"] .btn {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .btn svg {
+  margin-left: 0;
+  margin-right: 10px;
+  transform: scaleX(-1);
+}
+
+/* ============================================
+   SWIPER RTL
+   ============================================ */
+[dir="rtl"] .swiper {
+  direction: ltr;
+}
+
+[dir="rtl"] .swiper-slide {
+  direction: rtl;
+}
+
+[dir="rtl"] .swiper-button-next,
+[dir="rtl"] .swiper-button-prev {
+  transform: scaleX(-1);
+}
+
+/* ============================================
+   LANGUAGE SWITCHER - Modern Design
+   ============================================ */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 30px;
+  padding: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.language-switcher__btn {
+  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 25px;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.language-switcher__btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.language-switcher__btn--active {
+  background: linear-gradient(135deg, #E5CCA8 0%, #c9a87a 100%);
+  color: #1a1a1a;
+  box-shadow: 0 4px 15px rgba(229, 204, 168, 0.35);
+}
+
+.language-switcher__btn--active:hover {
+  background: linear-gradient(135deg, #d4b78f 0%, #b8976b 100%);
+  color: #1a1a1a;
+}
+
+/* Mobile header positioning */
+@media (max-width: 1279px) {
+  .header__right {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header__right .language-switcher {
+    order: 1;
+  }
+
+  .header__right .header__burger {
+    order: 2;
+    position: static;
+  }
+
+  /* Smaller language switcher on mobile */
+  .language-switcher {
+    padding: 3px;
+  }
+
+  .language-switcher__btn {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+}
+
+/* RTL mobile adjustments */
+@media (max-width: 1279px) {
+  [dir="rtl"] .header__right {
+    right: auto;
+    left: 18px;
+  }
+
+  /* Mobile Arabic menu text - even larger */
+  [dir="rtl"] .header__nav ul.menu li a {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  [dir="rtl"] .header__nav ul.menu .sub-menu a {
+    font-size: 1.6rem;
+  }
+}
+
+/* ============================================
+   PRELOADER RTL - Keep centered
+   ============================================ */
+[dir="rtl"] .preloader {
+  direction: ltr;
+}
+
+/* ============================================
+   DASHBOARD - Force LTR
+   ============================================ */
+.dashboard-layout,
+[class*="dashboard"] {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* ============================================
+   SPACING FIXES
+   ============================================ */
+[dir="rtl"] i {
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+}
+
+[dir="rtl"] .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Fix for inline italic text */
+[dir="rtl"] span i,
+[dir="rtl"] p i,
+[dir="rtl"] h1 i,
+[dir="rtl"] h2 i,
+[dir="rtl"] h3 i {
+  display: inline;
+  margin: 0 4px;
+}
+
+/* ============================================
+   RESPONSIVE RTL FIXES
+   ============================================ */
+@media (max-width: 1279px) {
+  /* Keep header the same - no RTL position changes */
+
+  [dir="rtl"] .home-owners {
+    flex-direction: column-reverse;
+  }
+
+  [dir="rtl"] .work-stages {
+    flex-direction: column;
+  }
+
+  [dir="rtl"] .footer__contacts {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  [dir="rtl"] .gallery__item {
+    text-align: right;
+  }
+}
+
+/* ============================================
+   DESKTOP RTL FIXES
+   ============================================ */
+@media (min-width: 1280px) {
+  /* Hero title desktop RTL */
+  [dir="rtl"] .hero__cont__title__item:nth-child(1) {
+    margin-left: 0;
+    margin-right: -9rem;
+  }
+
+  [dir="rtl"] .hero__cont__title__item:nth-child(2) span {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  [dir="rtl"] .hero__cont__title__item span {
+    transform-origin: 100% 50%;
+  }
+}

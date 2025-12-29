@@ -1,0 +1,98 @@
+{
+  "common": {
+    "siteName": "NKEY Architects",
+    "readMore": "Read more...",
+    "hide": "Hide...",
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "moreProjects": "More projects"
+  },
+  "nav": {
+    "projects": "Projects",
+    "services": "Services",
+    "aboutUs": "About us",
+    "team": "Team",
+    "blog": "Blog",
+    "careers": "Careers",
+    "contacts": "Contacts"
+  },
+  "hero": {
+    "title1": "Architecture &",
+    "title2": "Design Studio"
+  },
+  "gallery": {
+    "viewProject": "View Project",
+    "allProjects": "All Projects",
+    "marqueeText": "projects"
+  },
+  "quote": {
+    "line1": "We are in favor of",
+    "line2": "aesthetics in a",
+    "line2Italic": "details",
+    "line3Italic": "Design",
+    "line3": ", that is inspired by",
+    "line4Italic": "nature"
+  },
+  "workStages": {
+    "title": "Work Stages",
+    "marqueeText": "stages",
+    "marqueeItalic": "work",
+    "free3dTour": "Free 3D tour"
+  },
+  "about": {
+    "title1Italic": "8 years experience",
+    "title2": "in combination with",
+    "title3Italic": "a perfect taste",
+    "desc1": "Since year 2016, we have been designing interiors and houses, in which authenticity, style aesthetics, world trends, natural materials and human talent are intertwined.",
+    "desc2": "We have already implemented more than 90 projects in 10 countries of the world and are ready to create something significant for you.",
+    "desc3": "We're happy when you're happy!",
+    "marqueeText": "us",
+    "marqueeItalic": "about"
+  },
+  "testimonials": {
+    "title": "Customer Reviews",
+    "marqueeText": "reviews",
+    "marqueeItalic": "clients"
+  },
+  "contact": {
+    "title1": "Want",
+    "title1Italic": "to contact",
+    "title2": "with us ?",
+    "formLegend": "Fill the form down below",
+    "objectLocation": "Object location",
+    "selectService": "Select a service",
+    "yourName": "Your name",
+    "phone": "Phone number",
+    "email": "Your email",
+    "send": "Send",
+    "sending": "Sending...",
+    "thankYou": "Thank you!",
+    "messageSent": "Your message has been sent. We will get back to you soon.",
+    "sendAnother": "Send another message",
+    "contactUs": "Contact us",
+    "orderCall": "Order a call"
+  },
+  "footer": {
+    "title1": "Are you ready for the new",
+    "title2Italic": "achievements",
+    "offices": "Offices",
+    "phones": "Phones",
+    "emailLabel": "E-mail",
+    "followUs": "Follow Us",
+    "rights": "All Rights Reserved"
+  },
+  "map": {
+    "title": "working worldwide",
+    "stats": "10+ Countries | 90+ Projects"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email format",
+    "submissionFailed": "Submission failed. Please try again.",
+    "somethingWrong": "Something went wrong"
+  }
+}
