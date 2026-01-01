@@ -5,8 +5,8 @@ import { DashboardHeader } from '@/components/dashboard/Header'
 import './dashboard.css'
 
 export const metadata = {
-  title: 'Dashboard - NKEY Architects',
-  description: 'Admin dashboard for managing NKEY Architects website content',
+  title: 'Dashboard - IN-WAVE Architects',
+  description: 'Admin dashboard for managing IN-WAVE Architects website content',
 }
 
 export default async function DashboardLayout({

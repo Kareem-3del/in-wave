@@ -2,11 +2,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ContactForm from '@/components/ContactForm';
 import SmoothScroll from '@/components/SmoothScroll';
 import { ServicesClient } from '@/components/ServicesClient';
-import { ServicesHero } from '@/components/ServicesHero';
-import { getServices } from '@/lib/data/services';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -26,19 +23,13 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const services = await getServices();
-
   return (
     <>
       <SmoothScroll />
-      <main className="services-page bg-neutral-950 min-h-screen">
+      <main className="services-page wp-singular page-template page wp-theme-nk">
         <Header />
         <div className="main-wrap">
-          <ServicesHero locale={locale} />
-          <ServicesClient services={services} />
-          <div id="contact-form">
-            <ContactForm />
-          </div>
+          <ServicesClient />
           <Footer />
         </div>
       </main>

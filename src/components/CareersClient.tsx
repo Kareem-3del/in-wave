@@ -453,7 +453,7 @@ export function CareersClient() {
                 <div className="culture-visual__circle culture-visual__circle--1"></div>
                 <div className="culture-visual__circle culture-visual__circle--2"></div>
                 <div className="culture-visual__circle culture-visual__circle--3"></div>
-                <div className="culture-visual__text">NKEY</div>
+                <div className="culture-visual__text">IN-WAVE</div>
               </div>
             </div>
           </div>
@@ -469,7 +469,7 @@ export function CareersClient() {
               <Icon icon="mdi:briefcase-search-outline" width={48} height={48} />
             </div>
             <p className="positions-card__text">{t('noPositions')}</p>
-            <a href="mailto:careers@nkey.sa" className="positions-card__btn">
+            <a href="mailto:careers@in-wavearchitects.com" className="positions-card__btn">
               <span>{t('exploreMore')}</span>
               <Icon icon="mdi:arrow-right" width={20} height={20} />
             </a>
@@ -486,9 +486,9 @@ export function CareersClient() {
             <p className="cta-content__desc">{t('sendCVDesc')}</p>
             <div className="cta-content__email">
               <span className="cta-content__email-label">{t('emailUs')}</span>
-              <a href="mailto:careers@nkey.sa" className="cta-content__email-link">
+              <a href="mailto:careers@in-wavearchitects.com" className="cta-content__email-link">
                 <Icon icon="mdi:email-outline" width={24} height={24} />
-                <span>careers@nkey.sa</span>
+                <span>careers@in-wavearchitects.com</span>
               </a>
             </div>
           </div>

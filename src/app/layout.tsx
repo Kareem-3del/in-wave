@@ -3,22 +3,22 @@ import "./globals.css";
 import { TrackingPixelsHead, TrackingPixelsBody } from "@/components/TrackingPixels";
 
 export const metadata: Metadata = {
-  title: "Architecture Studio & Design Architect Services | NKEY ARCHITECTS",
-  description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio NKEY ARCHITECTS. Experience precise equipment",
-  keywords: ["architecture", "interior design", "architectural design", "renovation", "NKEY Architects"],
-  authors: [{ name: "NKEY Architects" }],
+  title: "Architecture Studio & Design Architect Services | IN-WAVE ARCHITECTS",
+  description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio IN-WAVE ARCHITECTS. Experience precise equipment",
+  keywords: ["architecture", "interior design", "architectural design", "renovation", "IN-WAVE Architects"],
+  authors: [{ name: "IN-WAVE Architects" }],
   openGraph: {
-    title: "Architecture Studio & Design Architect Services | NKEY ARCHITECTS",
-    description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio NKEY ARCHITECTS",
-    url: "https://nkeyarchitects.com/",
-    siteName: "NKEY Architects",
+    title: "Architecture Studio & Design Architect Services | IN-WAVE ARCHITECTS",
+    description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio IN-WAVE ARCHITECTS",
+    url: "https://in-wave.com/",
+    siteName: "IN-WAVE Architects",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Architecture Studio & Design Architect Services | NKEY ARCHITECTS",
-    description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio NKEY ARCHITECTS",
+    title: "Architecture Studio & Design Architect Services | IN-WAVE ARCHITECTS",
+    description: "Order first-class architectural design, interior solutions, and renovation services from architecture studio IN-WAVE ARCHITECTS",
   },
   icons: {
     icon: "/images/cropped-apple-icon-76x76-1-32x32.png",

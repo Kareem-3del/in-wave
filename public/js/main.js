@@ -229,7 +229,7 @@ $(function () {
   // На кнопку отправить в форме по кнопке связаться установить fbq('track', 'Lead');
   // При нажатии на кнопку связаться - fbq('track', 'InitiateCheckout');
   
-  if(window.location.href === 'https://nkeyarchitects.com/us/home/' || window.location.href === 'https://nkeyarchitects.com/us/projects/' || window.location.href === 'https://nkeyarchitects.com/us/services/'){
+  if(window.location.href === 'https://in-wavearchitects.com/us/home/' || window.location.href === 'https://in-wavearchitects.com/us/projects/' || window.location.href === 'https://in-wavearchitects.com/us/services/'){
     $(".wpcf7-validates-as-tel").intlTelInput({
       preferredCountries: ["us", "ae", "sa"],
       separateDialCode: true

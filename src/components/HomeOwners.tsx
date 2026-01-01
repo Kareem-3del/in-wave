@@ -98,7 +98,7 @@ export default function HomeOwners() {
             >
               <Image
                 src="/images/img_7397-1-683x1024.jpg.webp"
-                alt="NKEY Architects Team"
+                alt="IN-WAVE Architects Team"
                 width={683}
                 height={1024}
                 style={{ width: '100%', height: 'auto' }}

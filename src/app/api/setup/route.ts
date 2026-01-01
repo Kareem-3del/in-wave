@@ -48,7 +48,7 @@ export async function GET() {
 
     // Seed Offices
     const { error: oErr } = await supabase.from('offices').insert([
-      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@nkeyarchitects.com', display_order: 0 },
+      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@in-wavearchitects.com', display_order: 0 },
       { city: 'Los Angeles', country: 'USA', phone: '+1 954 271-5832', phone_href: 'tel:+19542715832', display_order: 1 },
       { city: 'Kyiv', country: 'Ukraine', phone: '+380 98 080 77 07', phone_href: 'tel:+380980807707', display_order: 2 },
       { city: 'Montreal', country: 'Canada', phone: '+1 4384053284', phone_href: 'tel:+14384053284', display_order: 3 },
@@ -78,7 +78,7 @@ export async function GET() {
     // Seed Team Info
     const { error: tiErr } = await supabase.from('team_info').insert([{
       title_lines: ['8 years experience', 'in combination with a', 'perfect taste'],
-      description_paragraphs: ['Founded in 2016, NKEY Architects.'],
+      description_paragraphs: ['Founded in 2016, IN-WAVE Architects.'],
       image_url: '/images/team-photo.jpg',
       years_experience: 8,
       projects_count: 90,
@@ -88,8 +88,8 @@ export async function GET() {
 
     // Seed Social Links
     const { error: slErr } = await supabase.from('social_links').insert([
-      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://facebook.com/NKEY', display_order: 0 },
-      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://instagram.com/nkey.architects', display_order: 1 },
+      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://facebook.com/IN-WAVE', display_order: 0 },
+      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://instagram.com/in-wave.architects', display_order: 1 },
       { platform: 'Pinterest', icon_url: '/icons/pinterest-ic.svg', href: 'https://pinterest.com/nk__interior__', display_order: 2 },
       { platform: 'Behance', icon_url: '/icons/behance-logo0-1.svg', href: 'https://behance.net/4ebd134f', display_order: 3 },
       { platform: 'TikTok', icon_url: '/icons/logo-tiktok.svg', href: 'https://tiktok.com/@nk_interior_', display_order: 4 },
@@ -117,8 +117,8 @@ export async function GET() {
       success: true,
       message: 'Database seeded successfully!',
       credentials: {
-        email: 'admin@nkeyarchitects.com',
-        password: 'NkeyAdmin2025!'
+        email: 'admin@in-wavearchitects.com',
+        password: 'InWaveAdmin2025!'
       },
       dashboard: 'http://localhost:3000/dashboard',
       results

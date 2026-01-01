@@ -25,7 +25,7 @@ export function DashboardSidebar() {
     <aside className="dashboard-sidebar">
       <div className="sidebar-logo">
         <Link href="/dashboard">
-          <span className="logo-text">NKEY</span>
+          <span className="logo-text">IN-WAVE</span>
           <span className="logo-sub">Dashboard</span>
         </Link>
       </div>

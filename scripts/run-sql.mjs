@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const connectionString = 'postgres://postgres:pD7ZhyHFpnttSgfW@db.hrduplvhuglxukyiwmez.supabase.co:5432/postgres';
 
 async function main() {
-  console.log('🚀 Setting up NKEY Architects Database...\n');
+  console.log('🚀 Setting up IN-WAVE Architects Database...\n');
 
   const client = new pg.Client({
     connectionString,
@@ -63,8 +63,8 @@ async function main() {
 
     console.log('✅ Database setup complete!\n');
     console.log('📋 Login credentials:');
-    console.log('   Email: admin@nkeyarchitects.com');
-    console.log('   Password: NkeyAdmin2025!');
+    console.log('   Email: admin@in-wavearchitects.com');
+    console.log('   Password: InWaveAdmin2025!');
     console.log('\n🌐 Dashboard: http://localhost:3000/dashboard');
 
   } catch (error) {

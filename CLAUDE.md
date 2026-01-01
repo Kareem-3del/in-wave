@@ -13,7 +13,7 @@ npm run lint     # Run ESLint (eslint-config-next with TypeScript)
 
 ## Architecture
 
-This is a Next.js 16 App Router project for NKEY Architects, a design and architecture studio website. It uses React 19, TypeScript, and Tailwind CSS 4.
+This is a Next.js 16 App Router project for IN-WAVE Architects, a design and architecture studio website. It uses React 19, TypeScript, and Tailwind CSS 4.
 
 ### Project Structure
 

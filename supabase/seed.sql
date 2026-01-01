@@ -1,4 +1,4 @@
--- NKEY Architects Seed Data
+-- IN-WAVE Architects Seed Data
 -- Run this after schema.sql to populate initial data
 
 -- Projects (Gallery items)
@@ -35,7 +35,7 @@ INSERT INTO hero_slides (image_url, alt_text, display_order, is_active) VALUES
 
 -- Offices
 INSERT INTO offices (city, country, phone, phone_href, email, email_href, display_order, is_active) VALUES
-('Dubai', 'UAE', '+971 5018 77644', 'tel:+971501877644', 'office@nkeyarchitects.com', 'mailto:office@nkeyarchitects.com', 0, true),
+('Dubai', 'UAE', '+971 5018 77644', 'tel:+971501877644', 'office@in-wavearchitects.com', 'mailto:office@in-wavearchitects.com', 0, true),
 ('Los Angeles', 'USA', '+1 954 271-5832', 'tel:+19542715832', NULL, NULL, 1, true),
 ('Kyiv', 'Ukraine', '+380 98 080 77 07', 'tel:+380980807707', NULL, NULL, 2, true),
 ('Montreal', 'Canada', '+1 4384053284', 'tel:+14384053284', NULL, NULL, 3, true);
@@ -60,7 +60,7 @@ INSERT INTO work_stages (stage_number, title, description, display_order, is_act
 INSERT INTO team_info (title_lines, description_paragraphs, image_url, years_experience, projects_count, countries_count) VALUES
 (
   ARRAY['8 years experience', 'in combination with a', 'perfect taste'],
-  ARRAY['Founded in 2016, NKEY Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.', 'With over 90 projects completed across 10 countries, we bring a global perspective to every design while respecting local traditions and preferences.'],
+  ARRAY['Founded in 2016, IN-WAVE Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.', 'With over 90 projects completed across 10 countries, we bring a global perspective to every design while respecting local traditions and preferences.'],
   '/images/team-photo.jpg',
   8,
   90,
@@ -69,8 +69,8 @@ INSERT INTO team_info (title_lines, description_paragraphs, image_url, years_exp
 
 -- Social Links
 INSERT INTO social_links (platform, icon_url, href, display_order, is_active) VALUES
-('Facebook', '/icons/facebook-ic.svg', 'https://www.facebook.com/NKEY.Architecture.and.Design', 0, true),
-('Instagram', '/icons/instagram-ic.svg', 'https://www.instagram.com/nkey.architects/', 1, true),
+('Facebook', '/icons/facebook-ic.svg', 'https://www.facebook.com/IN-WAVE.Architecture.and.Design', 0, true),
+('Instagram', '/icons/instagram-ic.svg', 'https://www.instagram.com/in-wave.architects/', 1, true),
 ('Pinterest', '/icons/pinterest-ic.svg', 'https://www.pinterest.com/nk__interior__', 2, true),
 ('Behance', '/icons/behance-logo0-1.svg', 'https://www.behance.net/4ebd134f', 3, true),
 ('TikTok', '/icons/logo-tiktok.svg', 'https://www.tiktok.com/@nk_interior_', 4, true),

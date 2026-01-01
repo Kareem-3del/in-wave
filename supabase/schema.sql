@@ -1,4 +1,4 @@
--- NKEY Architects Database Schema
+-- IN-WAVE Architects Database Schema
 -- Run this in Supabase SQL Editor
 
 -- Projects table (Portfolio/Gallery items)

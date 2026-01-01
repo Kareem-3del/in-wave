@@ -13,7 +13,7 @@ interface SetupState {
   adminPassword: string
 }
 
-const SQL_SCHEMA = `-- NKEY Architects Database Schema
+const SQL_SCHEMA = `-- IN-WAVE Architects Database Schema
 -- Run this in Supabase SQL Editor
 
 -- Projects table (Portfolio/Gallery items)
@@ -353,7 +353,7 @@ export default function SetupPage() {
     <div className="setup-page">
       <div className="setup-container">
         <div className="setup-header">
-          <h1>NKEY Setup</h1>
+          <h1>IN-WAVE Setup</h1>
           <p>Configure your website in a few simple steps</p>
         </div>
 

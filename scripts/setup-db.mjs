@@ -37,7 +37,7 @@ async function checkTable(table) {
 }
 
 async function main() {
-  console.log('🚀 Setting up NKEY Architects Database...\n');
+  console.log('🚀 Setting up IN-WAVE Architects Database...\n');
 
   // Check if tables exist
   const tablesExist = await checkTable('projects');
@@ -99,7 +99,7 @@ async function main() {
     // Seed Offices
     console.log('Seeding offices...');
     await insertData('offices', [
-      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@nkeyarchitects.com', email_href: 'mailto:office@nkeyarchitects.com', display_order: 0, is_active: true },
+      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@in-wavearchitects.com', email_href: 'mailto:office@in-wavearchitects.com', display_order: 0, is_active: true },
       { city: 'Los Angeles', country: 'USA', phone: '+1 954 271-5832', phone_href: 'tel:+19542715832', display_order: 1, is_active: true },
       { city: 'Kyiv', country: 'Ukraine', phone: '+380 98 080 77 07', phone_href: 'tel:+380980807707', display_order: 2, is_active: true },
       { city: 'Montreal', country: 'Canada', phone: '+1 4384053284', phone_href: 'tel:+14384053284', display_order: 3, is_active: true },
@@ -132,7 +132,7 @@ async function main() {
     console.log('Seeding team info...');
     await insertData('team_info', [{
       title_lines: ['8 years experience', 'in combination with a', 'perfect taste'],
-      description_paragraphs: ['Founded in 2016, NKEY Architects has grown into a leading design studio.', 'With over 90 projects completed across 10 countries.'],
+      description_paragraphs: ['Founded in 2016, IN-WAVE Architects has grown into a leading design studio.', 'With over 90 projects completed across 10 countries.'],
       image_url: '/images/team-photo.jpg',
       years_experience: 8,
       projects_count: 90,
@@ -143,8 +143,8 @@ async function main() {
     // Seed Social Links
     console.log('Seeding social links...');
     await insertData('social_links', [
-      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://www.facebook.com/NKEY.Architecture.and.Design', display_order: 0, is_active: true },
-      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://www.instagram.com/nkey.architects/', display_order: 1, is_active: true },
+      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://www.facebook.com/IN-WAVE.Architecture.and.Design', display_order: 0, is_active: true },
+      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://www.instagram.com/in-wave.architects/', display_order: 1, is_active: true },
       { platform: 'Pinterest', icon_url: '/icons/pinterest-ic.svg', href: 'https://www.pinterest.com/nk__interior__', display_order: 2, is_active: true },
       { platform: 'Behance', icon_url: '/icons/behance-logo0-1.svg', href: 'https://www.behance.net/4ebd134f', display_order: 3, is_active: true },
       { platform: 'TikTok', icon_url: '/icons/logo-tiktok.svg', href: 'https://www.tiktok.com/@nk_interior_', display_order: 4, is_active: true },
@@ -154,8 +154,8 @@ async function main() {
 
     console.log('\n✅ Database setup complete!\n');
     console.log('📋 Login credentials:');
-    console.log('   Email: admin@nkeyarchitects.com');
-    console.log('   Password: NkeyAdmin2025!');
+    console.log('   Email: admin@in-wavearchitects.com');
+    console.log('   Password: InWaveAdmin2025!');
     console.log('\n🌐 Dashboard: http://localhost:3000/dashboard');
 
   } catch (error) {

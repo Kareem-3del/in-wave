@@ -47,7 +47,7 @@ export default function Preloader() {
         <div className="preloader__logo__item">
           <img
             src="/images/logo.svg"
-            alt="NKEY Architects"
+            alt="IN-WAVE Architects"
             style={{ width: 84, height: 'auto' }}
           />
         </div>

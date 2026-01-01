@@ -88,7 +88,7 @@ export async function POST() {
 
     // Seed Offices
     const { error: oErr } = await supabase.from('offices').insert([
-      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@nkeyarchitects.com', email_href: 'mailto:office@nkeyarchitects.com', display_order: 0 },
+      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@in-wavearchitects.com', email_href: 'mailto:office@in-wavearchitects.com', display_order: 0 },
       { city: 'Los Angeles', country: 'USA', phone: '+1 954 271-5832', phone_href: 'tel:+19542715832', display_order: 1 },
       { city: 'Kyiv', country: 'Ukraine', phone: '+380 98 080 77 07', phone_href: 'tel:+380980807707', display_order: 2 },
       { city: 'Montreal', country: 'Canada', phone: '+1 4384053284', phone_href: 'tel:+14384053284', display_order: 3 },
@@ -119,7 +119,7 @@ export async function POST() {
     const { error: tiErr } = await supabase.from('team_info').insert([{
       title_lines: ['8 years experience', 'in combination with a', 'perfect taste'],
       description_paragraphs: [
-        'Founded in 2016, NKEY Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.',
+        'Founded in 2016, IN-WAVE Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.',
         'With over 90 projects completed across 10 countries, we bring a global perspective to every design while respecting local traditions and preferences.'
       ],
       image_url: '/images/team-photo.jpg',
@@ -131,8 +131,8 @@ export async function POST() {
 
     // Seed Social Links
     const { error: slErr } = await supabase.from('social_links').insert([
-      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://www.facebook.com/NKEY.Architecture.and.Design', display_order: 0 },
-      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://www.instagram.com/nkey.architects/', display_order: 1 },
+      { platform: 'Facebook', icon_url: '/icons/facebook-ic.svg', href: 'https://www.facebook.com/IN-WAVE.Architecture.and.Design', display_order: 0 },
+      { platform: 'Instagram', icon_url: '/icons/instagram-ic.svg', href: 'https://www.instagram.com/in-wave.architects/', display_order: 1 },
       { platform: 'Pinterest', icon_url: '/icons/pinterest-ic.svg', href: 'https://www.pinterest.com/nk__interior__', display_order: 2 },
       { platform: 'Behance', icon_url: '/icons/behance-logo0-1.svg', href: 'https://www.behance.net/4ebd134f', display_order: 3 },
       { platform: 'TikTok', icon_url: '/icons/logo-tiktok.svg', href: 'https://www.tiktok.com/@nk_interior_', display_order: 4 },

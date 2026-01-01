@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
     : `${project.title_italic_en || project.title_italic} ${project.title_regular_en || project.title_regular}`;
 
   return {
-    title: `${title} | NKEY Architects`,
+    title: `${title} | IN-WAVE Architects`,
     description: `${title} - ${project.location} (${project.year})`,
   };
 }

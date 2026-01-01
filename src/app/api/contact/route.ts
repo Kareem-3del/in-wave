@@ -9,7 +9,7 @@ async function triggerN8nWebhook(webhookUrl: string, data: Record<string, unknow
       body: JSON.stringify({
         ...data,
         timestamp: new Date().toISOString(),
-        source: 'nkey-website'
+        source: 'inwave-website'
       })
     })
   } catch (error) {
