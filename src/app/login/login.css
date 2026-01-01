@@ -1,3 +1,28 @@
+/* Show normal cursor on login page */
+body:has(.login-page) .cursor-dot,
+body:has(.login-page) .cursor-outline {
+  display: none !important;
+}
+
+.login-page,
+.login-page * {
+  cursor: auto !important;
+}
+
+.login-page a,
+.login-page button,
+.login-page [role="button"],
+.login-page input[type="submit"] {
+  cursor: pointer !important;
+}
+
+.login-page input[type="text"],
+.login-page input[type="email"],
+.login-page input[type="password"],
+.login-page textarea {
+  cursor: text !important;
+}
+
 .login-page {
   min-height: 100vh;
   display: flex;

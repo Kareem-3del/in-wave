@@ -1,3 +1,29 @@
+/* Show normal cursor on setup page */
+body:has(.setup-page) .cursor-dot,
+body:has(.setup-page) .cursor-outline {
+  display: none !important;
+}
+
+.setup-page,
+.setup-page * {
+  cursor: auto !important;
+}
+
+.setup-page a,
+.setup-page button,
+.setup-page [role="button"],
+.setup-page input[type="submit"] {
+  cursor: pointer !important;
+}
+
+.setup-page input[type="text"],
+.setup-page input[type="email"],
+.setup-page input[type="password"],
+.setup-page input[type="url"],
+.setup-page textarea {
+  cursor: text !important;
+}
+
 .setup-page {
   min-height: 100vh;
   display: flex;

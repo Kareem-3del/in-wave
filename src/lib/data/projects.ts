@@ -73,3 +73,19 @@ export async function deleteProject(id: string): Promise<void> {
 
   if (error) throw error
 }
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const supabase = await createClient()
+  const href = `/portfolio/${slug}`
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('href', href)
+    .single()
+
+  if (error) {
+    if (error.code === 'PGRST116') return null
+    throw error
+  }
+  return data
+}

@@ -1,4 +1,37 @@
 /* Dashboard Layout */
+
+/* Show normal cursor on dashboard - hide custom cursor elements */
+body:has(.dashboard-layout) .cursor-dot,
+body:has(.dashboard-layout) .cursor-outline {
+  display: none !important;
+}
+
+/* Show normal cursor on dashboard */
+.dashboard-layout,
+.dashboard-layout * {
+  cursor: auto !important;
+}
+
+.dashboard-layout a,
+.dashboard-layout button,
+.dashboard-layout [role="button"],
+.dashboard-layout input[type="submit"],
+.dashboard-layout input[type="button"],
+.dashboard-layout select,
+.dashboard-layout .clickable {
+  cursor: pointer !important;
+}
+
+.dashboard-layout input[type="text"],
+.dashboard-layout input[type="email"],
+.dashboard-layout input[type="password"],
+.dashboard-layout input[type="number"],
+.dashboard-layout input[type="search"],
+.dashboard-layout input[type="url"],
+.dashboard-layout textarea {
+  cursor: text !important;
+}
+
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
