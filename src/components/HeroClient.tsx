@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -10,6 +10,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
+import { Icon } from '@iconify/react';
+import { scale } from 'motion';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -27,6 +29,7 @@ interface HeroClientProps {
 
 export function HeroClient({ slides }: HeroClientProps) {
   const t = useTranslations('hero');
+  const locale = useLocale()
   const tContact = useTranslations('contact');
   const heroTrackRef = useRef<HTMLDivElement>(null);
   const heroStickyRef = useRef<HTMLDivElement>(null);
@@ -188,6 +191,9 @@ export function HeroClient({ slides }: HeroClientProps) {
 
   return (
     <section className="section hero-section">
+      <a href="#home-form" className="order-a-call">
+        {tContact('orderCall')}
+      </a>
       <div className="hero__track" ref={heroTrackRef}>
         <div className="hero__sticky" ref={heroStickyRef}>
           <div className="hero__slider" ref={heroSliderRef}>
@@ -227,20 +233,43 @@ export function HeroClient({ slides }: HeroClientProps) {
 
           <div className="hero__cont" ref={heroContRef}>
             <a href="#home-form" className="hero__cta js-anchor-scroll">
-              <span>{tContact('send')}<br/>{tContact('title1Italic')}</span>
+              {/* <span>{tContact('send')}<br />{tContact('title1Italic')}</span> */}
 
-              <svg width="25" height="8" viewBox="0 0 25 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24.3536 4.35356C24.5488 4.15829 24.5488 3.84171 24.3536 3.64645L21.1716 0.464468C20.9763 0.269206 20.6597 0.269206 20.4645 0.464468C20.2692 0.65973 20.2692 0.976313 20.4645 1.17157L23.2929 4L20.4645 6.82843C20.2692 7.02369 20.2692 7.34027 20.4645 7.53554C20.6597 7.7308 20.9763 7.7308 21.1716 7.53554L24.3536 4.35356ZM-4.37114e-08 4.5L24 4.5L24 3.5L4.37114e-08 3.5L-4.37114e-08 4.5Z" fill="url(#paint0_linear_1107_87)"/>
+              {/* <svg width="25" height="8" viewBox="0 0 25 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24.3536 4.35356C24.5488 4.15829 24.5488 3.84171 24.3536 3.64645L21.1716 0.464468C20.9763 0.269206 20.6597 0.269206 20.4645 0.464468C20.2692 0.65973 20.2692 0.976313 20.4645 1.17157L23.2929 4L20.4645 6.82843C20.2692 7.02369 20.2692 7.34027 20.4645 7.53554C20.6597 7.7308 20.9763 7.7308 21.1716 7.53554L24.3536 4.35356ZM-4.37114e-08 4.5L24 4.5L24 3.5L4.37114e-08 3.5L-4.37114e-08 4.5Z" fill="url(#paint0_linear_1107_87)" />
                 <defs>
                   <linearGradient id="paint0_linear_1107_87" x1="-8.74228e-08" y1="5" x2="0.083189" y2="3.00347" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#E5CCA8"/>
-                    <stop offset="1" stopColor="#88704E"/>
+                    <stop stopColor="#E5CCA8" />
+                    <stop offset="1" stopColor="#88704E" />
                   </linearGradient>
                 </defs>
-              </svg>
+              </svg> */}
 
-              <div className="hero__cta__circle">
+              {/* <div className="hero__cta__circle">
                 <div className="hero__cta__circle__inner"></div>
+              </div> */}
+              <div className='hero-contact'>
+                <div className='hero-send'>
+                  {t("send")}
+                  <svg
+                    style={{
+                      ...(locale === "ar" && {
+                        transform: "scale(-1)"
+                      })
+                    }}
+                    width="25" height="8" viewBox="0 0 25 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24.3536 4.35356C24.5488 4.15829 24.5488 3.84171 24.3536 3.64645L21.1716 0.464468C20.9763 0.269206 20.6597 0.269206 20.4645 0.464468C20.2692 0.65973 20.2692 0.976313 20.4645 1.17157L23.2929 4L20.4645 6.82843C20.2692 7.02369 20.2692 7.34027 20.4645 7.53554C20.6597 7.7308 20.9763 7.7308 21.1716 7.53554L24.3536 4.35356ZM-4.37114e-08 4.5L24 4.5L24 3.5L4.37114e-08 3.5L-4.37114e-08 4.5Z" fill="url(#paint0_linear_1107_87)" />
+                    <defs>
+                      <linearGradient id="paint0_linear_1107_87" x1="-8.74228e-08" y1="5" x2="0.083189" y2="3.00347" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#fff" />
+                        <stop offset="1" stopColor="#fff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className='hero-contact-text'>
+                  {tContact("title1Italic")}
+                </div>
               </div>
             </a>
 

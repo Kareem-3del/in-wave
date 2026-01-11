@@ -22,7 +22,9 @@
   },
   "hero": {
     "title1": "Architecture &",
-    "title2": "Design Studio"
+    "title2": "Design Studio",
+    "toContact": "TO CONTACT",
+    "send": "Send"
   },
   "gallery": {
     "viewProject": "View Project",
@@ -74,7 +76,8 @@
     "messageSent": "Your message has been sent. We will get back to you soon.",
     "sendAnother": "Send another message",
     "contactUs": "Contact us",
-    "orderCall": "Order a call"
+    "orderCall": "Order a call",
+    "whatsapp": "WHATSAPP US"
   },
   "footer": {
     "title1": "Are you ready for the new",
@@ -190,7 +193,14 @@
     "sendCV": "Ready to Create?",
     "sendCVDesc": "Whether you're a seasoned architect or fresh talent, we want to hear your story. Send us your portfolio and let's explore possibilities together.",
     "emailUs": "Reach out at",
-    "exploreMore": "Explore Opportunities"
+    "exploreMore": "Explore Opportunities",
+    "openPos": "OPEN POSITIONS",
+    "openPosDesc": "If you carry creativity within you, possess a refined sense of visual balance, and have the ability to transform chaos into clear, well-structured ideas, we would be delighted to connect with you.",
+    "architect": "ARCHITECT",
+    "shareCv": "Share your CV and portfolio with us.",
+    "get": "GET",
+    "in": "IN",
+    "touch": "TOUCH"
   },
   "aboutUs": {
     "pageTitle": "About Us | IN-WAVE Architects",
@@ -245,7 +255,13 @@
     "ctaTitle2": "Extraordinary?",
     "ctaDesc": "Let's collaborate to bring your architectural vision to life. Every great building starts with a conversation.",
     "ctaButton": "Start Your Project",
-    "ourTeam": "Our Team"
+    "ourTeam": "Our Team",
+    "ourMissionLabel": "Our Story",
+    "missionP1": "At Innovation Wave, our mission is to craft exceptional design solutions that seamlessly blend the highest quality with unparalleled value, all delivered with remarkable efficiency to meet our clients’ distinctive needs. We believe that great artistry begins wi great people; therefore, we focus on attracting the industry’s finest talent, empowering our team with comprehensive benefits and unwavering support.",
+    "missionP2": "This commitment enables us to cultivate an environment where creativity flourishes, ensuring that every project not only reflects our dedication to excellence but also provides a flawless experience for our clients, free from challenges and full of inspiration.",
+    "ourVisionLabel": "OUR VISION",
+    "visionP1": "Our vision at Innovation Wave is to redefine the landscape of interior design by setting new standards of elegance, innovation, and client satisfaction. We aspire to be the leading name in luxury decoration, known for our ability to transform spaces into extraordinary experiences that resonate with beauty and functionality. As we expand our influence across borders, we aim to inspire a global appreciation for artistic excellence and elevate the interior design industry to new heights.",
+    "visionP2": "Through our commitment to continuous improvement and creativity, we envision a future where every environment we touch becomes a lasting testament to our passion and expertise, enriching lives and igniting imaginations."
   },
   "articles": {
     "pageTitle": "Blog | IN-WAVE Architects",

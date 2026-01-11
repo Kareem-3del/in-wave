@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { PhoneDropdown } from './PhoneDropdown';
 
 type MenuItem = {
   href: string;
@@ -14,6 +15,7 @@ type MenuItem = {
 
 export default function Header() {
   const t = useTranslations('nav');
+
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,7 +59,7 @@ export default function Header() {
   ].filter(Boolean).join(' ');
 
   return (
-    <header className={headerClasses}>
+    <header className={`${headerClasses} header-container`}>
       <div className="container header__cont">
         <div className="header__logo">
           <Link href="/">
@@ -82,20 +84,26 @@ export default function Header() {
                   </li>
                 );
               })}
+              <li>
+                <PhoneDropdown />
+              </li>
+              <li>
+                <LanguageSwitcher />
+              </li>
             </ul>
-            <div className="header__nav__tel">
+            {/* <div className="header__nav__tel">
               <a href="tel:+966595594686" className="num">+966 595 594 686</a>
-            </div>
-            <div className="header__nav__lang">
+            </div> */}
+            {/* <div className="header__nav__lang">
               <LanguageSwitcher />
-            </div>
+            </div> */}
           </div>
         </nav>
 
         <div className="header__right">
-          <div className="header__lang-desktop">
+          {/* <div className="header__lang-desktop">
             <LanguageSwitcher />
-          </div>
+          </div> */}
           <div
             className="header__burger"
             onClick={() => setIsMenuOpen(!isMenuOpen)}

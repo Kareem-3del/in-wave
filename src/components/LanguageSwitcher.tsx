@@ -1,43 +1,67 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/routing';
 import { locales } from '@/i18n/config';
 
-const languageLabels: Record<string, { label: string; native: string }> = {
-  en: { label: 'EN', native: 'English' },
-  ar: { label: 'ع', native: 'العربية' },
+const languageLabels: Record<string, string> = {
+  en: 'EN',
+  ar: 'ع',
 };
 
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const switchLocale = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    if (newLocale !== locale) {
+      router.replace(pathname, { locale: newLocale });
+    }
+    setOpen(false);
   };
 
-  // Sort locales so inactive language comes first (clickable), active comes second
-  const sortedLocales = [...locales].sort((a, b) => {
-    if (a === locale) return 1;
-    if (b === locale) return -1;
-    return 0;
-  });
+  // close dropdown when clicking outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   return (
-    <div className="language-switcher">
-      {sortedLocales.map((loc) => (
-        <button
-          key={loc}
-          onClick={() => switchLocale(loc)}
-          className={`language-switcher__btn ${locale === loc ? 'language-switcher__btn--active' : ''}`}
-          aria-label={`Switch to ${languageLabels[loc].native}`}
-          title={languageLabels[loc].native}
-        >
-          {languageLabels[loc].label}
-        </button>
-      ))}
+    <div className="lang-dropdown" ref={ref}>
+      <button
+        className="lang-trigger"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        {languageLabels[locale]}
+        <span className={`arrow ${open ? 'open' : ''}`}>▾</span>
+      </button>
+
+      {open && (
+        <div className="lang-menu" role="listbox">
+          {locales.map((loc) => (
+            <button
+              key={loc}
+              onClick={() => switchLocale(loc)}
+              className={`lang-item ${loc === locale ? 'active' : ''}`}
+              role="option"
+              aria-selected={loc === locale}
+            >
+              {languageLabels[loc]}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

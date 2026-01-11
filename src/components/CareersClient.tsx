@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Icon } from '@iconify/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from '@/i18n/routing';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -64,7 +65,7 @@ function AnimatedCounter({ value, label, index }: { value: string; label: string
               val: numericValue,
               duration: 2,
               ease: 'power2.out',
-              onUpdate: function() {
+              onUpdate: function () {
                 setDisplayValue(Math.round(this.targets()[0].val) + suffix);
               }
             });
@@ -296,6 +297,7 @@ function CareersMarquee({ text, italicText }: { text: string; italicText: string
 
 export function CareersClient() {
   const t = useTranslations('careers');
+  const locale = useLocale()
   const benefitsRef = useRef<HTMLElement>(null);
   const journeyRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
@@ -384,8 +386,70 @@ export function CareersClient() {
       {/* Marquee Section */}
       <CareersMarquee text={t('marqueeText')} italicText={t('marqueeItalic')} />
 
+      {/* <section className="section careers-section oppe-section-enhanced" ref={ctaRef}>
+        <div className="container">
+          <h2 className="oppe-content__title">{t('openPos')}</h2>
+        </div>
+      </section> */}
+      <section
+        style={{
+          background: "linear-gradient(#0a0a0a 0%, #111 50%, #0a0a0a 100%)"
+        }}
+        className="section about-story-section"
+      >
+        <div
+          className='cust-container'
+        >
+          <div className="about-story__header">
+            <h2 className="about-story__title">{t('openPos')}</h2>
+          </div>
+          {/* <div className="about-story__content"> */}
+          <div className="story-app-container">
+            <a
+              style={{ position: "static" }}
+              href="#home-form"
+              className="order-a-call">
+              {t('architect')}
+            </a>
+
+            <div>
+              <p
+                className="about-story__paragraph"
+              >
+                {t('openPosDesc')}
+              </p>
+
+              <p className="about-story__paragraph_sub">
+                {t("shareCv")}
+              </p>
+            </div>
+
+            <Link href="/contacts" className='get-in-touch'>
+              <div>{t("get")}</div>
+              <div>{t("in")}</div>
+              <div style={{ marginBottom: "8px" }}>{t("touch")}</div>
+              <svg
+                style={{
+                  ...(locale === "ar" && {
+                    transform: "scale(-1)"
+                  })
+                }}
+                viewBox="0 0 25 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24.3536 4.35356C24.5488 4.15829 24.5488 3.84171 24.3536 3.64645L21.1716 0.464468C20.9763 0.269206 20.6597 0.269206 20.4645 0.464468C20.2692 0.65973 20.2692 0.976313 20.4645 1.17157L23.2929 4L20.4645 6.82843C20.2692 7.02369 20.2692 7.34027 20.4645 7.53554C20.6597 7.7308 20.9763 7.7308 21.1716 7.53554L24.3536 4.35356ZM-4.37114e-08 4.5L24 4.5L24 3.5L4.37114e-08 3.5L-4.37114e-08 4.5Z" fill="url(#paint0_linear_1107_87)" />
+                <defs>
+                  <linearGradient id="paint0_linear_1107_87" x1="-8.74228e-08" y1="5" x2="0.083189" y2="3.00347" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#fff" />
+                    <stop offset="1" stopColor="#fff" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </Link>
+          </div>
+        </div>
+        {/* </div> */}
+      </section>
       {/* Benefits Section */}
-      <section className="section careers-section benefits-section-enhanced" ref={benefitsRef}>
+      {/* <section className="section careers-section benefits-section-enhanced" ref={benefitsRef}>
         <FloatingShapes />
         <div className="container">
           <h2 className="section-title-enhanced">
@@ -405,6 +469,23 @@ export function CareersClient() {
             ))}
           </div>
         </div>
+      </section> */}
+
+      {/* CTA Section */}
+      <section className="section careers-section oppe-section-enhanced" ref={ctaRef}>
+        <div className="container">
+          <div className="cta-content">
+            <h2 className="cta-content__title">{t('sendCV')}</h2>
+            <p className="cta-content__desc">{t('sendCVDesc')}</p>
+            <div className="cta-content__email">
+              <span className="cta-content__email-label">{t('emailUs')}</span>
+              <a href="mailto:careers@in-wavearchitects.com" className="cta-content__email-link">
+                <Icon icon="mdi:email-outline" width={24} height={24} />
+                <span>careers@in-wavearchitects.com</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Stats Section */}
@@ -419,7 +500,7 @@ export function CareersClient() {
       </section>
 
       {/* Journey Section */}
-      <section className="section careers-section journey-section" ref={journeyRef}>
+      {/* <section className="section careers-section journey-section" ref={journeyRef}>
         <div className="container">
           <h2 className="section-title-enhanced">{t('journeyTitle')}</h2>
           <p className="section-subtitle">{t('journeySubtitle')}</p>
@@ -438,10 +519,10 @@ export function CareersClient() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Culture Section */}
-      <section className="section careers-section culture-section">
+      {/* <section className="section careers-section culture-section">
         <div className="container">
           <div className="culture-content">
             <div className="culture-content__text">
@@ -458,9 +539,9 @@ export function CareersClient() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Open Positions Section */}
+      {/* Open Positions Section
       <section className="section careers-section positions-section-enhanced">
         <div className="container">
           <h2 className="section-title-enhanced">{t('openPositions')}</h2>
@@ -475,25 +556,7 @@ export function CareersClient() {
             </a>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section careers-section cta-section-enhanced" ref={ctaRef}>
-        <FloatingShapes />
-        <div className="container">
-          <div className="cta-content">
-            <h2 className="cta-content__title">{t('sendCV')}</h2>
-            <p className="cta-content__desc">{t('sendCVDesc')}</p>
-            <div className="cta-content__email">
-              <span className="cta-content__email-label">{t('emailUs')}</span>
-              <a href="mailto:careers@in-wavearchitects.com" className="cta-content__email-link">
-                <Icon icon="mdi:email-outline" width={24} height={24} />
-                <span>careers@in-wavearchitects.com</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      </section> */}
     </>
   );
 }

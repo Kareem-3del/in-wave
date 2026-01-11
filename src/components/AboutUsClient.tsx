@@ -325,18 +325,161 @@ function StorySection() {
           >
             {t('storyP2')}
           </p>
-          <p
+          {/* <p
             className="about-story__paragraph"
             ref={(el) => { paragraphsRef.current[2] = el; }}
           >
             {t('storyP3')}
-          </p>
+          </p> */}
         </div>
       </div>
       <FloatingShapes />
     </section>
   );
 }
+
+function MessionSection() {
+  const t = useTranslations('aboutUs');
+  const sectionRef = useRef<HTMLElement>(null);
+  const paragraphsRef = useRef<(HTMLParagraphElement | null)[]>([]);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Set initial state
+      paragraphsRef.current.forEach((p) => {
+        if (p) {
+          gsap.set(p, { y: 60, opacity: 0 });
+        }
+      });
+
+      // Staggered reveal on scroll
+      paragraphsRef.current.forEach((p, i) => {
+        if (p) {
+          ScrollTrigger.create({
+            trigger: p,
+            start: 'top 80%',
+            end: 'top 50%',
+            scrub: 1,
+            onUpdate: (self) => {
+              gsap.to(p, {
+                y: 60 * (1 - self.progress),
+                opacity: self.progress,
+                duration: 0.1,
+              });
+            },
+          });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section className="section about-story-section" ref={sectionRef}>
+      <div className="container">
+        <div className="about-story__header">
+          <span className="about-story__label">{t('ourMissionLabel')}</span>
+        </div>
+        <div className="about-story__content">
+          <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[0] = el; }}
+          >
+            {t('missionP1')}
+          </p>
+          <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[1] = el; }}
+          >
+            {t('missionP2')}
+          </p>
+          {/* <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[2] = el; }}
+          >
+            {t('storyP3')}
+          </p> */}
+        </div>
+      </div>
+      <FloatingShapes />
+    </section>
+  );
+}
+
+function VisionSection() {
+  const t = useTranslations('aboutUs');
+  const sectionRef = useRef<HTMLElement>(null);
+  const paragraphsRef = useRef<(HTMLParagraphElement | null)[]>([]);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Set initial state
+      paragraphsRef.current.forEach((p) => {
+        if (p) {
+          gsap.set(p, { y: 60, opacity: 0 });
+        }
+      });
+
+      // Staggered reveal on scroll
+      paragraphsRef.current.forEach((p, i) => {
+        if (p) {
+          ScrollTrigger.create({
+            trigger: p,
+            start: 'top 80%',
+            end: 'top 50%',
+            scrub: 1,
+            onUpdate: (self) => {
+              gsap.to(p, {
+                y: 60 * (1 - self.progress),
+                opacity: self.progress,
+                duration: 0.1,
+              });
+            },
+          });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section className="section about-story-section" ref={sectionRef}>
+      <div className="container">
+        <div className="about-story__header">
+          <span className="about-story__label">{t('ourVisionLabel')}</span>
+        </div>
+        <div className="about-story__content">
+          <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[0] = el; }}
+          >
+            {t('visionP1')}
+          </p>
+          <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[1] = el; }}
+          >
+            {t('visionP2')}
+          </p>
+          {/* <p
+            className="about-story__paragraph"
+            ref={(el) => { paragraphsRef.current[2] = el; }}
+          >
+            {t('storyP3')}
+          </p> */}
+        </div>
+      </div>
+      <FloatingShapes />
+    </section>
+  );
+}
+
 
 // Animated Counter Component
 function AnimatedCounter({
@@ -373,7 +516,7 @@ function AnimatedCounter({
               val: numericValue,
               duration: 2.5,
               ease: 'power2.out',
-              onUpdate: function() {
+              onUpdate: function () {
                 setDisplayValue(Math.round(this.targets()[0].val).toString());
               },
             });
@@ -772,9 +915,23 @@ function CTASection() {
             {t('ctaTitle1')} <span>{t('ctaTitle2')}</span>
           </h2>
           <p className="about-cta__desc">{t('ctaDesc')}</p>
-          <Link href="/contacts" className="btn btn--default about-cta__btn">
+          <Link
+            style={{
+              marginBottom: "4rem"
+            }}
+            href="/contacts"
+            className="btn btn--default about-cta__btn"
+          >
             <span>{t('ctaButton')}</span>
           </Link>
+          <p
+            style={{
+              marginTop: "4rem",
+              paddingTop: "3rem"
+            }}
+            className="about-cta__desc">
+            {t('storyP3')}
+          </p>
         </div>
       </div>
       <FloatingShapes />
@@ -787,13 +944,15 @@ export function AboutUsClient() {
   return (
     <div className="about-us-page">
       <AboutHero />
-      <VisionQuote />
+      <CTASection />
+      {/* <VisionQuote /> */}
       <StorySection />
-      <StatsSection />
+      <MessionSection />
+      <VisionSection />
+      {/* <StatsSection />
       <PhilosophySection />
       <TimelineSection />
-      <ValuesSection />
-      <CTASection />
+      <ValuesSection /> */}
     </div>
   );
 }
