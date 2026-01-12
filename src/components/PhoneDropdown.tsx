@@ -61,6 +61,7 @@ export function PhoneDropdown() {
                     {phoneNumbers.map((phone) => (
 
                         <a
+                            style={{ direction: "ltr" }}
                             key={phone.value}
                             href={`tel:${phone.value}`}
                             className="lang-item"

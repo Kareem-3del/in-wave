@@ -406,7 +406,7 @@ export function CareersClient() {
           {/* <div className="about-story__content"> */}
           <div className="story-app-container">
             <a
-              style={{ position: "static" }}
+              style={{ position: "static", flexShrink: 0 }}
               href="#home-form"
               className="order-a-call">
               {t('architect')}

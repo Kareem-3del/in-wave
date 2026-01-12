@@ -7854,7 +7854,7 @@ select:focus-visible {
 .lang-menu {
   position: absolute;
   top: calc(100% + 6px);
-  right: 0;
+  /* right: 0; */
   min-width: 60px;
   background-color: #222326;
   border-radius: 8px;
