@@ -85,7 +85,7 @@ export default async function HeroSlidesPage({ searchParams }: { searchParams: P
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Hero Slides</h1>
       </div>
@@ -110,8 +110,8 @@ export default async function HeroSlidesPage({ searchParams }: { searchParams: P
       {/* Duplicate Order Warning */}
       <DuplicateOrderWarning items={slides.map(s => ({ id: s.id, display_order: s.display_order }))} />
 
-      <div className="card" style={{ marginBottom: 24 }}>
-        <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Slide</h3>
+      <div className="card mb-6">
+        <h3 className="card-title mb-4">Add New Slide</h3>
         <HeroSlideForm onSubmit={handleCreate} defaultOrder={slides.length} />
       </div>
 
@@ -135,24 +135,22 @@ export default async function HeroSlidesPage({ searchParams }: { searchParams: P
                     <img
                       src={slide.image_url}
                       alt={slide.alt_text || ''}
-                      style={{ width: 80, height: 45, objectFit: 'cover', borderRadius: 4 }}
+                      className="table-thumbnail"
                     />
                   </td>
-                  <td style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {slide.image_url}
-                  </td>
-                  <td>{slide.alt_text || '-'}</td>
+                  <td className="text-truncate">{slide.image_url}</td>
+                  <td>{slide.alt_text || <span className="text-muted">-</span>}</td>
                   <td>
-                    <form action={handleUpdateOrder} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <form action={handleUpdateOrder} className="inline-order-form">
                       <input type="hidden" name="id" value={slide.id} />
                       <input
                         type="number"
                         name="display_order"
                         defaultValue={slide.display_order}
-                        style={{ width: 50, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 13 }}
+                        className="order-input"
                         min={0}
                       />
-                      <button type="submit" style={{ padding: '4px 8px', background: '#f3f4f6', border: '1px solid #ddd', borderRadius: 4, cursor: 'pointer', fontSize: 11 }}>
+                      <button type="submit" className="order-btn">
                         Save
                       </button>
                     </form>
@@ -182,7 +180,13 @@ export default async function HeroSlidesPage({ searchParams }: { searchParams: P
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">🖼️</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+              </svg>
+            </div>
             <div className="empty-state-title">No hero slides yet</div>
             <div className="empty-state-text">Add your first slide using the form above</div>
           </div>

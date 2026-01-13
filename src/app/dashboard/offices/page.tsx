@@ -84,7 +84,7 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Office Locations</h1>
       </div>
@@ -100,12 +100,12 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
         <AlertMessage type="error" message={`Failed to create office: ${params.msg || 'Please try again.'}`} />
       )}
 
-      <div className="card" style={{ marginBottom: 24 }}>
-        <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Office</h3>
+      <div className="card mb-6">
+        <h3 className="card-title mb-4">Add New Office</h3>
         <form action={handleCreate}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>City</label>
+          <div className="grid-2 mb-4">
+            <div className="form-group">
+              <label className="form-label">City</label>
               <input
                 type="text"
                 name="city"
@@ -114,8 +114,8 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
                 required
               />
             </div>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>Country</label>
+            <div className="form-group">
+              <label className="form-label">Country</label>
               <input
                 type="text"
                 name="country"
@@ -126,29 +126,26 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div className="flex gap-3 flex-wrap items-center">
             <input
               type="text"
               name="phone"
-              className="form-input"
+              className="form-input flex-1"
               placeholder="Phone"
               required
-              style={{ flex: 1, minWidth: 150 }}
             />
             <input
               type="email"
               name="email"
-              className="form-input"
+              className="form-input flex-1"
               placeholder="Email (optional)"
-              style={{ flex: 1, minWidth: 150 }}
             />
             <input
               type="number"
               name="display_order"
-              className="form-input"
+              className="form-input order-field"
               placeholder="Order"
               defaultValue={offices.length}
-              style={{ width: 80 }}
             />
             <button type="submit" className="btn btn-primary">Add Office</button>
           </div>
@@ -172,16 +169,16 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
               {offices.map((office) => (
                 <tr key={office.id}>
                   <td>
-                    <form action={handleUpdateOrder} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <form action={handleUpdateOrder} className="inline-order-form">
                       <input type="hidden" name="id" value={office.id} />
                       <input
                         type="number"
                         name="display_order"
                         defaultValue={office.display_order}
-                        style={{ width: 50, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 13 }}
+                        className="order-input"
                         min={0}
                       />
-                      <button type="submit" style={{ padding: '4px 8px', background: '#f3f4f6', border: '1px solid #ddd', borderRadius: 4, cursor: 'pointer', fontSize: 11 }}>
+                      <button type="submit" className="order-btn">
                         Save
                       </button>
                     </form>
@@ -209,7 +206,17 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">🏢</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M3 21h18" />
+                <path d="M5 21V7l8-4v18" />
+                <path d="M19 21V11l-6-4" />
+                <path d="M9 9v.01" />
+                <path d="M9 12v.01" />
+                <path d="M9 15v.01" />
+                <path d="M9 18v.01" />
+              </svg>
+            </div>
             <div className="empty-state-title">No offices yet</div>
             <div className="empty-state-text">Add your first office location</div>
           </div>

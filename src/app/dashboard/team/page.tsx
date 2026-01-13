@@ -55,7 +55,7 @@ export default async function TeamInfoPage({ searchParams }: { searchParams: Pro
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Team Info</h1>
       </div>
@@ -107,7 +107,7 @@ export default async function TeamInfoPage({ searchParams }: { searchParams: Pro
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          <div className="grid-3">
             <div className="form-group">
               <label className="form-label">Years Experience</label>
               <input

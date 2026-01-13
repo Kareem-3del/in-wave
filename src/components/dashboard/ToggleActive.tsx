@@ -33,27 +33,9 @@ export function ToggleActive({ id, isActive, onToggle }: ToggleActiveProps) {
       onClick={handleToggle}
       disabled={loading}
       title={active ? 'Click to hide' : 'Click to show'}
-      style={{
-        padding: '6px 12px',
-        borderRadius: 6,
-        border: 'none',
-        cursor: loading ? 'wait' : 'pointer',
-        fontWeight: 500,
-        fontSize: 12,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 6,
-        background: active ? '#dcfce7' : '#f3f4f6',
-        color: active ? '#16a34a' : '#6b7280',
-        transition: 'all 0.15s',
-      }}
+      className={`toggle-active-btn ${active ? 'is-active' : 'is-hidden'} ${loading ? 'is-loading' : ''}`}
     >
-      <span style={{
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        background: active ? '#16a34a' : '#9ca3af',
-      }} />
+      <span className="toggle-dot" />
       {loading ? '...' : active ? 'Active' : 'Hidden'}
     </button>
   )

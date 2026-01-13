@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
 import { DuplicateOrderWarning } from '@/components/dashboard/DuplicateOrderWarning'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -31,12 +32,12 @@ async function handleUpdateOrder(formData: FormData) {
   revalidatePath('/dashboard/projects')
 }
 
-export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+export default async function ProjectsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const projects = await getAllProjects()
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Projects</h1>
         <div className="page-actions">
@@ -48,24 +49,16 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
 
       {/* Alert Messages */}
       {params.success === 'project_created' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Project created successfully!
-        </div>
+        <AlertMessage type="success" message="Project created successfully!" />
       )}
       {params.success === 'project_updated' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Project updated successfully!
-        </div>
+        <AlertMessage type="success" message="Project updated successfully!" />
       )}
       {params.error === 'create_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to create project. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to create project: ${params.msg || 'Please try again.'}`} />
       )}
       {params.error === 'update_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to update project. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to update project: ${params.msg || 'Please try again.'}`} />
       )}
 
       {/* Duplicate Order Warning */}
@@ -89,26 +82,29 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
               {projects.map((project) => (
                 <tr key={project.id}>
                   <td>
-                    <form action={handleUpdateOrder} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <form action={handleUpdateOrder} className="inline-order-form">
                       <input type="hidden" name="id" value={project.id} />
                       <input
                         type="number"
                         name="display_order"
                         defaultValue={project.display_order}
-                        style={{ width: 50, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 13 }}
+                        className="order-input"
                         min={0}
                       />
-                      <button type="submit" style={{ padding: '4px 8px', background: '#f3f4f6', border: '1px solid #ddd', borderRadius: 4, cursor: 'pointer', fontSize: 11 }}>
+                      <button type="submit" className="order-btn">
                         Save
                       </button>
                     </form>
                   </td>
                   <td>
-                    <em>{project.title_italic}</em> {project.title_regular}
+                    <span className="text-accent">{project.title_italic}</span>{' '}
+                    {project.title_regular}
                   </td>
                   <td>{project.location}</td>
                   <td>{project.year}</td>
-                  <td>Type {project.type}</td>
+                  <td>
+                    <span className="badge badge-info">Type {project.type}</span>
+                  </td>
                   <td>
                     <ToggleActive
                       id={project.id}
@@ -134,7 +130,13 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">🏗️</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M2 20h20" />
+                <path d="M5 20V8l7-5 7 5v12" />
+                <path d="M9 20v-6h6v6" />
+              </svg>
+            </div>
             <div className="empty-state-title">No projects yet</div>
             <div className="empty-state-text">Add your first project to get started</div>
             <Link href="/dashboard/projects/new" className="btn btn-primary">

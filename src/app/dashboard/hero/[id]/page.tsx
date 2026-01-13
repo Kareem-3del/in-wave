@@ -46,7 +46,7 @@ export default async function EditHeroSlidePage({ params }: { params: Promise<{ 
   }
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Edit Hero Slide</h1>
         <div className="page-actions">

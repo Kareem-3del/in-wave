@@ -103,16 +103,16 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
   const getPlatform = (id: string) => platforms.find(p => p.id === id)
 
   return (
-    <div>
+    <div className="social-links-manager">
       {/* Active Links */}
-      <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Active Social Links</h3>
+      <h3 className="section-title">Active Social Links</h3>
 
       {activeLinks.length === 0 ? (
-        <div style={{ padding: 24, textAlign: 'center', color: '#666', background: '#f9fafb', borderRadius: 8, marginBottom: 24 }}>
+        <div className="empty-message">
           No social links added. Select from available platforms below.
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+        <div className="active-links-list">
           {activeLinks.map((link, index) => {
             const platform = getPlatform(link.platform)
             return (
@@ -123,53 +123,25 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => handleDragOver(e, index)}
                 onDrop={(e) => handleDrop(e, index)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  padding: 12,
-                  background: dragOverIndex === index ? '#eff6ff' : '#fff',
-                  border: dragOverIndex === index ? '2px solid #3b82f6' : '1px solid #e5e7eb',
-                  borderRadius: 8,
-                  cursor: 'grab',
-                  opacity: draggedIndex === index ? 0.5 : 1,
-                  transition: 'all 0.15s',
-                }}
+                className={`link-item ${dragOverIndex === index ? 'drag-over' : ''} ${draggedIndex === index ? 'dragging' : ''}`}
               >
-                <div style={{ cursor: 'grab', color: '#999', fontSize: 18 }}>⠿</div>
-                <div style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 8,
-                  background: '#f3f4f6',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                <div className="drag-handle">⠿</div>
+                <div className="platform-icon">
                   <Icon icon={platform?.icon || 'mdi:link'} width={24} height={24} />
                 </div>
-                <div style={{ width: 100, fontWeight: 500 }}>{platform?.name}</div>
+                <div className="platform-name">{platform?.name}</div>
                 <input
                   type="url"
                   value={link.href}
                   onChange={(e) => updateLink(index, e.target.value)}
                   placeholder={`https://${link.platform}.com/...`}
-                  className="form-input"
-                  style={{ flex: 1 }}
+                  className="form-input link-input"
                   onClick={(e) => e.stopPropagation()}
                 />
                 <button
                   type="button"
                   onClick={() => removePlatform(index)}
-                  style={{
-                    padding: '8px 16px',
-                    background: '#fee2e2',
-                    color: '#dc2626',
-                    border: 'none',
-                    borderRadius: 6,
-                    cursor: 'pointer',
-                    fontWeight: 500,
-                  }}
+                  className="btn-remove"
                 >
                   Remove
                 </button>
@@ -183,14 +155,13 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
       <button
         onClick={handleSave}
         disabled={saving}
-        className="btn btn-primary"
-        style={{ marginBottom: 32 }}
+        className="btn btn-primary save-btn"
       >
         {saving ? 'Saving...' : 'Save Changes'}
       </button>
 
       {/* Available Platforms */}
-      <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Available Platforms ({availablePlatforms.length})</h3>
+      <h3 className="section-title">Available Platforms ({availablePlatforms.length})</h3>
 
       {/* Search */}
       <input
@@ -198,49 +169,30 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search platforms..."
-        className="form-input"
-        style={{ marginBottom: 16, maxWidth: 300 }}
+        className="form-input search-input"
       />
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+      <div className="platforms-grid">
         {filteredPlatforms.map((platform) => (
           <button
             key={platform.id}
             type="button"
             onClick={() => addPlatform(platform.id)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '10px 16px',
-              background: '#fff',
-              border: '1px solid #e5e7eb',
-              borderRadius: 8,
-              cursor: 'pointer',
-              transition: 'all 0.15s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#3b82f6'
-              e.currentTarget.style.background = '#eff6ff'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = '#e5e7eb'
-              e.currentTarget.style.background = '#fff'
-            }}
+            className="platform-btn"
           >
             <Icon icon={platform.icon} width={20} height={20} />
-            <span style={{ fontWeight: 500 }}>{platform.name}</span>
+            <span>{platform.name}</span>
           </button>
         ))}
 
         {filteredPlatforms.length === 0 && availablePlatforms.length > 0 && (
-          <div style={{ color: '#666', fontSize: 14 }}>
+          <div className="no-results">
             No platforms match your search.
           </div>
         )}
 
         {availablePlatforms.length === 0 && (
-          <div style={{ color: '#666', fontSize: 14 }}>
+          <div className="no-results">
             All platforms have been added.
           </div>
         )}

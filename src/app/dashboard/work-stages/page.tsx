@@ -80,7 +80,7 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Work Stages</h1>
       </div>
@@ -99,37 +99,40 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
       {/* Duplicate Order Warning */}
       <DuplicateOrderWarning items={stages.map(s => ({ id: s.id, display_order: s.display_order }))} />
 
-      <div className="card" style={{ marginBottom: 24 }}>
-        <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Stage</h3>
+      <div className="card mb-6">
+        <h3 className="card-title mb-4">Add New Stage</h3>
         <form action={handleCreate}>
-          <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
-            <input
-              type="text"
-              name="stage_number"
-              className="form-input"
-              placeholder="Stage # (e.g., 01)"
-              required
-              style={{ width: 100 }}
-            />
-            <input
-              type="text"
-              name="title"
-              className="form-input"
-              placeholder="Stage Title"
-              required
-              style={{ flex: 1 }}
-            />
-            <input
-              type="number"
-              name="display_order"
-              className="form-input"
-              placeholder="Order"
-              defaultValue={stages.length}
-              style={{ width: 80 }}
-            />
+          <div className="grid-3 mb-4">
+            <div>
+              <input
+                type="text"
+                name="stage_number"
+                className="form-input"
+                placeholder="Stage # (e.g., 01)"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                name="title"
+                className="form-input"
+                placeholder="Stage Title"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="number"
+                name="display_order"
+                className="form-input"
+                placeholder="Order"
+                defaultValue={stages.length}
+              />
+            </div>
           </div>
 
-          <div style={{ marginBottom: 12 }}>
+          <div className="mb-4">
             <textarea
               name="description"
               className="form-textarea"
@@ -159,21 +162,23 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
               {stages.map((stage) => (
                 <tr key={stage.id}>
                   <td>
-                    <form action={handleUpdateOrder} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <form action={handleUpdateOrder} className="inline-order-form">
                       <input type="hidden" name="id" value={stage.id} />
                       <input
                         type="number"
                         name="display_order"
                         defaultValue={stage.display_order}
-                        style={{ width: 50, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 13 }}
+                        className="order-input"
                         min={0}
                       />
-                      <button type="submit" style={{ padding: '4px 8px', background: '#f3f4f6', border: '1px solid #ddd', borderRadius: 4, cursor: 'pointer', fontSize: 11 }}>
+                      <button type="submit" className="order-btn">
                         Save
                       </button>
                     </form>
                   </td>
-                  <td>{stage.stage_number}</td>
+                  <td>
+                    <span className="badge badge-info">{stage.stage_number}</span>
+                  </td>
                   <td>{stage.title}</td>
                   <td>
                     <ToggleActive
@@ -195,7 +200,12 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">📈</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M3 3v18h18" />
+                <path d="M7 16l4-4 4 4 5-6" />
+              </svg>
+            </div>
             <div className="empty-state-title">No work stages yet</div>
             <div className="empty-state-text">Add stages to show your work process</div>
           </div>

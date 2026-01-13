@@ -28,7 +28,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Testimonials</h1>
         <div className="page-actions">
@@ -71,20 +71,24 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
             <tbody>
               {testimonials.map((t) => (
                 <tr key={t.id}>
-                  <td>{t.display_order}</td>
-                  <td>{t.name}</td>
-                  <td>{'⭐'.repeat(t.rating)}</td>
-                  <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <td data-label="Order">
+                    <span className="badge badge-info">{t.display_order}</span>
+                  </td>
+                  <td data-label="Name">{t.name}</td>
+                  <td data-label="Rating">
+                    <span className="rating-stars">{'★'.repeat(t.rating)}</span>
+                  </td>
+                  <td data-label="Review" className="text-truncate">
                     {t.text.substring(0, 100)}...
                   </td>
-                  <td>
+                  <td data-label="Status">
                     <ToggleActive
                       id={t.id}
                       isActive={t.is_active}
                       onToggle={handleToggle}
                     />
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <div className="actions">
                       <Link href={`/dashboard/testimonials/${t.id}`} className="btn btn-secondary btn-sm">
                         Edit
@@ -102,7 +106,13 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">💬</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                <path d="M8 9h8" />
+                <path d="M8 13h6" />
+              </svg>
+            </div>
             <div className="empty-state-title">No testimonials yet</div>
             <div className="empty-state-text">Add your first testimonial to get started</div>
             <Link href="/dashboard/testimonials/new" className="btn btn-primary">

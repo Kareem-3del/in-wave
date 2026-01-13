@@ -162,57 +162,34 @@ export function ImageUpload({
       <input type="hidden" name={name} value={uploadedUrl} />
 
       <div
-        className="upload-area"
+        className={`upload-area ${preview ? 'has-preview' : ''}`}
         onClick={() => inputRef.current?.click()}
-        style={{
-          border: '2px dashed #ddd',
-          borderRadius: 8,
-          padding: preview ? 0 : 24,
-          textAlign: 'center',
-          cursor: 'pointer',
-          background: '#fafafa',
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: 120,
-        }}
       >
         {preview ? (
           <img
             src={preview}
             alt="Preview"
-            style={{
-              width: '100%',
-              height: 150,
-              objectFit: 'cover',
-              display: 'block',
-            }}
+            className="upload-preview-image"
           />
         ) : (
-          <div>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
-            <div style={{ color: '#666', fontSize: 14 }}>
-              Click to upload image
+          <div className="upload-placeholder">
+            <div className="upload-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+              </svg>
             </div>
-            <div style={{ color: '#999', fontSize: 12, marginTop: 4 }}>
+            <div className="upload-text">Click to upload image</div>
+            <div className="upload-requirements">
               Min: {minWidth}×{minHeight}px {aspectRatio && `• Ratio: ${aspectRatio}`}
             </div>
-            <div style={{ color: '#999', fontSize: 11, marginTop: 2 }}>
-              JPG, PNG, WebP (max 5MB)
-            </div>
+            <div className="upload-formats">JPG, PNG, WebP (max 5MB)</div>
           </div>
         )}
 
         {uploading && (
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(255,255,255,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#333',
-            fontWeight: 500,
-          }}>
+          <div className="upload-loading">
             Uploading...
           </div>
         )}
@@ -228,29 +205,13 @@ export function ImageUpload({
       />
 
       {imageInfo && (
-        <div style={{
-          marginTop: 8,
-          padding: '8px 12px',
-          background: '#f0fdf4',
-          border: '1px solid #bbf7d0',
-          borderRadius: 6,
-          fontSize: 12,
-          color: '#166534',
-        }}>
+        <div className="upload-success">
           <strong>✓</strong> {imageInfo.width}×{imageInfo.height}px • {imageInfo.ratio} • {imageInfo.size}
         </div>
       )}
 
       {error && (
-        <div style={{
-          marginTop: 8,
-          padding: '8px 12px',
-          background: '#fef2f2',
-          border: '1px solid #fecaca',
-          borderRadius: 6,
-          fontSize: 12,
-          color: '#dc2626',
-        }}>
+        <div className="upload-error">
           {error}
         </div>
       )}
@@ -266,22 +227,14 @@ export function ImageUpload({
             onUpload?.('')
             if (inputRef.current) inputRef.current.value = ''
           }}
-          style={{
-            marginTop: 8,
-            padding: '6px 14px',
-            fontSize: 13,
-            fontWeight: 500,
-            background: '#ef4444',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 6,
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-          }}
+          className="upload-remove-btn"
         >
-          🗑 Remove Image
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 6h18" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
+          Remove Image
         </button>
       )}
     </div>

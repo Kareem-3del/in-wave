@@ -32,14 +32,18 @@ export default async function SubmissionsPage() {
     archived: 'badge-danger',
   }
 
+  const newCount = submissions.filter(s => s.status === 'new').length
+
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Form Submissions</h1>
         <div className="page-actions">
-          <span className="badge badge-success" style={{ marginRight: 8 }}>
-            {submissions.filter(s => s.status === 'new').length} new
-          </span>
+          {newCount > 0 && (
+            <span className="badge badge-success">
+              {newCount} new
+            </span>
+          )}
         </div>
       </div>
 
@@ -60,23 +64,23 @@ export default async function SubmissionsPage() {
             </thead>
             <tbody>
               {submissions.map((sub) => (
-                <tr key={sub.id}>
-                  <td>{new Date(sub.created_at).toLocaleDateString()}</td>
-                  <td>{sub.user_name}</td>
-                  <td>
-                    <a href={`mailto:${sub.email}`}>{sub.email}</a>
+                <tr key={sub.id} className={sub.status === 'new' ? 'row-highlight' : ''}>
+                  <td data-label="Date">{new Date(sub.created_at).toLocaleDateString()}</td>
+                  <td data-label="Name">{sub.user_name}</td>
+                  <td data-label="Email">
+                    <a href={`mailto:${sub.email}`} className="table-link">{sub.email}</a>
                   </td>
-                  <td>
-                    <a href={`tel:${sub.phone}`}>{sub.phone}</a>
+                  <td data-label="Phone">
+                    <a href={`tel:${sub.phone}`} className="table-link">{sub.phone}</a>
                   </td>
-                  <td>{sub.service}</td>
-                  <td>{sub.object_location || '-'}</td>
-                  <td>
+                  <td data-label="Service">{sub.service}</td>
+                  <td data-label="Location">{sub.object_location || <span className="text-muted">-</span>}</td>
+                  <td data-label="Status">
                     <span className={`badge ${statusColors[sub.status]}`}>
                       {sub.status}
                     </span>
                   </td>
-                  <td>
+                  <td data-label="Actions">
                     <div className="actions">
                       <StatusSelect
                         id={sub.id}
@@ -96,7 +100,12 @@ export default async function SubmissionsPage() {
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">📨</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+                <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+              </svg>
+            </div>
             <div className="empty-state-title">No submissions yet</div>
             <div className="empty-state-text">Form submissions from your website will appear here</div>
           </div>

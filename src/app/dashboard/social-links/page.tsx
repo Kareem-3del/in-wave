@@ -93,7 +93,7 @@ export default async function SocialLinksPage() {
   })
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Social Links</h1>
       </div>

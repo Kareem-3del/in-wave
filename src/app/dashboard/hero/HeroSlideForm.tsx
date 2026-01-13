@@ -41,8 +41,8 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
   }
 
   return (
-    <form action={handleSubmit} style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-      <div style={{ flex: '1 1 300px', minWidth: 250 }}>
+    <form action={handleSubmit} className="hero-slide-form">
+      <div className="form-column form-column-image">
         <ImageUpload
           name="image_url"
           currentUrl={slide?.image_url}
@@ -53,12 +53,12 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
           onUpload={setImageUrl}
           required
         />
-        <p style={{ fontSize: 11, color: '#666', marginTop: 8 }}>
+        <p className="image-hint">
           Recommended: Full HD (1920x1080) or higher, 16:9 aspect ratio
         </p>
       </div>
-      <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div>
+      <div className="form-column form-column-fields">
+        <div className="form-group">
           <label className="form-label">Alt Text</label>
           <input
             type="text"
@@ -68,7 +68,7 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
             defaultValue={slide?.alt_text || ''}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label className="form-label">Display Order</label>
           <input
             type="number"
@@ -79,24 +79,17 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
           />
         </div>
         {isEdit && (
-          <div>
+          <div className="form-group">
             <label className="form-label">Status</label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+            <label className="status-toggle">
               <input
                 type="checkbox"
                 name="is_active_checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                style={{ width: 18, height: 18, cursor: 'pointer' }}
+                className="status-checkbox"
               />
-              <span style={{
-                padding: '4px 10px',
-                borderRadius: 4,
-                fontSize: 13,
-                fontWeight: 500,
-                background: isActive ? '#dcfce7' : '#f3f4f6',
-                color: isActive ? '#16a34a' : '#6b7280'
-              }}>
+              <span className={`status-badge ${isActive ? 'active' : 'hidden'}`}>
                 {isActive ? 'Active' : 'Hidden'}
               </span>
             </label>

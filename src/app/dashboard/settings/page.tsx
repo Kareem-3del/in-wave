@@ -54,22 +54,22 @@ export default async function SettingsPage() {
   const settings = await getSettings()
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Settings</h1>
       </div>
 
       <SettingsForm settings={settings} onSave={handleSave} />
 
-      <div className="card" style={{ marginTop: 24 }}>
+      <div className="card mt-6">
         <h3 className="card-title">Database Setup</h3>
-        <p style={{ marginBottom: 16, color: '#666' }}>
+        <p className="text-muted mb-4">
           Run the SQL schema in your Supabase dashboard to create the required tables.
         </p>
 
-        <div style={{ background: '#f5f5f5', padding: 16, borderRadius: 8, marginBottom: 24 }}>
-          <p style={{ marginBottom: 8 }}><strong>Steps:</strong></p>
-          <ol style={{ marginLeft: 20, color: '#666' }}>
+        <div className="info-box mb-6">
+          <p className="mb-2"><strong>Steps:</strong></p>
+          <ol className="steps-list">
             <li>Go to your Supabase dashboard</li>
             <li>Navigate to SQL Editor</li>
             <li>Copy the contents of <code>supabase/schema.sql</code></li>
@@ -78,9 +78,9 @@ export default async function SettingsPage() {
         </div>
       </div>
 
-      <div className="card" style={{ marginTop: 24 }}>
+      <div className="card mt-6">
         <h3 className="card-title">Environment Variables</h3>
-        <p style={{ marginBottom: 16, color: '#666' }}>
+        <p className="text-muted mb-4">
           Ensure these environment variables are set:
         </p>
 
@@ -94,16 +94,16 @@ export default async function SettingsPage() {
           </thead>
           <tbody>
             <tr>
-              <td><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
-              <td>Your Supabase project URL</td>
-              <td>
+              <td data-label="Variable"><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
+              <td data-label="Description">Your Supabase project URL</td>
+              <td data-label="Status">
                 <span className="badge badge-success">Set</span>
               </td>
             </tr>
             <tr>
-              <td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
-              <td>Your Supabase anon/public key</td>
-              <td>
+              <td data-label="Variable"><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
+              <td data-label="Description">Your Supabase anon/public key</td>
+              <td data-label="Status">
                 <span className="badge badge-success">Set</span>
               </td>
             </tr>

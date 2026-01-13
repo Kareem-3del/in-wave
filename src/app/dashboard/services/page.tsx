@@ -65,7 +65,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
   const params = await searchParams
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="page-header">
         <h1 className="page-title">Services</h1>
       </div>
@@ -81,10 +81,10 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
         <AlertMessage type="error" message={`Failed to create service: ${params.msg || 'Please try again.'}`} />
       )}
 
-      <div className="card" style={{ marginBottom: 24 }}>
-        <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Service</h3>
+      <div className="card mb-6">
+        <h3 className="card-title mb-4">Add New Service</h3>
         <form action={handleCreate}>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <div className="flex gap-3 items-center">
             <input
               type="text"
               name="name"
@@ -99,12 +99,12 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
               className="form-input"
               placeholder="Order"
               defaultValue={services.length}
-              style={{ width: 80 }}
+              style={{ width: 100 }}
             />
             <button type="submit" className="btn btn-primary">Add Service</button>
           </div>
         </form>
-        <p className="form-hint" style={{ marginTop: 8 }}>These services appear in the contact form dropdown</p>
+        <p className="form-hint mt-4">These services appear in the contact form dropdown</p>
       </div>
 
       <div className="card">
@@ -121,7 +121,9 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
             <tbody>
               {services.map((service) => (
                 <tr key={service.id}>
-                  <td>{service.display_order}</td>
+                  <td>
+                    <span className="badge badge-info">{service.display_order}</span>
+                  </td>
                   <td>{service.name}</td>
                   <td>
                     <ToggleActive
@@ -143,7 +145,14 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
           </table>
         ) : (
           <div className="empty-state">
-            <div className="empty-state-icon">📋</div>
+            <div className="empty-state-icon">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                <rect x="9" y="3" width="6" height="4" rx="1" />
+                <path d="M9 12h6" />
+                <path d="M9 16h6" />
+              </svg>
+            </div>
             <div className="empty-state-title">No services yet</div>
             <div className="empty-state-text">Add services that will appear in the contact form</div>
           </div>
