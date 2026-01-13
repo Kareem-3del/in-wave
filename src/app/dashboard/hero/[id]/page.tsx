@@ -21,15 +21,20 @@ async function handleUpdate(formData: FormData) {
   const id = formData.get('id') as string
   const supabase = await createClient()
 
-  await supabase.from('hero_slides').update({
+  const { error } = await supabase.from('hero_slides').update({
     image_url: formData.get('image_url') as string,
     alt_text: formData.get('alt_text') as string || null,
     display_order: parseInt(formData.get('display_order') as string) || 0,
     is_active: formData.get('is_active') === 'on',
   }).eq('id', id)
 
+  if (error) {
+    console.error('Error updating hero slide:', error)
+    redirect('/dashboard/hero?error=update_failed')
+  }
+
   revalidatePath('/dashboard/hero')
-  redirect('/dashboard/hero')
+  redirect('/dashboard/hero?success=slide_updated')
 }
 
 export default async function EditHeroSlidePage({ params }: { params: Promise<{ id: string }> }) {

@@ -26,9 +26,20 @@ export async function createTestimonialAction(formData: FormData) {
     is_active: formData.get('is_active') === 'on',
   }
 
-  await createTestimonial(testimonial)
+  let success = false
+  try {
+    await createTestimonial(testimonial)
+    success = true
+  } catch (error) {
+    console.error('Error creating testimonial:', error)
+  }
+
   revalidatePath('/dashboard/testimonials')
-  redirect('/dashboard/testimonials')
+  if (success) {
+    redirect('/dashboard/testimonials?success=testimonial_created')
+  } else {
+    redirect('/dashboard/testimonials?error=create_failed')
+  }
 }
 
 export async function updateTestimonialAction(formData: FormData) {
@@ -54,7 +65,18 @@ export async function updateTestimonialAction(formData: FormData) {
     is_active: formData.get('is_active') === 'on',
   }
 
-  await updateTestimonial(id, testimonial)
+  let success = false
+  try {
+    await updateTestimonial(id, testimonial)
+    success = true
+  } catch (error) {
+    console.error('Error updating testimonial:', error)
+  }
+
   revalidatePath('/dashboard/testimonials')
-  redirect('/dashboard/testimonials')
+  if (success) {
+    redirect('/dashboard/testimonials?success=testimonial_updated')
+  } else {
+    redirect('/dashboard/testimonials?error=update_failed')
+  }
 }
