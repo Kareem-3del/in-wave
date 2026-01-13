@@ -43,12 +43,18 @@ export async function createProjectAction(formData: FormData) {
     is_active: formData.get('is_active') === 'on',
   }
 
+  let success = false
   try {
     await createProject(project)
-    revalidatePath('/dashboard/projects')
-    redirect('/dashboard/projects?success=project_created')
+    success = true
   } catch (error) {
     console.error('Error creating project:', error)
+  }
+
+  revalidatePath('/dashboard/projects')
+  if (success) {
+    redirect('/dashboard/projects?success=project_created')
+  } else {
     redirect('/dashboard/projects?error=create_failed')
   }
 }
@@ -92,12 +98,18 @@ export async function updateProjectAction(formData: FormData) {
     is_active: formData.get('is_active') === 'on',
   }
 
+  let success = false
   try {
     await updateProject(id, project)
-    revalidatePath('/dashboard/projects')
-    redirect('/dashboard/projects?success=project_updated')
+    success = true
   } catch (error) {
     console.error('Error updating project:', error)
+  }
+
+  revalidatePath('/dashboard/projects')
+  if (success) {
+    redirect('/dashboard/projects?success=project_updated')
+  } else {
     redirect('/dashboard/projects?error=update_failed')
   }
 }
