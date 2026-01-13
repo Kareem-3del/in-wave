@@ -1,5 +1,6 @@
 import { getTeamInfo } from '@/lib/data/team-info'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
 async function handleSave(formData: FormData) {
@@ -20,23 +21,44 @@ async function handleSave(formData: FormData) {
 
   const existingId = formData.get('id') as string
 
+  let result
   if (existingId) {
-    await supabase.from('team_info').update(data).eq('id', existingId)
+    result = await supabase.from('team_info').update(data).eq('id', existingId)
   } else {
-    await supabase.from('team_info').insert(data)
+    result = await supabase.from('team_info').insert(data)
+  }
+
+  if (result.error) {
+    console.error('Error saving team info:', result.error)
+    redirect('/dashboard/team?error=save_failed')
   }
 
   revalidatePath('/dashboard/team')
+  revalidatePath('/') // Refresh homepage too
+  redirect('/dashboard/team?success=saved')
 }
 
-export default async function TeamInfoPage() {
+export default async function TeamInfoPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
   const teamInfo = await getTeamInfo()
+  const params = await searchParams
 
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Team Info</h1>
       </div>
+
+      {/* Alert Messages */}
+      {params.success === 'saved' && (
+        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>✓</span> Team info saved successfully!
+        </div>
+      )}
+      {params.error === 'save_failed' && (
+        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>✕</span> Failed to save team info. Please try again.
+        </div>
+      )}
 
       <div className="card">
         <form action={handleSave}>

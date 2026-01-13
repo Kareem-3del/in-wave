@@ -1,5 +1,14 @@
 /* Dashboard Layout */
 
+/* Use Cairo font for entire dashboard */
+.dashboard-layout {
+  font-family: 'Cairo', sans-serif !important;
+}
+
+.dashboard-layout * {
+  font-family: 'Cairo', sans-serif !important;
+}
+
 /* Show normal cursor on dashboard - hide custom cursor elements */
 body:has(.dashboard-layout) .cursor-dot,
 body:has(.dashboard-layout) .cursor-outline {

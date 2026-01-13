@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { DashboardSidebar } from '@/components/dashboard/Sidebar'
 import { DashboardHeader } from '@/components/dashboard/Header'
+import { DashboardClientProviders } from '@/components/dashboard/ClientProviders'
 import './dashboard.css'
 
 export const metadata = {
@@ -22,14 +23,16 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="dashboard-layout">
-      <DashboardSidebar />
-      <div className="dashboard-main">
-        <DashboardHeader userEmail={user.email || 'Admin'} />
-        <main className="dashboard-content">
-          {children}
-        </main>
+    <DashboardClientProviders>
+      <div className="dashboard-layout">
+        <DashboardSidebar />
+        <div className="dashboard-main">
+          <DashboardHeader userEmail={user.email || 'Admin'} />
+          <main className="dashboard-content">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </DashboardClientProviders>
   )
 }
