@@ -2,24 +2,36 @@ import { getTeamInfo } from '@/lib/data/team-info'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
+
+// Helper to get form field value with or without prefix
+function getField(formData: FormData, name: string): string {
+  let value = formData.get(name) as string
+  if (value) return value
+  for (const prefix of ['1_', '2_', '0_']) {
+    value = formData.get(`${prefix}${name}`) as string
+    if (value) return value
+  }
+  return ''
+}
 
 async function handleSave(formData: FormData) {
   'use server'
   const supabase = await createClient()
 
-  const titleLinesRaw = formData.get('title_lines') as string
-  const descParagraphsRaw = formData.get('description_paragraphs') as string
+  const titleLinesRaw = getField(formData, 'title_lines')
+  const descParagraphsRaw = getField(formData, 'description_paragraphs')
 
   const data = {
     title_lines: titleLinesRaw.split('\n').filter(Boolean),
     description_paragraphs: descParagraphsRaw.split('\n\n').filter(Boolean),
-    image_url: formData.get('image_url') as string,
-    years_experience: parseInt(formData.get('years_experience') as string) || 8,
-    projects_count: parseInt(formData.get('projects_count') as string) || 90,
-    countries_count: parseInt(formData.get('countries_count') as string) || 10,
+    image_url: getField(formData, 'image_url'),
+    years_experience: parseInt(getField(formData, 'years_experience')) || 8,
+    projects_count: parseInt(getField(formData, 'projects_count')) || 90,
+    countries_count: parseInt(getField(formData, 'countries_count')) || 10,
   }
 
-  const existingId = formData.get('id') as string
+  const existingId = getField(formData, 'id')
 
   let result
   if (existingId) {
@@ -30,7 +42,7 @@ async function handleSave(formData: FormData) {
 
   if (result.error) {
     console.error('Error saving team info:', result.error)
-    redirect('/dashboard/team?error=save_failed')
+    redirect(`/dashboard/team?error=save_failed&msg=${encodeURIComponent(result.error.message)}`)
   }
 
   revalidatePath('/dashboard/team')
@@ -38,7 +50,7 @@ async function handleSave(formData: FormData) {
   redirect('/dashboard/team?success=saved')
 }
 
-export default async function TeamInfoPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+export default async function TeamInfoPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const teamInfo = await getTeamInfo()
   const params = await searchParams
 
@@ -50,14 +62,10 @@ export default async function TeamInfoPage({ searchParams }: { searchParams: Pro
 
       {/* Alert Messages */}
       {params.success === 'saved' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Team info saved successfully!
-        </div>
+        <AlertMessage type="success" message="Team info saved successfully!" />
       )}
       {params.error === 'save_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to save team info. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to save team info: ${params.msg || 'Please try again.'}`} />
       )}
 
       <div className="card">

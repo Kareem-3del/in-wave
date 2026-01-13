@@ -1,8 +1,21 @@
 import { getAllServices } from '@/lib/data/services'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
+
+// Helper to get form field value with or without prefix
+function getField(formData: FormData, name: string): string {
+  let value = formData.get(name) as string
+  if (value) return value
+  for (const prefix of ['1_', '2_', '0_']) {
+    value = formData.get(`${prefix}${name}`) as string
+    if (value) return value
+  }
+  return ''
+}
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -23,22 +36,33 @@ async function handleDelete(formData: FormData) {
 
 async function handleCreate(formData: FormData) {
   'use server'
-  const name_en = formData.get('name_en') as string
-  const name_ar = formData.get('name_ar') as string
+  const name = getField(formData, 'name_en') || getField(formData, 'name')
+  const display_order = getField(formData, 'display_order')
+
+  if (!name) {
+    redirect('/dashboard/services?error=missing_name')
+  }
 
   const supabase = await createClient()
-  await supabase.from('services').insert({
-    name: name_en,
-    name_en,
-    name_ar: name_ar || null,
-    display_order: parseInt(formData.get('display_order') as string) || 0,
+  // Only use columns that definitely exist in the database
+  const { error } = await supabase.from('services').insert({
+    name,
+    display_order: parseInt(display_order) || 0,
     is_active: true,
   })
+
+  if (error) {
+    console.error('Error creating service:', error)
+    redirect(`/dashboard/services?error=create_failed&msg=${encodeURIComponent(error.message)}`)
+  }
+
   revalidatePath('/dashboard/services')
+  redirect('/dashboard/services?success=service_created')
 }
 
-export default async function ServicesPage() {
+export default async function ServicesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const services = await getAllServices()
+  const params = await searchParams
 
   return (
     <div>
@@ -46,33 +70,29 @@ export default async function ServicesPage() {
         <h1 className="page-title">Services</h1>
       </div>
 
+      {/* Alert Messages */}
+      {params.success === 'service_created' && (
+        <AlertMessage type="success" message="Service created successfully!" />
+      )}
+      {params.error === 'missing_name' && (
+        <AlertMessage type="error" message="Please enter a service name" />
+      )}
+      {params.error === 'create_failed' && (
+        <AlertMessage type="error" message={`Failed to create service: ${params.msg || 'Please try again.'}`} />
+      )}
+
       <div className="card" style={{ marginBottom: 24 }}>
         <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Service</h3>
         <form action={handleCreate}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇺🇸 English</label>
-              <input
-                type="text"
-                name="name_en"
-                className="form-input"
-                placeholder="Service name (English)"
-                required
-              />
-            </div>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇸🇦 العربية</label>
-              <input
-                type="text"
-                name="name_ar"
-                className="form-input"
-                placeholder="اسم الخدمة (عربي)"
-                dir="rtl"
-                style={{ fontFamily: 'Cairo, sans-serif' }}
-              />
-            </div>
-          </div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <input
+              type="text"
+              name="name"
+              className="form-input"
+              placeholder="Service name"
+              required
+              style={{ flex: 1 }}
+            />
             <input
               type="number"
               name="display_order"
@@ -93,8 +113,7 @@ export default async function ServicesPage() {
             <thead>
               <tr>
                 <th>Order</th>
-                <th>🇺🇸 English</th>
-                <th>🇸🇦 Arabic</th>
+                <th>Name</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -103,8 +122,7 @@ export default async function ServicesPage() {
               {services.map((service) => (
                 <tr key={service.id}>
                   <td>{service.display_order}</td>
-                  <td>{service.name_en || service.name}</td>
-                  <td style={{ fontFamily: 'Cairo, sans-serif', direction: 'rtl' }}>{service.name_ar || '-'}</td>
+                  <td>{service.name}</td>
                   <td>
                     <ToggleActive
                       id={service.id}

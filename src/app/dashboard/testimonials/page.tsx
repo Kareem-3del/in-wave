@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -22,7 +23,7 @@ async function handleDelete(formData: FormData) {
   revalidatePath('/dashboard/testimonials')
 }
 
-export default async function TestimonialsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+export default async function TestimonialsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const testimonials = await getAllTestimonials()
   const params = await searchParams
 
@@ -39,24 +40,19 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
 
       {/* Alert Messages */}
       {params.success === 'testimonial_created' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Testimonial created successfully!
-        </div>
+        <AlertMessage type="success" message="Testimonial created successfully!" />
       )}
       {params.success === 'testimonial_updated' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Testimonial updated successfully!
-        </div>
+        <AlertMessage type="success" message="Testimonial updated successfully!" />
+      )}
+      {params.error === 'missing_fields' && (
+        <AlertMessage type="error" message="Please fill in all required fields (Name and Review Text)" />
       )}
       {params.error === 'create_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to create testimonial. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to create testimonial: ${params.msg || 'Please try again.'}`} />
       )}
       {params.error === 'update_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to update testimonial. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to update testimonial: ${params.msg || 'Please try again.'}`} />
       )}
 
       <div className="card">

@@ -12,6 +12,11 @@ export async function createTestimonialAction(formData: FormData) {
   const text_en = formData.get('text_en') as string
   const text_ar = formData.get('text_ar') as string
 
+  // Validate required fields
+  if (!name_en || !text_en) {
+    redirect('/dashboard/testimonials?error=missing_fields')
+  }
+
   const testimonial: TestimonialInsert = {
     // Legacy fields (use English as default)
     name: name_en,
@@ -27,18 +32,21 @@ export async function createTestimonialAction(formData: FormData) {
   }
 
   let success = false
+  let errorMsg = ''
   try {
     await createTestimonial(testimonial)
     success = true
-  } catch (error) {
-    console.error('Error creating testimonial:', error)
+  } catch (error: unknown) {
+    const err = error as { message?: string; code?: string }
+    errorMsg = err?.message || err?.code || 'Unknown error'
+    console.error('Error creating testimonial:', errorMsg, error)
   }
 
   revalidatePath('/dashboard/testimonials')
   if (success) {
     redirect('/dashboard/testimonials?success=testimonial_created')
   } else {
-    redirect('/dashboard/testimonials?error=create_failed')
+    redirect(`/dashboard/testimonials?error=create_failed&msg=${encodeURIComponent(errorMsg)}`)
   }
 }
 
@@ -50,6 +58,11 @@ export async function updateTestimonialAction(formData: FormData) {
   const name_ar = formData.get('name_ar') as string
   const text_en = formData.get('text_en') as string
   const text_ar = formData.get('text_ar') as string
+
+  // Validate required fields
+  if (!name_en || !text_en) {
+    redirect('/dashboard/testimonials?error=missing_fields')
+  }
 
   const testimonial: TestimonialUpdate = {
     // Legacy fields (use English as default)
@@ -66,17 +79,20 @@ export async function updateTestimonialAction(formData: FormData) {
   }
 
   let success = false
+  let errorMsg = ''
   try {
     await updateTestimonial(id, testimonial)
     success = true
-  } catch (error) {
-    console.error('Error updating testimonial:', error)
+  } catch (error: unknown) {
+    const err = error as { message?: string; code?: string }
+    errorMsg = err?.message || err?.code || 'Unknown error'
+    console.error('Error updating testimonial:', errorMsg, error)
   }
 
   revalidatePath('/dashboard/testimonials')
   if (success) {
     redirect('/dashboard/testimonials?success=testimonial_updated')
   } else {
-    redirect('/dashboard/testimonials?error=update_failed')
+    redirect(`/dashboard/testimonials?error=update_failed&msg=${encodeURIComponent(errorMsg)}`)
   }
 }

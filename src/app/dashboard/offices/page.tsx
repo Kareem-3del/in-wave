@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -22,37 +23,47 @@ async function handleDelete(formData: FormData) {
   revalidatePath('/dashboard/offices')
 }
 
+// Helper to get form field value with or without prefix
+function getField(formData: FormData, name: string): string {
+  // Try without prefix first
+  let value = formData.get(name) as string
+  if (value) return value
+  // Try with common prefixes
+  for (const prefix of ['1_', '2_', '0_']) {
+    value = formData.get(`${prefix}${name}`) as string
+    if (value) return value
+  }
+  return ''
+}
+
 async function handleCreate(formData: FormData) {
   'use server'
-  const city_en = formData.get('city_en') as string
-  const city_ar = formData.get('city_ar') as string
-  const country_en = formData.get('country_en') as string
-  const country_ar = formData.get('country_ar') as string
-  const phone = formData.get('phone') as string
+  const city = getField(formData, 'city_en') || getField(formData, 'city')
+  const country = getField(formData, 'country_en') || getField(formData, 'country')
+  const phone = getField(formData, 'phone')
+  const email = getField(formData, 'email')
+  const display_order = getField(formData, 'display_order')
 
-  if (!city_en || !country_en || !phone) {
+  if (!city || !country || !phone) {
     redirect('/dashboard/offices?error=missing_fields')
   }
 
   const supabase = await createClient()
+  // Only insert fields that exist in the database
   const { error } = await supabase.from('offices').insert({
-    city: city_en,
-    city_en,
-    city_ar: city_ar || null,
-    country: country_en,
-    country_en,
-    country_ar: country_ar || null,
+    city,
+    country,
     phone,
     phone_href: `tel:${phone.replace(/\s/g, '')}`,
-    email: formData.get('email') as string || null,
-    email_href: formData.get('email') ? `mailto:${formData.get('email')}` : null,
-    display_order: parseInt(formData.get('display_order') as string) || 0,
+    email: email || null,
+    email_href: email ? `mailto:${email}` : null,
+    display_order: parseInt(display_order) || 0,
     is_active: true,
   })
 
   if (error) {
     console.error('Error creating office:', error)
-    redirect('/dashboard/offices?error=create_failed')
+    redirect(`/dashboard/offices?error=create_failed&msg=${encodeURIComponent(error.message)}`)
   }
 
   revalidatePath('/dashboard/offices')
@@ -68,7 +79,7 @@ async function handleUpdateOrder(formData: FormData) {
   revalidatePath('/dashboard/offices')
 }
 
-export default async function OfficesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+export default async function OfficesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const offices = await getAllOffices()
   const params = await searchParams
 
@@ -80,19 +91,13 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
 
       {/* Alert Messages */}
       {params.success === 'office_created' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Office created successfully!
-        </div>
+        <AlertMessage type="success" message="Office created successfully!" />
       )}
       {params.error === 'missing_fields' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Please fill in all required fields (City, Country, Phone)
-        </div>
+        <AlertMessage type="error" message="Please fill in all required fields (City, Country, Phone)" />
       )}
       {params.error === 'create_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to create office. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to create office: ${params.msg || 'Please try again.'}`} />
       )}
 
       <div className="card" style={{ marginBottom: 24 }}>
@@ -100,48 +105,23 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
         <form action={handleCreate}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
             <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇺🇸 City (English)</label>
+              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>City</label>
               <input
                 type="text"
-                name="city_en"
+                name="city"
                 className="form-input"
-                placeholder="City (English)"
+                placeholder="City name"
                 required
               />
             </div>
             <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇸🇦 المدينة (عربي)</label>
+              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>Country</label>
               <input
                 type="text"
-                name="city_ar"
+                name="country"
                 className="form-input"
-                placeholder="المدينة"
-                dir="rtl"
-                style={{ fontFamily: 'Cairo, sans-serif' }}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇺🇸 Country (English)</label>
-              <input
-                type="text"
-                name="country_en"
-                className="form-input"
-                placeholder="Country (English)"
+                placeholder="Country name"
                 required
-              />
-            </div>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇸🇦 البلد (عربي)</label>
-              <input
-                type="text"
-                name="country_ar"
-                className="form-input"
-                placeholder="البلد"
-                dir="rtl"
-                style={{ fontFamily: 'Cairo, sans-serif' }}
               />
             </div>
           </div>
@@ -181,10 +161,8 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
             <thead>
               <tr>
                 <th>Order</th>
-                <th>🇺🇸 City</th>
-                <th>🇸🇦 المدينة</th>
-                <th>🇺🇸 Country</th>
-                <th>🇸🇦 البلد</th>
+                <th>City</th>
+                <th>Country</th>
                 <th>Phone</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -208,10 +186,8 @@ export default async function OfficesPage({ searchParams }: { searchParams: Prom
                       </button>
                     </form>
                   </td>
-                  <td>{office.city_en || office.city}</td>
-                  <td style={{ direction: 'rtl' }}>{office.city_ar || '-'}</td>
-                  <td>{office.country_en || office.country}</td>
-                  <td style={{ direction: 'rtl' }}>{office.country_ar || '-'}</td>
+                  <td>{office.city}</td>
+                  <td>{office.country}</td>
                   <td>{office.phone}</td>
                   <td>
                     <ToggleActive

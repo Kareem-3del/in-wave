@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
 import { DuplicateOrderWarning } from '@/components/dashboard/DuplicateOrderWarning'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -23,37 +24,42 @@ async function handleDelete(formData: FormData) {
   revalidatePath('/dashboard/work-stages')
 }
 
+// Helper to get form field value with or without prefix
+function getField(formData: FormData, name: string): string {
+  let value = formData.get(name) as string
+  if (value) return value
+  for (const prefix of ['1_', '2_', '0_']) {
+    value = formData.get(`${prefix}${name}`) as string
+    if (value) return value
+  }
+  return ''
+}
+
 async function handleCreate(formData: FormData) {
   'use server'
-  const title_en = formData.get('title_en') as string
-  const title_ar = formData.get('title_ar') as string
-  const description_en = formData.get('description_en') as string
-  const description_ar = formData.get('description_ar') as string
-  const stage_number = formData.get('stage_number') as string
-  const display_order = parseInt(formData.get('display_order') as string) || 0
+  const title = getField(formData, 'title_en') || getField(formData, 'title')
+  const description = getField(formData, 'description_en') || getField(formData, 'description')
+  const stage_number = getField(formData, 'stage_number')
+  const display_order = parseInt(getField(formData, 'display_order')) || 0
 
   // Validate required fields
-  if (!title_en || !description_en || !stage_number) {
-    // Redirect with error
+  if (!title || !description || !stage_number) {
     redirect('/dashboard/work-stages?error=missing_fields')
   }
 
   const supabase = await createClient()
+  // Only use columns that exist in the database
   const { error } = await supabase.from('work_stages').insert({
     stage_number,
-    title: title_en,
-    title_en,
-    title_ar: title_ar || null,
-    description: description_en,
-    description_en,
-    description_ar: description_ar || null,
+    title,
+    description,
     display_order,
     is_active: true,
   })
 
   if (error) {
     console.error('Error creating stage:', error)
-    redirect('/dashboard/work-stages?error=create_failed')
+    redirect(`/dashboard/work-stages?error=create_failed&msg=${encodeURIComponent(error.message)}`)
   }
 
   revalidatePath('/dashboard/work-stages')
@@ -69,7 +75,7 @@ async function handleUpdateOrder(formData: FormData) {
   revalidatePath('/dashboard/work-stages')
 }
 
-export default async function WorkStagesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
+export default async function WorkStagesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const stages = await getAllWorkStages()
   const params = await searchParams
 
@@ -81,19 +87,13 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
 
       {/* Alert Messages */}
       {params.success === 'stage_created' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Stage created successfully!
-        </div>
+        <AlertMessage type="success" message="Stage created successfully!" />
       )}
       {params.error === 'missing_fields' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Please fill in all required fields (Stage #, Title, Description)
-        </div>
+        <AlertMessage type="error" message="Please fill in all required fields (Stage #, Title, Description)" />
       )}
       {params.error === 'create_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to create stage. Please try again.
-        </div>
+        <AlertMessage type="error" message={`Failed to create stage: ${params.msg || 'Please try again.'}`} />
       )}
 
       {/* Duplicate Order Warning */}
@@ -112,6 +112,14 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
               style={{ width: 100 }}
             />
             <input
+              type="text"
+              name="title"
+              className="form-input"
+              placeholder="Stage Title"
+              required
+              style={{ flex: 1 }}
+            />
+            <input
               type="number"
               name="display_order"
               className="form-input"
@@ -121,52 +129,14 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇺🇸 Title (English)</label>
-              <input
-                type="text"
-                name="title_en"
-                className="form-input"
-                placeholder="Stage Title (English)"
-                required
-              />
-            </div>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇸🇦 العنوان (عربي)</label>
-              <input
-                type="text"
-                name="title_ar"
-                className="form-input"
-                placeholder="عنوان المرحلة"
-                dir="rtl"
-                style={{ }}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇺🇸 Description (English)</label>
-              <textarea
-                name="description_en"
-                className="form-textarea"
-                placeholder="Stage description..."
-                required
-                rows={3}
-              />
-            </div>
-            <div>
-              <label className="form-label" style={{ fontSize: 12, marginBottom: 4, display: 'block' }}>🇸🇦 الوصف (عربي)</label>
-              <textarea
-                name="description_ar"
-                className="form-textarea"
-                placeholder="وصف المرحلة..."
-                dir="rtl"
-                rows={3}
-                style={{ }}
-              />
-            </div>
+          <div style={{ marginBottom: 12 }}>
+            <textarea
+              name="description"
+              className="form-textarea"
+              placeholder="Stage description..."
+              required
+              rows={3}
+            />
           </div>
 
           <button type="submit" className="btn btn-primary">Add Stage</button>
@@ -180,8 +150,7 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
               <tr>
                 <th>Order</th>
                 <th>Stage #</th>
-                <th>🇺🇸 Title</th>
-                <th>🇸🇦 العنوان</th>
+                <th>Title</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -205,8 +174,7 @@ export default async function WorkStagesPage({ searchParams }: { searchParams: P
                     </form>
                   </td>
                   <td>{stage.stage_number}</td>
-                  <td>{stage.title_en || stage.title}</td>
-                  <td style={{ direction: 'rtl' }}>{stage.title_ar || '-'}</td>
+                  <td>{stage.title}</td>
                   <td>
                     <ToggleActive
                       id={stage.id}
