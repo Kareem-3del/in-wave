@@ -7,6 +7,7 @@ import { HeroSlideForm } from './HeroSlideForm'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
 import { DuplicateOrderWarning } from '@/components/dashboard/DuplicateOrderWarning'
+import { AlertMessage } from '@/components/dashboard/AlertMessage'
 
 async function handleToggle(formData: FormData) {
   'use server'
@@ -91,29 +92,19 @@ export default async function HeroSlidesPage({ searchParams }: { searchParams: P
 
       {/* Alert Messages */}
       {params.success === 'slide_created' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Hero slide created successfully!
-        </div>
+        <AlertMessage type="success" message="Hero slide created successfully!" />
       )}
       {params.success === 'slide_updated' && (
-        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✓</span> Hero slide updated successfully!
-        </div>
+        <AlertMessage type="success" message="Hero slide updated successfully!" />
       )}
       {params.error === 'missing_image' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Please upload an image first.
-        </div>
+        <AlertMessage type="error" message="Please upload an image first." />
       )}
       {params.error === 'create_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to create slide. Please try again.
-        </div>
+        <AlertMessage type="error" message="Failed to create slide. Please try again." />
       )}
       {params.error === 'update_failed' && (
-        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontWeight: 700 }}>✕</span> Failed to update slide. Please try again.
-        </div>
+        <AlertMessage type="error" message="Failed to update slide. Please try again." />
       )}
 
       {/* Duplicate Order Warning */}

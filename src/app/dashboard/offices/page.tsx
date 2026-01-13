@@ -1,5 +1,6 @@
 import { getAllOffices } from '@/lib/data/offices'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { DeleteButton } from '@/components/dashboard/DeleteButton'
 import { ToggleActive } from '@/components/dashboard/ToggleActive'
@@ -29,8 +30,12 @@ async function handleCreate(formData: FormData) {
   const country_ar = formData.get('country_ar') as string
   const phone = formData.get('phone') as string
 
+  if (!city_en || !country_en || !phone) {
+    redirect('/dashboard/offices?error=missing_fields')
+  }
+
   const supabase = await createClient()
-  await supabase.from('offices').insert({
+  const { error } = await supabase.from('offices').insert({
     city: city_en,
     city_en,
     city_ar: city_ar || null,
@@ -44,17 +49,51 @@ async function handleCreate(formData: FormData) {
     display_order: parseInt(formData.get('display_order') as string) || 0,
     is_active: true,
   })
+
+  if (error) {
+    console.error('Error creating office:', error)
+    redirect('/dashboard/offices?error=create_failed')
+  }
+
+  revalidatePath('/dashboard/offices')
+  redirect('/dashboard/offices?success=office_created')
+}
+
+async function handleUpdateOrder(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  const display_order = parseInt(formData.get('display_order') as string) || 0
+  const supabase = await createClient()
+  await supabase.from('offices').update({ display_order }).eq('id', id)
   revalidatePath('/dashboard/offices')
 }
 
-export default async function OfficesPage() {
+export default async function OfficesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {
   const offices = await getAllOffices()
+  const params = await searchParams
 
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Office Locations</h1>
       </div>
+
+      {/* Alert Messages */}
+      {params.success === 'office_created' && (
+        <div style={{ padding: '12px 16px', background: '#dcfce7', border: '1px solid #16a34a', borderRadius: 8, marginBottom: 16, color: '#166534', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>✓</span> Office created successfully!
+        </div>
+      )}
+      {params.error === 'missing_fields' && (
+        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>✕</span> Please fill in all required fields (City, Country, Phone)
+        </div>
+      )}
+      {params.error === 'create_failed' && (
+        <div style={{ padding: '12px 16px', background: '#fee2e2', border: '1px solid #dc2626', borderRadius: 8, marginBottom: 16, color: '#991b1b', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700 }}>✕</span> Failed to create office. Please try again.
+        </div>
+      )}
 
       <div className="card" style={{ marginBottom: 24 }}>
         <h3 className="card-title" style={{ marginBottom: 16 }}>Add New Office</h3>
@@ -154,11 +193,25 @@ export default async function OfficesPage() {
             <tbody>
               {offices.map((office) => (
                 <tr key={office.id}>
-                  <td>{office.display_order}</td>
+                  <td>
+                    <form action={handleUpdateOrder} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <input type="hidden" name="id" value={office.id} />
+                      <input
+                        type="number"
+                        name="display_order"
+                        defaultValue={office.display_order}
+                        style={{ width: 50, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 13 }}
+                        min={0}
+                      />
+                      <button type="submit" style={{ padding: '4px 8px', background: '#f3f4f6', border: '1px solid #ddd', borderRadius: 4, cursor: 'pointer', fontSize: 11 }}>
+                        Save
+                      </button>
+                    </form>
+                  </td>
                   <td>{office.city_en || office.city}</td>
-                  <td style={{ fontFamily: 'Cairo, sans-serif', direction: 'rtl' }}>{office.city_ar || '-'}</td>
+                  <td style={{ direction: 'rtl' }}>{office.city_ar || '-'}</td>
                   <td>{office.country_en || office.country}</td>
-                  <td style={{ fontFamily: 'Cairo, sans-serif', direction: 'rtl' }}>{office.country_ar || '-'}</td>
+                  <td style={{ direction: 'rtl' }}>{office.country_ar || '-'}</td>
                   <td>{office.phone}</td>
                   <td>
                     <ToggleActive

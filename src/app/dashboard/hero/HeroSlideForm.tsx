@@ -13,6 +13,7 @@ interface HeroSlideFormProps {
 export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFormProps) {
   const [imageUrl, setImageUrl] = useState(slide?.image_url || '')
   const [submitting, setSubmitting] = useState(false)
+  const [isActive, setIsActive] = useState(slide?.is_active ?? true)
 
   const isEdit = !!slide
 
@@ -25,6 +26,12 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
     formData.set('image_url', imageUrl)
     if (slide) {
       formData.set('id', slide.id)
+    }
+    // Set is_active based on state
+    if (isActive) {
+      formData.set('is_active', 'on')
+    } else {
+      formData.delete('is_active')
     }
     await onSubmit(formData)
     if (!isEdit) {
@@ -74,13 +81,24 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
         {isEdit && (
           <div>
             <label className="form-label">Status</label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
               <input
                 type="checkbox"
-                name="is_active"
-                defaultChecked={slide?.is_active}
+                name="is_active_checkbox"
+                checked={isActive}
+                onChange={(e) => setIsActive(e.target.checked)}
+                style={{ width: 18, height: 18, cursor: 'pointer' }}
               />
-              Active (visible on website)
+              <span style={{
+                padding: '4px 10px',
+                borderRadius: 4,
+                fontSize: 13,
+                fontWeight: 500,
+                background: isActive ? '#dcfce7' : '#f3f4f6',
+                color: isActive ? '#16a34a' : '#6b7280'
+              }}>
+                {isActive ? 'Active' : 'Hidden'}
+              </span>
             </label>
           </div>
         )}

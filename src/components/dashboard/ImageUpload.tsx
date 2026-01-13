@@ -263,19 +263,25 @@ export function ImageUpload({
             setPreview(null)
             setUploadedUrl('')
             setImageInfo(null)
+            onUpload?.('')
             if (inputRef.current) inputRef.current.value = ''
           }}
           style={{
             marginTop: 8,
-            padding: '4px 12px',
-            fontSize: 12,
-            background: '#f5f5f5',
-            border: '1px solid #ddd',
-            borderRadius: 4,
+            padding: '6px 14px',
+            fontSize: 13,
+            fontWeight: 500,
+            background: '#ef4444',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 6,
             cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
           }}
         >
-          Remove
+          🗑 Remove Image
         </button>
       )}
     </div>
