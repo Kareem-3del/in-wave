@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import type { Testimonial } from '@/lib/types/database'
 import { BilingualInput } from './BilingualInput'
+import { ImageUpload } from './ImageUpload'
 
 interface TestimonialFormProps {
   testimonial?: Testimonial
@@ -10,9 +12,29 @@ interface TestimonialFormProps {
 }
 
 export function TestimonialForm({ testimonial, action }: TestimonialFormProps) {
+  const [imageUrl, setImageUrl] = useState(testimonial?.image_url || '')
+
+  const handleSubmit = async (formData: FormData) => {
+    if (imageUrl) {
+      formData.set('image_url', imageUrl)
+    }
+    await action(formData)
+  }
+
   return (
-    <form action={action}>
+    <form action={handleSubmit}>
       {testimonial && <input type="hidden" name="id" value={testimonial.id} />}
+
+      <div className="form-group">
+        <label className="form-label">Customer Photo (Optional)</label>
+        <ImageUpload
+          name="image_url"
+          currentUrl={testimonial?.image_url || undefined}
+          bucket="images"
+          onUpload={setImageUrl}
+        />
+        <p className="form-hint">Square image recommended (e.g., 200x200)</p>
+      </div>
 
       <BilingualInput
         name="name"

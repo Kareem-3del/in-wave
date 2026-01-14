@@ -15,11 +15,13 @@ export async function createTestimonialAction(formData: FormData) {
   }
 
   const supabase = await createClient()
+  const image_url = formData.get('image_url') as string || null
 
   // Only use columns that exist in the database
   const { error } = await supabase.from('testimonials').insert({
     name,
     text,
+    image_url,
     rating: parseInt(formData.get('rating') as string) || 5,
     display_order: parseInt(formData.get('display_order') as string) || 0,
     is_active: formData.get('is_active') === 'on',
@@ -49,11 +51,13 @@ export async function updateTestimonialAction(formData: FormData) {
   }
 
   const supabase = await createClient()
+  const image_url = formData.get('image_url') as string || null
 
   // Only use columns that exist in the database
   const { error } = await supabase.from('testimonials').update({
     name,
     text,
+    image_url,
     rating: parseInt(formData.get('rating') as string) || 5,
     display_order: parseInt(formData.get('display_order') as string) || 0,
     is_active: formData.get('is_active') === 'on',

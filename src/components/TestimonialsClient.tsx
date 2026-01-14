@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import Image from 'next/image';
 import type { Locale } from '@/lib/types/database';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -14,6 +15,7 @@ interface Testimonial {
   name: string;
   rating: number;
   text: string;
+  image_url?: string | null;
   // Bilingual fields
   name_en?: string | null;
   name_ar?: string | null;
@@ -58,10 +60,11 @@ function StarRating({ count }: { count: number }) {
   );
 }
 
-function TestimonialCard({ name, rating, text, readMoreText, hideText }: {
+function TestimonialCard({ name, rating, text, imageUrl, readMoreText, hideText }: {
   name: string;
   rating: number;
   text: string;
+  imageUrl?: string | null;
   readMoreText: string;
   hideText: string;
 }) {
@@ -71,7 +74,17 @@ function TestimonialCard({ name, rating, text, readMoreText, hideText }: {
   return (
     <div className="slide-block">
       <div className="slide-block-title">{name}</div>
-      <div className="slide-block-img"></div>
+      <div className="slide-block-img">
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt={name}
+            width={80}
+            height={80}
+            style={{ objectFit: 'cover', borderRadius: '50%' }}
+          />
+        )}
+      </div>
       <div className="slide-block-cont">
         <p>
           {expanded ? text : shortText}
@@ -131,6 +144,7 @@ export function TestimonialsClient({ testimonials }: TestimonialsClientProps) {
                         name={getLocalizedValue(testimonial, 'name', locale)}
                         rating={testimonial.rating}
                         text={getLocalizedValue(testimonial, 'text', locale)}
+                        imageUrl={testimonial.image_url}
                         readMoreText={tCommon('readMore')}
                         hideText={tCommon('hide')}
                       />

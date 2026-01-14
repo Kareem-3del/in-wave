@@ -83,6 +83,7 @@ export interface Database {
           name: string
           rating: number
           text: string
+          image_url: string | null
           display_order: number
           is_active: boolean
           created_at: string
@@ -98,6 +99,7 @@ export interface Database {
           name: string
           rating: number
           text: string
+          image_url?: string | null
           display_order?: number
           is_active?: boolean
           created_at?: string
@@ -113,6 +115,7 @@ export interface Database {
           name?: string
           rating?: number
           text?: string
+          image_url?: string | null
           display_order?: number
           is_active?: boolean
           created_at?: string
