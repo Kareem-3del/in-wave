@@ -104,8 +104,8 @@ export default async function Footer() {
                 </li>
               ))} */}
               <li >
-                <a href="mailto:office@nkeyarchitects.com">
-                  office@nkeyarchitects.com
+                <a href="mailto:Info@innowave-me.com">
+                  Info@innowave-me.com
                 </a>
               </li>
 

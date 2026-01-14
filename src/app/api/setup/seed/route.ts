@@ -88,7 +88,7 @@ export async function POST() {
 
     // Seed Offices
     const { error: oErr } = await supabase.from('offices').insert([
-      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'office@in-wavearchitects.com', email_href: 'mailto:office@in-wavearchitects.com', display_order: 0 },
+      { city: 'Dubai', country: 'UAE', phone: '+971 5018 77644', phone_href: 'tel:+971501877644', email: 'Info@innowave-me.com', email_href: 'mailto:Info@innowave-me.com', display_order: 0 },
       { city: 'Los Angeles', country: 'USA', phone: '+1 954 271-5832', phone_href: 'tel:+19542715832', display_order: 1 },
       { city: 'Kyiv', country: 'Ukraine', phone: '+380 98 080 77 07', phone_href: 'tel:+380980807707', display_order: 2 },
       { city: 'Montreal', country: 'Canada', phone: '+1 4384053284', phone_href: 'tel:+14384053284', display_order: 3 },
