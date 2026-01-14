@@ -25,18 +25,29 @@ export async function createProjectAction(formData: FormData) {
     images = imagesRaw ? imagesRaw.split('\n').filter(Boolean) : []
   }
 
-  // Get fields (try bilingual names first, fall back to simple names)
-  const title_italic = getField(formData, 'title_italic_en') || getField(formData, 'title_italic')
-  const title_regular = getField(formData, 'title_regular_en') || getField(formData, 'title_regular')
-  const location = getField(formData, 'location_en') || getField(formData, 'location')
+  // Get bilingual fields
+  const title_italic_en = getField(formData, 'title_italic_en') || getField(formData, 'title_italic')
+  const title_italic_ar = getField(formData, 'title_italic_ar') || null
+  const title_regular_en = getField(formData, 'title_regular_en') || getField(formData, 'title_regular')
+  const title_regular_ar = getField(formData, 'title_regular_ar') || null
+  const location_en = getField(formData, 'location_en') || getField(formData, 'location')
+  const location_ar = getField(formData, 'location_ar') || null
 
-  // Only use columns that exist in the database
   const project: ProjectInsert = {
     type: parseInt(getField(formData, 'type')) || 1,
     images,
-    title_italic,
-    title_regular,
-    location,
+    // Base fields (required by DB)
+    title_italic: title_italic_en,
+    title_regular: title_regular_en,
+    location: location_en,
+    // Bilingual fields
+    title_italic_en,
+    title_italic_ar,
+    title_regular_en,
+    title_regular_ar,
+    location_en,
+    location_ar,
+    // Other fields
     year: getField(formData, 'year'),
     href: getField(formData, 'href'),
     show_marquee: getField(formData, 'show_marquee') === 'on',
@@ -56,6 +67,8 @@ export async function createProjectAction(formData: FormData) {
   }
 
   revalidatePath('/dashboard/projects')
+  revalidatePath('/portfolio')
+  revalidatePath('/')
   if (success) {
     redirect('/dashboard/projects?success=project_created')
   } else {
@@ -73,18 +86,29 @@ export async function updateProjectAction(formData: FormData) {
     images = imagesRaw ? imagesRaw.split('\n').filter(Boolean) : []
   }
 
-  // Get fields (try bilingual names first, fall back to simple names)
-  const title_italic = getField(formData, 'title_italic_en') || getField(formData, 'title_italic')
-  const title_regular = getField(formData, 'title_regular_en') || getField(formData, 'title_regular')
-  const location = getField(formData, 'location_en') || getField(formData, 'location')
+  // Get bilingual fields
+  const title_italic_en = getField(formData, 'title_italic_en') || getField(formData, 'title_italic')
+  const title_italic_ar = getField(formData, 'title_italic_ar') || null
+  const title_regular_en = getField(formData, 'title_regular_en') || getField(formData, 'title_regular')
+  const title_regular_ar = getField(formData, 'title_regular_ar') || null
+  const location_en = getField(formData, 'location_en') || getField(formData, 'location')
+  const location_ar = getField(formData, 'location_ar') || null
 
-  // Only use columns that exist in the database
   const project: ProjectUpdate = {
     type: parseInt(getField(formData, 'type')) || 1,
     images,
-    title_italic,
-    title_regular,
-    location,
+    // Base fields (required by DB)
+    title_italic: title_italic_en,
+    title_regular: title_regular_en,
+    location: location_en,
+    // Bilingual fields
+    title_italic_en,
+    title_italic_ar,
+    title_regular_en,
+    title_regular_ar,
+    location_en,
+    location_ar,
+    // Other fields
     year: getField(formData, 'year'),
     href: getField(formData, 'href'),
     show_marquee: getField(formData, 'show_marquee') === 'on',
@@ -104,6 +128,8 @@ export async function updateProjectAction(formData: FormData) {
   }
 
   revalidatePath('/dashboard/projects')
+  revalidatePath('/portfolio')
+  revalidatePath('/')
   if (success) {
     redirect('/dashboard/projects?success=project_updated')
   } else {

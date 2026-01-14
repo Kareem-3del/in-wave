@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import Preloader from '@/components/Preloader';
 import FixedButtons from '@/components/FixedButtons';
 import SmoothScroll from '@/components/SmoothScroll';
+import { getTeamInfo } from '@/lib/data/team-info';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -20,6 +21,8 @@ type Props = {
 export default async function Home({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const teamInfo = await getTeamInfo();
 
   return (
     <>
@@ -33,7 +36,7 @@ export default async function Home({ params }: Props) {
           <Gallery />
           <Quote />
           <WorkStages />
-          <HomeOwners />
+          <HomeOwners teamInfo={teamInfo} locale={locale as 'en' | 'ar'} />
           <MapSection />
           <Testimonials />
           <ContactForm />

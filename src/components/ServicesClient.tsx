@@ -197,13 +197,17 @@ function ServicesHero() {
 
 // Service Card Component with 3D Tilt
 function ServiceCard({
-  title,
-  description,
+  titleEn,
+  titleAr,
+  descriptionEn,
+  descriptionAr,
   icon,
   index,
 }: {
-  title: string;
-  description: string;
+  titleEn: string;
+  titleAr: string;
+  descriptionEn: string;
+  descriptionAr: string;
   icon: string;
   index: number;
 }) {
@@ -288,8 +292,14 @@ function ServiceCard({
         <div className="service-card__icon" ref={iconRef}>
           <Icon icon={icon} width={48} height={48} />
         </div>
-        <h3 className="service-card__title">{title}</h3>
-        <p className="service-card__desc">{description}</p>
+        <h3 className="service-card__title">
+          <span>{titleEn}</span>
+          {titleAr && <span className="service-card__title-ar">{titleAr}</span>}
+        </h3>
+        <p className="service-card__desc">
+          {descriptionEn}
+          {descriptionAr && <span className="service-card__desc-ar">{descriptionAr}</span>}
+        </p>
         <span className="service-card__link">
           {t('learnMore')}
           <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
@@ -312,14 +322,18 @@ function ServicesGrid({ services, locale }: { services?: Service[]; locale?: 'en
   const displayServices = services && services.length > 0
     ? services.map((service) => ({
         id: service.id,
-        title: locale === 'ar' ? (service.name_ar || service.name_en || service.name) : (service.name_en || service.name),
-        description: locale === 'ar' ? (service.description_ar || service.description_en || '') : (service.description_en || ''),
+        titleEn: service.name_en || service.name,
+        titleAr: service.name_ar || '',
+        descriptionEn: service.description_en || '',
+        descriptionAr: service.description_ar || '',
         icon: service.icon || 'mdi:home-city-outline',
       }))
     : fallbackServices.map((service) => ({
         id: service.key,
-        title: t(service.key),
-        description: t(`${service.key}Desc`),
+        titleEn: t(service.key),
+        titleAr: '',
+        descriptionEn: t(`${service.key}Desc`),
+        descriptionAr: '',
         icon: service.icon,
       }));
 
@@ -333,8 +347,10 @@ function ServicesGrid({ services, locale }: { services?: Service[]; locale?: 'en
           {displayServices.map((service, index) => (
             <ServiceCard
               key={service.id}
-              title={service.title}
-              description={service.description}
+              titleEn={service.titleEn}
+              titleAr={service.titleAr}
+              descriptionEn={service.descriptionEn}
+              descriptionAr={service.descriptionAr}
               icon={service.icon}
               index={index}
             />

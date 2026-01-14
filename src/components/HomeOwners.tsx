@@ -8,14 +8,31 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Atropos from 'atropos/react';
 import 'atropos/css';
 import { SimpleMarquee } from './Marquee';
+import type { TeamInfo } from '@/lib/types/database';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function HomeOwners() {
+interface HomeOwnersProps {
+  teamInfo?: TeamInfo | null;
+  locale?: 'en' | 'ar';
+}
+
+export default function HomeOwners({ teamInfo, locale = 'en' }: HomeOwnersProps) {
   const t = useTranslations('about');
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Get localized content from database or fallback to translations
+  const titleLines = teamInfo
+    ? (locale === 'ar' && teamInfo.title_lines_ar?.length ? teamInfo.title_lines_ar : teamInfo.title_lines_en || teamInfo.title_lines)
+    : null;
+
+  const descParagraphs = teamInfo
+    ? (locale === 'ar' && teamInfo.description_paragraphs_ar?.length ? teamInfo.description_paragraphs_ar : teamInfo.description_paragraphs_en || teamInfo.description_paragraphs)
+    : null;
+
+  const imageUrl = teamInfo?.image_url || '/images/img_7397-1-683x1024.jpg.webp';
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -69,21 +86,39 @@ export default function HomeOwners() {
         <div className="home-owners">
           <div className="home-owners__info">
             <span className="title">
-              <span className="title__item">
-                <span><i>{t('title1Italic')} </i></span>
-              </span>
-              <span className="title__item">
-                <span>{t('title2')} </span>
-              </span>
-              <span className="title__item">
-                <span><i>{t('title3Italic')}</i></span>
-              </span>
+              {titleLines && titleLines.length > 0 ? (
+                titleLines.map((line, index) => (
+                  <span key={index} className="title__item">
+                    <span>{index % 2 === 0 ? <i>{line} </i> : <>{line} </>}</span>
+                  </span>
+                ))
+              ) : (
+                <>
+                  <span className="title__item">
+                    <span><i>{t('title1Italic')} </i></span>
+                  </span>
+                  <span className="title__item">
+                    <span>{t('title2')} </span>
+                  </span>
+                  <span className="title__item">
+                    <span><i>{t('title3Italic')}</i></span>
+                  </span>
+                </>
+              )}
             </span>
 
             <div className="home-owners__desc">
-              <p>{t('desc1')}</p>
-              <p>{t('desc2')}</p>
-              <p>{t('desc3')}</p>
+              {descParagraphs && descParagraphs.length > 0 ? (
+                descParagraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))
+              ) : (
+                <>
+                  <p>{t('desc1')}</p>
+                  <p>{t('desc2')}</p>
+                  <p>{t('desc3')}</p>
+                </>
+              )}
             </div>
           </div>
           <div className="home-owners__photo">
@@ -97,7 +132,7 @@ export default function HomeOwners() {
               rotateTouch="scroll-y"
             >
               <Image
-                src="/images/img_7397-1-683x1024.jpg.webp"
+                src={imageUrl}
                 alt="IN-WAVE Architects Team"
                 width={683}
                 height={1024}

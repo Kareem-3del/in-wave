@@ -85,7 +85,7 @@ export function ProjectForm({ project, action }: ProjectFormProps) {
       </div>
 
       <div className="form-group">
-        <label className="form-label">Layout Type</label>
+        <label className="form-label">Project Category</label>
         <select
           name="type"
           className="form-select"
@@ -100,11 +100,11 @@ export function ProjectForm({ project, action }: ProjectFormProps) {
             }
           }}
         >
-          <option value={1}>Type 1 - Single image (1 image max)</option>
-          <option value={2}>Type 2 - Two images, stacked (2 images max)</option>
-          <option value={3}>Type 3 - Two images, side by side (2 images max)</option>
+          <option value={1}>Residential (1 image max)</option>
+          <option value={2}>Commercial (2 images max)</option>
+          <option value={3}>Interior Design (2 images max)</option>
         </select>
-        <p className="form-hint">Determines how images are displayed in the gallery</p>
+        <p className="form-hint">This category is shown on the project detail page and used to find related projects</p>
       </div>
 
       <div className="form-group">
