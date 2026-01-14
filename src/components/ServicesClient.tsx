@@ -7,13 +7,14 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SimpleMarquee } from '@/components/Marquee';
+import type { Service } from '@/lib/types/database';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Services data
-const services = [
+// Fallback services data if database is empty
+const fallbackServices = [
   { key: 'architecturalDesign', icon: 'mdi:home-city-outline' },
   { key: 'interiorDesign', icon: 'mdi:sofa-outline' },
   { key: 'visualization', icon: 'mdi:cube-scan' },
@@ -21,6 +22,11 @@ const services = [
   { key: 'consultation', icon: 'mdi:comment-question-outline' },
   { key: 'landscaping', icon: 'mdi:tree-outline' },
 ];
+
+interface ServicesClientProps {
+  services?: Service[];
+  locale?: 'en' | 'ar';
+}
 
 // Process steps data
 const processSteps = [
@@ -163,7 +169,7 @@ function ServicesHero() {
       </div>
 
       {/* Floating service icons */}
-      {services.map((service, i) => (
+      {fallbackServices.map((service, i) => (
         <div
           key={service.key}
           className="services-hero__float-icon"
@@ -202,7 +208,7 @@ function ServiceCard({
   index: number;
 }) {
   const t = useTranslations('services');
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -240,7 +246,7 @@ function ServiceCard({
   }, [index]);
 
   // 3D tilt effect on hover
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -269,12 +275,13 @@ function ServiceCard({
   };
 
   return (
-    <div
+    <Link
+      href="/contacts"
       className="service-card-wrapper"
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ perspective: '1000px' }}
+      style={{ perspective: '1000px', textDecoration: 'none' }}
     >
       <div className="service-card">
         <div className="service-card__glow"></div>
@@ -293,13 +300,28 @@ function ServiceCard({
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
 
 // Services Grid Section
-function ServicesGrid() {
+function ServicesGrid({ services, locale }: { services?: Service[]; locale?: 'en' | 'ar' }) {
   const t = useTranslations('services');
+
+  // Use database services if available, otherwise fallback to translation keys
+  const displayServices = services && services.length > 0
+    ? services.map((service) => ({
+        id: service.id,
+        title: locale === 'ar' ? (service.name_ar || service.name_en || service.name) : (service.name_en || service.name),
+        description: locale === 'ar' ? (service.description_ar || service.description_en || '') : (service.description_en || ''),
+        icon: service.icon || 'mdi:home-city-outline',
+      }))
+    : fallbackServices.map((service) => ({
+        id: service.key,
+        title: t(service.key),
+        description: t(`${service.key}Desc`),
+        icon: service.icon,
+      }));
 
   return (
     <section className="section services-grid-section">
@@ -308,11 +330,11 @@ function ServicesGrid() {
           <span className="services-grid__label">{t('sectionLabel')}</span>
         </div>
         <div className="services-grid">
-          {services.map((service, index) => (
+          {displayServices.map((service, index) => (
             <ServiceCard
-              key={service.key}
-              title={t(service.key)}
-              description={t(`${service.key}Desc`)}
+              key={service.id}
+              title={service.title}
+              description={service.description}
               icon={service.icon}
               index={index}
             />
@@ -520,11 +542,11 @@ function CTASection() {
 }
 
 // Main ServicesClient Component
-export function ServicesClient() {
+export function ServicesClient({ services, locale }: ServicesClientProps) {
   return (
     <div className="services-page-content">
       <ServicesHero />
-      <ServicesGrid />
+      <ServicesGrid services={services} locale={locale} />
       <ProcessSection />
       <MarqueeSection />
       <CTASection />

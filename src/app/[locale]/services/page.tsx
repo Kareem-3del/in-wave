@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
 import { ServicesClient } from '@/components/ServicesClient';
+import { getServices } from '@/lib/data/services';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -23,13 +24,15 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const services = await getServices();
+
   return (
     <>
       <SmoothScroll />
       <main className="services-page wp-singular page-template page wp-theme-nk">
         <Header />
         <div className="main-wrap">
-          <ServicesClient />
+          <ServicesClient services={services} locale={locale as 'en' | 'ar'} />
           <Footer />
         </div>
       </main>

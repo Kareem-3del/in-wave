@@ -225,6 +225,7 @@ export interface Database {
         Row: {
           id: string
           name: string
+          icon: string | null
           display_order: number
           is_active: boolean
           created_at: string
@@ -232,10 +233,13 @@ export interface Database {
           // Bilingual fields
           name_en: string | null
           name_ar: string | null
+          description_en: string | null
+          description_ar: string | null
         }
         Insert: {
           id?: string
           name: string
+          icon?: string | null
           display_order?: number
           is_active?: boolean
           created_at?: string
@@ -243,10 +247,13 @@ export interface Database {
           // Bilingual fields
           name_en?: string | null
           name_ar?: string | null
+          description_en?: string | null
+          description_ar?: string | null
         }
         Update: {
           id?: string
           name?: string
+          icon?: string | null
           display_order?: number
           is_active?: boolean
           created_at?: string
@@ -254,6 +261,8 @@ export interface Database {
           // Bilingual fields
           name_en?: string | null
           name_ar?: string | null
+          description_en?: string | null
+          description_ar?: string | null
         }
       }
       work_stages: {

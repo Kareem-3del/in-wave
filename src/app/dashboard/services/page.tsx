@@ -2,9 +2,8 @@ import { getAllServices } from '@/lib/data/services'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { DeleteButton } from '@/components/dashboard/DeleteButton'
-import { ToggleActive } from '@/components/dashboard/ToggleActive'
 import { AlertMessage } from '@/components/dashboard/AlertMessage'
+import { ServiceForm } from './ServiceForm'
 
 // Helper to get form field value with or without prefix
 function getField(formData: FormData, name: string): string {
@@ -40,6 +39,9 @@ async function handleCreate(formData: FormData) {
   'use server'
   const name_en = getField(formData, 'name_en') || getField(formData, 'name')
   const name_ar = getField(formData, 'name_ar') || null
+  const description_en = getField(formData, 'description_en') || null
+  const description_ar = getField(formData, 'description_ar') || null
+  const icon = getField(formData, 'icon') || null
   const display_order = getField(formData, 'display_order')
 
   if (!name_en) {
@@ -51,6 +53,9 @@ async function handleCreate(formData: FormData) {
     name: name_en,
     name_en,
     name_ar,
+    description_en,
+    description_ar,
+    icon,
     display_order: parseInt(display_order) || 0,
     is_active: true,
   })
@@ -62,6 +67,7 @@ async function handleCreate(formData: FormData) {
 
   revalidatePath('/dashboard/services')
   revalidatePath('/') // Refresh frontend
+  revalidatePath('/services') // Refresh services page
   redirect('/dashboard/services?success=service_created')
 }
 
@@ -70,6 +76,9 @@ async function handleUpdate(formData: FormData) {
   const id = formData.get('id') as string
   const name_en = getField(formData, 'name_en') || getField(formData, 'name')
   const name_ar = getField(formData, 'name_ar') || null
+  const description_en = getField(formData, 'description_en') || null
+  const description_ar = getField(formData, 'description_ar') || null
+  const icon = getField(formData, 'icon') || null
   const display_order = getField(formData, 'display_order')
 
   if (!name_en) {
@@ -81,6 +90,9 @@ async function handleUpdate(formData: FormData) {
     name: name_en,
     name_en,
     name_ar,
+    description_en,
+    description_ar,
+    icon,
     display_order: parseInt(display_order) || 0,
   }).eq('id', id)
 
@@ -91,6 +103,7 @@ async function handleUpdate(formData: FormData) {
 
   revalidatePath('/dashboard/services')
   revalidatePath('/') // Refresh frontend
+  revalidatePath('/services') // Refresh services page
   redirect('/dashboard/services?success=service_updated')
 }
 
@@ -117,100 +130,26 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
 
       <div className="card mb-6">
         <h3 className="card-title mb-4">Add New Service</h3>
-        <form action={handleCreate}>
-          <div className="service-form-row">
-            <div className="form-group" style={{ margin: 0 }}>
-              <label className="form-label">Name (English)</label>
-              <input
-                type="text"
-                name="name_en"
-                className="form-input"
-                placeholder="Service name in English"
-                required
-              />
-            </div>
-            <div className="form-group" style={{ margin: 0 }}>
-              <label className="form-label">Name (Arabic)</label>
-              <input
-                type="text"
-                name="name_ar"
-                className="form-input"
-                placeholder="اسم الخدمة بالعربية"
-                dir="rtl"
-              />
-            </div>
-            <div className="form-group" style={{ margin: 0, minWidth: '80px' }}>
-              <label className="form-label">Order</label>
-              <input
-                type="number"
-                name="display_order"
-                className="form-input"
-                placeholder="0"
-                defaultValue={services.length}
-              />
-            </div>
-            <div className="form-group" style={{ margin: 0, alignSelf: 'end' }}>
-              <button type="submit" className="btn btn-primary">Add</button>
-            </div>
-          </div>
-        </form>
-        <p className="form-hint mt-4">These services appear in the contact form dropdown</p>
+        <ServiceForm
+          isNew={true}
+          onSave={handleCreate}
+          defaultOrder={services.length}
+        />
+        <p className="form-hint mt-4">These services appear on the Services page and in the contact form dropdown</p>
       </div>
 
       <div className="card">
-        <h3 className="card-title mb-4">Manage Services</h3>
+        <h3 className="card-title mb-4">Manage Services ({services.length})</h3>
         {services.length > 0 ? (
           <div className="services-list">
             {services.map((service) => (
-              <form key={service.id} action={handleUpdate} className="service-item-form">
-                <input type="hidden" name="id" value={service.id} />
-                <div className="service-item-order">
-                  <label className="form-label-sm">Order</label>
-                  <input
-                    type="number"
-                    name="display_order"
-                    className="form-input"
-                    defaultValue={service.display_order}
-                  />
-                </div>
-                <div className="service-item-names">
-                  <div className="service-item-name">
-                    <label className="form-label-sm">English</label>
-                    <input
-                      type="text"
-                      name="name_en"
-                      className="form-input"
-                      defaultValue={service.name_en || service.name}
-                      placeholder="English name"
-                      required
-                    />
-                  </div>
-                  <div className="service-item-name">
-                    <label className="form-label-sm">Arabic</label>
-                    <input
-                      type="text"
-                      name="name_ar"
-                      className="form-input"
-                      defaultValue={service.name_ar || ''}
-                      placeholder="الاسم بالعربية"
-                      dir="rtl"
-                    />
-                  </div>
-                </div>
-                <div className="service-item-actions">
-                  <ToggleActive
-                    id={service.id}
-                    isActive={service.is_active}
-                    onToggle={handleToggle}
-                  />
-                  <button type="submit" className="btn btn-secondary btn-sm">Save</button>
-                  <DeleteButton
-                    id={service.id}
-                    onDelete={handleDelete}
-                    confirmMessage="Are you sure you want to delete this service?"
-                  />
-                </div>
-              </form>
+              <ServiceForm
+                key={service.id}
+                service={service}
+                onSave={handleUpdate}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+              />
             ))}
           </div>
         ) : (
@@ -224,7 +163,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
               </svg>
             </div>
             <div className="empty-state-title">No services yet</div>
-            <div className="empty-state-text">Add services that will appear in the contact form</div>
+            <div className="empty-state-text">Add services that will appear on the Services page</div>
           </div>
         )}
       </div>
