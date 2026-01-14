@@ -39,7 +39,7 @@ export function TeamInfoForm({ teamInfo, onSave }: TeamInfoFormProps) {
         <textarea
           name="title_lines"
           className="form-textarea"
-          defaultValue={teamInfo?.title_lines?.join('\n') || '8 years experience\nin combination with a\nperfect taste'}
+          defaultValue={teamInfo?.title_lines?.join('\n') || '10 years experience\nin combination with a\nperfect taste'}
           rows={4}
           placeholder="First line&#10;Second line&#10;Third line"
         />
@@ -65,7 +65,7 @@ export function TeamInfoForm({ teamInfo, onSave }: TeamInfoFormProps) {
             type="number"
             name="years_experience"
             className="form-input"
-            defaultValue={teamInfo?.years_experience || 8}
+            defaultValue={teamInfo?.years_experience || 10}
           />
         </div>
 

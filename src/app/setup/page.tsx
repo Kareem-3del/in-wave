@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS team_info (
   title_lines TEXT[] NOT NULL DEFAULT '{}',
   description_paragraphs TEXT[] NOT NULL DEFAULT '{}',
   image_url TEXT NOT NULL,
-  years_experience INTEGER DEFAULT 8,
+  years_experience INTEGER DEFAULT 10,
   projects_count INTEGER DEFAULT 90,
   countries_count INTEGER DEFAULT 10,
   created_at TIMESTAMPTZ DEFAULT NOW(),

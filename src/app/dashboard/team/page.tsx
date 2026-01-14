@@ -27,7 +27,7 @@ async function handleSave(formData: FormData) {
     title_lines: titleLinesRaw.split('\n').filter(Boolean),
     description_paragraphs: descParagraphsRaw.split('\n\n').filter(Boolean),
     image_url: getField(formData, 'image_url'),
-    years_experience: parseInt(getField(formData, 'years_experience')) || 8,
+    years_experience: parseInt(getField(formData, 'years_experience')) || 10,
     projects_count: parseInt(getField(formData, 'projects_count')) || 90,
     countries_count: parseInt(getField(formData, 'countries_count')) || 10,
   }

@@ -135,10 +135,10 @@ async function initDatabase() {
   // Seed Team Info
   console.log('Seeding team info...')
   const teamInfo = {
-    title_lines: ['8 years experience', 'in combination with a', 'perfect taste'],
+    title_lines: ['10 years experience', 'in combination with a', 'perfect taste'],
     description_paragraphs: ['Founded in 2016, IN-WAVE Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.', 'With over 90 projects completed across 10 countries, we bring a global perspective to every design while respecting local traditions and preferences.'],
     image_url: '/images/team-photo.jpg',
-    years_experience: 8,
+    years_experience: 10,
     projects_count: 90,
     countries_count: 10,
   }

@@ -59,10 +59,10 @@ INSERT INTO work_stages (stage_number, title, description, display_order, is_act
 -- Team Info
 INSERT INTO team_info (title_lines, description_paragraphs, image_url, years_experience, projects_count, countries_count) VALUES
 (
-  ARRAY['8 years experience', 'in combination with a', 'perfect taste'],
+  ARRAY['10 years experience', 'in combination with a', 'perfect taste'],
   ARRAY['Founded in 2016, IN-WAVE Architects has grown into a leading design studio specializing in luxury residential and commercial interiors. Our team combines years of experience with a passion for creating spaces that inspire.', 'With over 90 projects completed across 10 countries, we bring a global perspective to every design while respecting local traditions and preferences.'],
   '/images/team-photo.jpg',
-  8,
+  10,
   90,
   10
 );

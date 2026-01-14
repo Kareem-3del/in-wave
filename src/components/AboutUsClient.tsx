@@ -36,7 +36,7 @@ const coreValues = [
 
 // Stats data
 const stats = [
-  { value: '8', suffix: '+', labelKey: 'yearsExperience' },
+  { value: '10', suffix: '+', labelKey: 'yearsExperience' },
   { value: '90', suffix: '+', labelKey: 'projectsCompleted' },
   { value: '10', suffix: '+', labelKey: 'countriesServed' },
 ];

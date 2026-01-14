@@ -77,10 +77,10 @@ export async function GET() {
 
     // Seed Team Info
     const { error: tiErr } = await supabase.from('team_info').insert([{
-      title_lines: ['8 years experience', 'in combination with a', 'perfect taste'],
+      title_lines: ['10 years experience', 'in combination with a', 'perfect taste'],
       description_paragraphs: ['Founded in 2016, IN-WAVE Architects.'],
       image_url: '/images/team-photo.jpg',
-      years_experience: 8,
+      years_experience: 10,
       projects_count: 90,
       countries_count: 10,
     }])
