@@ -8647,12 +8647,25 @@ select:focus-visible {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 @media (min-width: 1024px) {
   .social-links-layout {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+.social-links-active,
+.social-links-available {
+  display: flex;
+  flex-direction: column;
+}
+
+.social-links-active .social-panel,
+.social-links-available .social-panel {
+  flex: 1;
+  min-height: 500px;
 }
 
 /* Panel Styles */
@@ -8700,7 +8713,6 @@ select:focus-visible {
   flex: 1;
   padding: 1.25rem;
   overflow-y: auto;
-  max-height: 500px;
 }
 
 .social-panel-footer {
