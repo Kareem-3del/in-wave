@@ -136,7 +136,7 @@ export default async function DashboardPage() {
           </span>
           <span>Add Project</span>
         </Link>
-        <Link href="/dashboard/hero/new" className="quick-action-btn">
+        <Link href="/dashboard/hero" className="quick-action-btn">
           <span className="quick-action-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <rect x="3" y="3" width="18" height="18" rx="2" />
