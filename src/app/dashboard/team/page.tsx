@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AlertMessage } from '@/components/dashboard/AlertMessage'
+import { TeamInfoForm } from './TeamInfoForm'
 
 // Helper to get form field value with or without prefix
 function getField(formData: FormData, name: string): string {
@@ -69,82 +70,7 @@ export default async function TeamInfoPage({ searchParams }: { searchParams: Pro
       )}
 
       <div className="card">
-        <form action={handleSave}>
-          {teamInfo && <input type="hidden" name="id" value={teamInfo.id} />}
-
-          <div className="form-group">
-            <label className="form-label">Title Lines (one per line)</label>
-            <textarea
-              name="title_lines"
-              className="form-textarea"
-              defaultValue={teamInfo?.title_lines?.join('\n') || '8 years experience\nin combination with a\nperfect taste'}
-              rows={4}
-              placeholder="First line&#10;Second line&#10;Third line"
-            />
-            <p className="form-hint">Each line appears on the About section</p>
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Description Paragraphs (separate with blank lines)</label>
-            <textarea
-              name="description_paragraphs"
-              className="form-textarea"
-              defaultValue={teamInfo?.description_paragraphs?.join('\n\n') || 'First paragraph here.\n\nSecond paragraph here.'}
-              rows={8}
-              placeholder="First paragraph&#10;&#10;Second paragraph"
-            />
-            <p className="form-hint">Separate paragraphs with blank lines</p>
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Team Image URL</label>
-            <input
-              type="text"
-              name="image_url"
-              className="form-input"
-              defaultValue={teamInfo?.image_url || '/images/team.jpg'}
-              placeholder="/images/team.jpg"
-            />
-          </div>
-
-          <div className="grid-3">
-            <div className="form-group">
-              <label className="form-label">Years Experience</label>
-              <input
-                type="number"
-                name="years_experience"
-                className="form-input"
-                defaultValue={teamInfo?.years_experience || 8}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Projects Count</label>
-              <input
-                type="number"
-                name="projects_count"
-                className="form-input"
-                defaultValue={teamInfo?.projects_count || 90}
-              />
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Countries Count</label>
-              <input
-                type="number"
-                name="countries_count"
-                className="form-input"
-                defaultValue={teamInfo?.countries_count || 10}
-              />
-            </div>
-          </div>
-
-          <div className="form-actions">
-            <button type="submit" className="btn btn-primary">
-              Save Changes
-            </button>
-          </div>
-        </form>
+        <TeamInfoForm teamInfo={teamInfo} onSave={handleSave} />
       </div>
     </div>
   )

@@ -118,7 +118,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
       <div className="card mb-6">
         <h3 className="card-title mb-4">Add New Service</h3>
         <form action={handleCreate}>
-          <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '12px', alignItems: 'end' }}>
+          <div className="service-form-row">
             <div className="form-group" style={{ margin: 0 }}>
               <label className="form-label">Name (English)</label>
               <input
@@ -139,7 +139,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
                 dir="rtl"
               />
             </div>
-            <div className="form-group" style={{ margin: 0 }}>
+            <div className="form-group" style={{ margin: 0, minWidth: '80px' }}>
               <label className="form-label">Order</label>
               <input
                 type="number"
@@ -147,10 +147,11 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
                 className="form-input"
                 placeholder="0"
                 defaultValue={services.length}
-                style={{ width: 80 }}
               />
             </div>
-            <button type="submit" className="btn btn-primary" style={{ height: 42 }}>Add</button>
+            <div className="form-group" style={{ margin: 0, alignSelf: 'end' }}>
+              <button type="submit" className="btn btn-primary">Add</button>
+            </div>
           </div>
         </form>
         <p className="form-hint mt-4">These services appear in the contact form dropdown</p>
@@ -161,46 +162,47 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
         {services.length > 0 ? (
           <div className="services-list">
             {services.map((service) => (
-              <form key={service.id} action={handleUpdate} className="service-item" style={{
-                padding: '16px',
-                borderBottom: '1px solid var(--border)',
-                display: 'grid',
-                gridTemplateColumns: '60px 1fr 1fr 100px 80px',
-                gap: '12px',
-                alignItems: 'center'
-              }}>
+              <form key={service.id} action={handleUpdate} className="service-item-form">
                 <input type="hidden" name="id" value={service.id} />
-                <input
-                  type="number"
-                  name="display_order"
-                  className="form-input"
-                  defaultValue={service.display_order}
-                  style={{ width: '60px', textAlign: 'center' }}
-                />
-                <input
-                  type="text"
-                  name="name_en"
-                  className="form-input"
-                  defaultValue={service.name_en || service.name}
-                  placeholder="English name"
-                  required
-                />
-                <input
-                  type="text"
-                  name="name_ar"
-                  className="form-input"
-                  defaultValue={service.name_ar || ''}
-                  placeholder="الاسم بالعربية"
-                  dir="rtl"
-                />
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div className="service-item-order">
+                  <label className="form-label-sm">Order</label>
+                  <input
+                    type="number"
+                    name="display_order"
+                    className="form-input"
+                    defaultValue={service.display_order}
+                  />
+                </div>
+                <div className="service-item-names">
+                  <div className="service-item-name">
+                    <label className="form-label-sm">English</label>
+                    <input
+                      type="text"
+                      name="name_en"
+                      className="form-input"
+                      defaultValue={service.name_en || service.name}
+                      placeholder="English name"
+                      required
+                    />
+                  </div>
+                  <div className="service-item-name">
+                    <label className="form-label-sm">Arabic</label>
+                    <input
+                      type="text"
+                      name="name_ar"
+                      className="form-input"
+                      defaultValue={service.name_ar || ''}
+                      placeholder="الاسم بالعربية"
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
+                <div className="service-item-actions">
                   <ToggleActive
                     id={service.id}
                     isActive={service.is_active}
                     onToggle={handleToggle}
                   />
-                </div>
-                <div style={{ display: 'flex', gap: '8px' }}>
                   <button type="submit" className="btn btn-secondary btn-sm">Save</button>
                   <DeleteButton
                     id={service.id}
