@@ -3,6 +3,45 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { SocialLinksManager } from './SocialLinksManager'
 
+// Platform categories for better organization
+export const PLATFORM_CATEGORIES = {
+  social: {
+    name: 'Social Networks',
+    icon: 'mdi:account-group',
+    platforms: ['facebook', 'instagram', 'twitter', 'linkedin', 'threads', 'snapchat']
+  },
+  media: {
+    name: 'Media & Content',
+    icon: 'mdi:play-circle',
+    platforms: ['youtube', 'tiktok', 'twitch', 'vimeo', 'spotify', 'soundcloud']
+  },
+  design: {
+    name: 'Design & Portfolio',
+    icon: 'mdi:palette',
+    platforms: ['behance', 'dribbble', 'deviantart', 'artstation', 'pixels', 'unsplash', 'flickr']
+  },
+  messaging: {
+    name: 'Messaging',
+    icon: 'mdi:message',
+    platforms: ['whatsapp', 'telegram', 'discord', 'slack', 'skype']
+  },
+  developer: {
+    name: 'Developer',
+    icon: 'mdi:code-braces',
+    platforms: ['github', 'gitlab', 'medium', 'reddit']
+  },
+  business: {
+    name: 'Business & Shopping',
+    icon: 'mdi:store',
+    platforms: ['pinterest', 'etsy', 'shopify', 'amazon', 'ebay', 'patreon', 'kofi']
+  },
+  contact: {
+    name: 'Contact & Other',
+    icon: 'mdi:contacts',
+    platforms: ['email', 'phone', 'website', 'rss', 'paypal', 'venmo', 'cashapp', 'tumblr']
+  }
+}
+
 // Predefined social platforms with Iconify icons
 export const SOCIAL_PLATFORMS = [
   { id: 'facebook', name: 'Facebook', icon: 'mdi:facebook' },
@@ -93,15 +132,41 @@ export default async function SocialLinksPage() {
   })
 
   return (
-    <div className="fade-in">
-      <div className="page-header">
-        <h1 className="page-title">Social Links</h1>
+    <div className="fade-in social-links-page">
+      {/* Page Header */}
+      <div className="social-page-header">
+        <div className="social-page-header-content">
+          <div className="social-page-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+            </svg>
+          </div>
+          <div className="social-page-text">
+            <h1 className="social-page-title">Social Links</h1>
+            <p className="social-page-desc">
+              Connect your social media profiles. These links appear in your website footer and contact sections.
+              Drag to reorder, and they&apos;ll display in the same order on your site.
+            </p>
+          </div>
+        </div>
+        <div className="social-page-stats">
+          <div className="social-stat">
+            <span className="social-stat-value">{existingLinks.length}</span>
+            <span className="social-stat-label">Active Links</span>
+          </div>
+          <div className="social-stat">
+            <span className="social-stat-value">{SOCIAL_PLATFORMS.length - existingLinks.length}</span>
+            <span className="social-stat-label">Available</span>
+          </div>
+        </div>
       </div>
 
-      <div className="card">
+      {/* Main Content */}
+      <div className="social-links-container">
         <SocialLinksManager
           existingLinks={existingLinks}
           platforms={SOCIAL_PLATFORMS}
+          categories={PLATFORM_CATEGORIES}
           onSave={handleSave}
         />
       </div>
