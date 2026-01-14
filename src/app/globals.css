@@ -8304,6 +8304,7 @@ select:focus-visible {
   display: grid;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+  align-items: stretch;
 }
 
 .form-grid:last-child {
@@ -8328,11 +8329,29 @@ select:focus-visible {
   }
 }
 
-/* Ensure all form-group children in grid take full height */
+/* Ensure all form-group children in grid take full height and align symmetrically */
 .form-grid > .form-group,
 .form-grid > .bilingual-input {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+/* Make regular form-group match bilingual-input height when side by side */
+.form-grid > .form-group:not(.bilingual-input) {
+  justify-content: flex-start;
+}
+
+/* Spacer for regular inputs to match bilingual tabs height (only when grid contains bilingual inputs) */
+.form-grid:has(.bilingual-input) > .form-group:not(.bilingual-input) .form-label {
+  margin-bottom: calc(0.5rem + 37px);
+}
+
+/* The input should take remaining space */
+.form-grid > .form-group .form-input,
+.form-grid > .form-group .form-select,
+.form-grid > .form-group .toggle-group {
+  flex-shrink: 0;
 }
 
 /* Form Row (legacy support) */
