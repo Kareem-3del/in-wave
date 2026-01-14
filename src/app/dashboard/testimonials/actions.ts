@@ -5,22 +5,27 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
 export async function createTestimonialAction(formData: FormData) {
-  // Get form fields (BilingualInput sends name_en, text_en)
-  const name = formData.get('name_en') as string || formData.get('name') as string
-  const text = formData.get('text_en') as string || formData.get('text') as string
+  // Get form fields (BilingualInput sends name_en, name_ar, text_en, text_ar)
+  const name_en = formData.get('name_en') as string || formData.get('name') as string
+  const name_ar = formData.get('name_ar') as string || null
+  const text_en = formData.get('text_en') as string || formData.get('text') as string
+  const text_ar = formData.get('text_ar') as string || null
 
   // Validate required fields
-  if (!name || !text) {
+  if (!name_en || !text_en) {
     redirect('/dashboard/testimonials?error=missing_fields')
   }
 
   const supabase = await createClient()
   const image_url = formData.get('image_url') as string || null
 
-  // Only use columns that exist in the database
   const { error } = await supabase.from('testimonials').insert({
-    name,
-    text,
+    name: name_en,
+    text: text_en,
+    name_en,
+    name_ar,
+    text_en,
+    text_ar,
     image_url,
     rating: parseInt(formData.get('rating') as string) || 5,
     display_order: parseInt(formData.get('display_order') as string) || 0,
@@ -41,22 +46,27 @@ export async function createTestimonialAction(formData: FormData) {
 export async function updateTestimonialAction(formData: FormData) {
   const id = formData.get('id') as string
 
-  // Get form fields (BilingualInput sends name_en, text_en)
-  const name = formData.get('name_en') as string || formData.get('name') as string
-  const text = formData.get('text_en') as string || formData.get('text') as string
+  // Get form fields (BilingualInput sends name_en, name_ar, text_en, text_ar)
+  const name_en = formData.get('name_en') as string || formData.get('name') as string
+  const name_ar = formData.get('name_ar') as string || null
+  const text_en = formData.get('text_en') as string || formData.get('text') as string
+  const text_ar = formData.get('text_ar') as string || null
 
   // Validate required fields
-  if (!name || !text) {
+  if (!name_en || !text_en) {
     redirect('/dashboard/testimonials?error=missing_fields')
   }
 
   const supabase = await createClient()
   const image_url = formData.get('image_url') as string || null
 
-  // Only use columns that exist in the database
   const { error } = await supabase.from('testimonials').update({
-    name,
-    text,
+    name: name_en,
+    text: text_en,
+    name_en,
+    name_ar,
+    text_en,
+    text_ar,
     image_url,
     rating: parseInt(formData.get('rating') as string) || 5,
     display_order: parseInt(formData.get('display_order') as string) || 0,
