@@ -38,17 +38,19 @@ async function handleDelete(formData: FormData) {
 
 async function handleCreate(formData: FormData) {
   'use server'
-  const name = getField(formData, 'name_en') || getField(formData, 'name')
+  const name_en = getField(formData, 'name_en') || getField(formData, 'name')
+  const name_ar = getField(formData, 'name_ar') || null
   const display_order = getField(formData, 'display_order')
 
-  if (!name) {
+  if (!name_en) {
     redirect('/dashboard/services?error=missing_name')
   }
 
   const supabase = await createClient()
-  // Only use columns that definitely exist in the database
   const { error } = await supabase.from('services').insert({
-    name,
+    name: name_en,
+    name_en,
+    name_ar,
     display_order: parseInt(display_order) || 0,
     is_active: true,
   })
@@ -63,6 +65,35 @@ async function handleCreate(formData: FormData) {
   redirect('/dashboard/services?success=service_created')
 }
 
+async function handleUpdate(formData: FormData) {
+  'use server'
+  const id = formData.get('id') as string
+  const name_en = getField(formData, 'name_en') || getField(formData, 'name')
+  const name_ar = getField(formData, 'name_ar') || null
+  const display_order = getField(formData, 'display_order')
+
+  if (!name_en) {
+    redirect('/dashboard/services?error=missing_name')
+  }
+
+  const supabase = await createClient()
+  const { error } = await supabase.from('services').update({
+    name: name_en,
+    name_en,
+    name_ar,
+    display_order: parseInt(display_order) || 0,
+  }).eq('id', id)
+
+  if (error) {
+    console.error('Error updating service:', error)
+    redirect(`/dashboard/services?error=update_failed&msg=${encodeURIComponent(error.message)}`)
+  }
+
+  revalidatePath('/dashboard/services')
+  revalidatePath('/') // Refresh frontend
+  redirect('/dashboard/services?success=service_updated')
+}
+
 export default async function ServicesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {
   const services = await getAllServices()
   const params = await searchParams
@@ -74,78 +105,112 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
       </div>
 
       {/* Alert Messages */}
-      {params.success === 'service_created' && (
-        <AlertMessage type="success" message="Service created successfully!" />
+      {(params.success === 'service_created' || params.success === 'service_updated') && (
+        <AlertMessage type="success" message={params.success === 'service_created' ? "Service created successfully!" : "Service updated successfully!"} />
       )}
       {params.error === 'missing_name' && (
         <AlertMessage type="error" message="Please enter a service name" />
       )}
-      {params.error === 'create_failed' && (
-        <AlertMessage type="error" message={`Failed to create service: ${params.msg || 'Please try again.'}`} />
+      {(params.error === 'create_failed' || params.error === 'update_failed') && (
+        <AlertMessage type="error" message={`Failed: ${params.msg || 'Please try again.'}`} />
       )}
 
       <div className="card mb-6">
         <h3 className="card-title mb-4">Add New Service</h3>
         <form action={handleCreate}>
-          <div className="flex gap-3 items-center">
-            <input
-              type="text"
-              name="name"
-              className="form-input"
-              placeholder="Service name"
-              required
-              style={{ flex: 1 }}
-            />
-            <input
-              type="number"
-              name="display_order"
-              className="form-input"
-              placeholder="Order"
-              defaultValue={services.length}
-              style={{ width: 100 }}
-            />
-            <button type="submit" className="btn btn-primary">Add Service</button>
+          <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '12px', alignItems: 'end' }}>
+            <div className="form-group" style={{ margin: 0 }}>
+              <label className="form-label">Name (English)</label>
+              <input
+                type="text"
+                name="name_en"
+                className="form-input"
+                placeholder="Service name in English"
+                required
+              />
+            </div>
+            <div className="form-group" style={{ margin: 0 }}>
+              <label className="form-label">Name (Arabic)</label>
+              <input
+                type="text"
+                name="name_ar"
+                className="form-input"
+                placeholder="اسم الخدمة بالعربية"
+                dir="rtl"
+              />
+            </div>
+            <div className="form-group" style={{ margin: 0 }}>
+              <label className="form-label">Order</label>
+              <input
+                type="number"
+                name="display_order"
+                className="form-input"
+                placeholder="0"
+                defaultValue={services.length}
+                style={{ width: 80 }}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary" style={{ height: 42 }}>Add</button>
           </div>
         </form>
         <p className="form-hint mt-4">These services appear in the contact form dropdown</p>
       </div>
 
       <div className="card">
+        <h3 className="card-title mb-4">Manage Services</h3>
         {services.length > 0 ? (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services.map((service) => (
-                <tr key={service.id}>
-                  <td>
-                    <span className="badge badge-info">{service.display_order}</span>
-                  </td>
-                  <td>{service.name}</td>
-                  <td>
-                    <ToggleActive
-                      id={service.id}
-                      isActive={service.is_active}
-                      onToggle={handleToggle}
-                    />
-                  </td>
-                  <td>
-                    <DeleteButton
-                      id={service.id}
-                      onDelete={handleDelete}
-                      confirmMessage="Are you sure you want to delete this service?"
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="services-list">
+            {services.map((service) => (
+              <form key={service.id} action={handleUpdate} className="service-item" style={{
+                padding: '16px',
+                borderBottom: '1px solid var(--border)',
+                display: 'grid',
+                gridTemplateColumns: '60px 1fr 1fr 100px 80px',
+                gap: '12px',
+                alignItems: 'center'
+              }}>
+                <input type="hidden" name="id" value={service.id} />
+                <input
+                  type="number"
+                  name="display_order"
+                  className="form-input"
+                  defaultValue={service.display_order}
+                  style={{ width: '60px', textAlign: 'center' }}
+                />
+                <input
+                  type="text"
+                  name="name_en"
+                  className="form-input"
+                  defaultValue={service.name_en || service.name}
+                  placeholder="English name"
+                  required
+                />
+                <input
+                  type="text"
+                  name="name_ar"
+                  className="form-input"
+                  defaultValue={service.name_ar || ''}
+                  placeholder="الاسم بالعربية"
+                  dir="rtl"
+                />
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <ToggleActive
+                    id={service.id}
+                    isActive={service.is_active}
+                    onToggle={handleToggle}
+                  />
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button type="submit" className="btn btn-secondary btn-sm">Save</button>
+                  <DeleteButton
+                    id={service.id}
+                    onDelete={handleDelete}
+                    confirmMessage="Are you sure you want to delete this service?"
+                  />
+                </div>
+              </form>
+            ))}
+          </div>
         ) : (
           <div className="empty-state">
             <div className="empty-state-icon">
