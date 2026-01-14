@@ -14,6 +14,7 @@ export interface Database {
           id: string
           type: number
           images: string[]
+          gallery_images: string[]
           title_italic: string
           title_regular: string
           location: string
@@ -31,11 +32,26 @@ export interface Database {
           title_regular_ar: string | null
           location_en: string | null
           location_ar: string | null
+          category_en: string | null
+          category_ar: string | null
+          // Rich content fields
+          description_en: string | null
+          description_ar: string | null
+          client_en: string | null
+          client_ar: string | null
+          area: string | null
+          scope_en: string | null
+          scope_ar: string | null
+          challenge_en: string | null
+          challenge_ar: string | null
+          solution_en: string | null
+          solution_ar: string | null
         }
         Insert: {
           id?: string
           type: number
           images?: string[]
+          gallery_images?: string[]
           title_italic: string
           title_regular: string
           location: string
@@ -53,11 +69,26 @@ export interface Database {
           title_regular_ar?: string | null
           location_en?: string | null
           location_ar?: string | null
+          category_en?: string | null
+          category_ar?: string | null
+          // Rich content fields
+          description_en?: string | null
+          description_ar?: string | null
+          client_en?: string | null
+          client_ar?: string | null
+          area?: string | null
+          scope_en?: string | null
+          scope_ar?: string | null
+          challenge_en?: string | null
+          challenge_ar?: string | null
+          solution_en?: string | null
+          solution_ar?: string | null
         }
         Update: {
           id?: string
           type?: number
           images?: string[]
+          gallery_images?: string[]
           title_italic?: string
           title_regular?: string
           location?: string
@@ -75,6 +106,20 @@ export interface Database {
           title_regular_ar?: string | null
           location_en?: string | null
           location_ar?: string | null
+          category_en?: string | null
+          category_ar?: string | null
+          // Rich content fields
+          description_en?: string | null
+          description_ar?: string | null
+          client_en?: string | null
+          client_ar?: string | null
+          area?: string | null
+          scope_en?: string | null
+          scope_ar?: string | null
+          challenge_en?: string | null
+          challenge_ar?: string | null
+          solution_en?: string | null
+          solution_ar?: string | null
         }
       }
       testimonials: {

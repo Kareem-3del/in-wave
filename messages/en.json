@@ -296,10 +296,15 @@
     "year": "Year",
     "type": "Type",
     "area": "Area",
+    "client": "Client",
+    "scope": "Scope",
     "residential": "Residential",
     "commercial": "Commercial",
     "interior": "Interior Design",
     "projectGallery": "Project Gallery",
-    "relatedProjects": "Related Projects"
+    "relatedProjects": "Related Projects",
+    "aboutProject": "About the Project",
+    "theChallenge": "The Challenge",
+    "ourSolution": "Our Solution"
   }
 }

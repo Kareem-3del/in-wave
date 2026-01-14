@@ -295,10 +295,15 @@
     "year": "السنة",
     "type": "النوع",
     "area": "المساحة",
+    "client": "العميل",
+    "scope": "نطاق العمل",
     "residential": "سكني",
     "commercial": "تجاري",
     "interior": "تصميم داخلي",
     "projectGallery": "معرض المشروع",
-    "relatedProjects": "مشاريع ذات صلة"
+    "relatedProjects": "مشاريع ذات صلة",
+    "aboutProject": "عن المشروع",
+    "theChallenge": "التحدي",
+    "ourSolution": "الحل"
   }
 }

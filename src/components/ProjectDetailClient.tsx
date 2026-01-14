@@ -19,7 +19,7 @@ interface ProjectDetailClientProps {
   relatedProjects: Project[];
 }
 
-function getLocalizedValue(item: Project, field: 'title_italic' | 'title_regular' | 'location', locale: Locale): string {
+function getLocalizedValue(item: Project, field: string, locale: Locale): string {
   const localizedKey = `${field}_${locale}` as keyof Project;
   const fallbackKey = `${field}_en` as keyof Project;
   const legacyKey = field as keyof Project;
@@ -78,21 +78,27 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
   const t = useTranslations('projectDetail');
   const locale = useLocale() as Locale;
   const [activeImage, setActiveImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
 
+  // Get localized content
   const titleItalic = getLocalizedValue(project, 'title_italic', locale);
   const titleRegular = getLocalizedValue(project, 'title_regular', locale);
   const location = getLocalizedValue(project, 'location', locale);
+  const category = getLocalizedValue(project, 'category', locale);
+  const client = getLocalizedValue(project, 'client', locale);
+  const scope = getLocalizedValue(project, 'scope', locale);
+  const description = getLocalizedValue(project, 'description', locale);
+  const challenge = getLocalizedValue(project, 'challenge', locale);
+  const solution = getLocalizedValue(project, 'solution', locale);
 
-  const projectTypeLabel = () => {
-    switch (project.type) {
-      case 1: return t('residential');
-      case 2: return t('commercial');
-      case 3: return t('interior');
-      default: return t('residential');
-    }
-  };
+  // Combine gallery images with main images for the detail page
+  const allGalleryImages = project.gallery_images?.length > 0
+    ? project.gallery_images
+    : project.images;
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -112,7 +118,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
         delay: 0.3,
       });
 
-      gsap.from('.project-info__item', {
+      gsap.from('.project-meta__item', {
         y: 30,
         opacity: 0,
         duration: 0.6,
@@ -125,6 +131,25 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
   }, []);
 
   useEffect(() => {
+    if (!contentRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from('.project-content__section', {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: '.project-content',
+          start: 'top 70%',
+        },
+      });
+    }, contentRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
     if (!galleryRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -132,7 +157,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
         y: 80,
         opacity: 0,
         duration: 0.8,
-        stagger: 0.15,
+        stagger: 0.1,
         scrollTrigger: {
           trigger: '.project-gallery',
           start: 'top 70%',
@@ -143,8 +168,28 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
     return () => ctx.revert();
   }, []);
 
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    document.body.style.overflow = '';
+  };
+
+  const nextImage = () => {
+    setLightboxIndex((prev) => (prev + 1) % allGalleryImages.length);
+  };
+
+  const prevImage = () => {
+    setLightboxIndex((prev) => (prev - 1 + allGalleryImages.length) % allGalleryImages.length);
+  };
+
   return (
     <>
+      {/* Hero Section */}
       <section className="section project-hero-section" ref={heroRef}>
         <div className="container">
           <Link href="/portfolio" className="project-hero__back">
@@ -186,41 +231,132 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
             </Atropos>
           </div>
 
-          <div className="project-info">
-            <div className="project-info__item">
-              <span className="project-info__label">{t('location')}</span>
-              <span className="project-info__value">{location}</span>
+          {/* Project Meta Info */}
+          <div className="project-meta">
+            <div className="project-meta__item">
+              <span className="project-meta__label">{t('location')}</span>
+              <span className="project-meta__value">{location}</span>
             </div>
-            <div className="project-info__item">
-              <span className="project-info__label">{t('year')}</span>
-              <span className="project-info__value">{project.year}</span>
+            <div className="project-meta__item">
+              <span className="project-meta__label">{t('year')}</span>
+              <span className="project-meta__value">{project.year}</span>
             </div>
-            <div className="project-info__item">
-              <span className="project-info__label">{t('type')}</span>
-              <span className="project-info__value">{projectTypeLabel()}</span>
-            </div>
+            {category && (
+              <div className="project-meta__item">
+                <span className="project-meta__label">{t('type')}</span>
+                <span className="project-meta__value">{category}</span>
+              </div>
+            )}
+            {client && (
+              <div className="project-meta__item">
+                <span className="project-meta__label">{t('client') || 'Client'}</span>
+                <span className="project-meta__value">{client}</span>
+              </div>
+            )}
+            {project.area && (
+              <div className="project-meta__item">
+                <span className="project-meta__label">{t('area') || 'Area'}</span>
+                <span className="project-meta__value">{project.area}</span>
+              </div>
+            )}
+            {scope && (
+              <div className="project-meta__item project-meta__item--full">
+                <span className="project-meta__label">{t('scope') || 'Scope'}</span>
+                <span className="project-meta__value">{scope}</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {project.images.length > 1 && (
+      {/* Project Content Section */}
+      {(description || challenge || solution) && (
+        <section className="section project-content-section" ref={contentRef}>
+          <div className="container">
+            <div className="project-content">
+              {description && (
+                <div className="project-content__section project-content__description">
+                  <h2 className="project-content__title">{t('aboutProject') || 'About the Project'}</h2>
+                  <div className="project-content__text">
+                    {description.split('\n').map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {(challenge || solution) && (
+                <div className="project-content__grid">
+                  {challenge && (
+                    <div className="project-content__section project-content__challenge">
+                      <h3 className="project-content__subtitle">
+                        <span className="project-content__icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4M12 16h.01"/>
+                          </svg>
+                        </span>
+                        {t('theChallenge') || 'The Challenge'}
+                      </h3>
+                      <div className="project-content__text">
+                        {challenge.split('\n').map((paragraph, index) => (
+                          <p key={index}>{paragraph}</p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {solution && (
+                    <div className="project-content__section project-content__solution">
+                      <h3 className="project-content__subtitle">
+                        <span className="project-content__icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="12" r="10"/>
+                          </svg>
+                        </span>
+                        {t('ourSolution') || 'Our Solution'}
+                      </h3>
+                      <div className="project-content__text">
+                        {solution.split('\n').map((paragraph, index) => (
+                          <p key={index}>{paragraph}</p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Project Gallery Section */}
+      {allGalleryImages.length > 0 && (
         <section className="section project-gallery-section" ref={galleryRef}>
           <div className="container">
             <h2 className="section-title">{t('projectGallery')}</h2>
             <div className="project-gallery">
-              {project.images.map((image, index) => (
+              {allGalleryImages.map((image, index) => (
                 <div
                   key={index}
-                  className={`project-gallery__item ${index === activeImage ? 'active' : ''}`}
-                  onClick={() => setActiveImage(index)}
+                  className="project-gallery__item"
+                  onClick={() => openLightbox(index)}
                 >
                   <Image
                     src={image}
                     alt={`${titleItalic} ${titleRegular} - ${index + 1}`}
                     fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: 'cover' }}
                   />
+                  <div className="project-gallery__overlay">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="M21 21l-4.35-4.35"/>
+                      <path d="M11 8v6M8 11h6"/>
+                    </svg>
+                  </div>
                 </div>
               ))}
             </div>
@@ -228,6 +364,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
         </section>
       )}
 
+      {/* Related Projects Section */}
       {relatedProjects.length > 0 && (
         <section className="section related-projects-section">
           <div className="container">
@@ -244,6 +381,49 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
             </div>
           </div>
         </section>
+      )}
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <div className="project-lightbox" onClick={closeLightbox}>
+          <button className="project-lightbox__close" onClick={closeLightbox}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <button
+            className="project-lightbox__nav project-lightbox__prev"
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+          >
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+
+          <div className="project-lightbox__content" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={allGalleryImages[lightboxIndex]}
+              alt={`${titleItalic} ${titleRegular} - ${lightboxIndex + 1}`}
+              fill
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </div>
+
+          <button
+            className="project-lightbox__nav project-lightbox__next"
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+          >
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+
+          <div className="project-lightbox__counter">
+            {lightboxIndex + 1} / {allGalleryImages.length}
+          </div>
+        </div>
       )}
     </>
   );
