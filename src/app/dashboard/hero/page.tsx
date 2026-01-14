@@ -16,6 +16,7 @@ async function handleToggle(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('hero_slides').update({ is_active: isActive }).eq('id', id)
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
 }
 
 async function handleDelete(formData: FormData) {
@@ -24,6 +25,7 @@ async function handleDelete(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('hero_slides').delete().eq('id', id)
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
 }
 
 async function handleCreate(formData: FormData) {
@@ -48,6 +50,7 @@ async function handleCreate(formData: FormData) {
   }
 
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
   redirect('/dashboard/hero?success=slide_created')
 }
 
@@ -68,6 +71,7 @@ async function handleUpdate(formData: FormData) {
   }
 
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
   redirect('/dashboard/hero?success=slide_updated')
 }
 
@@ -78,6 +82,7 @@ async function handleUpdateOrder(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('hero_slides').update({ display_order }).eq('id', id)
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
 }
 
 export default async function HeroSlidesPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string }> }) {

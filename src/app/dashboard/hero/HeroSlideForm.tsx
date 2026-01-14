@@ -78,23 +78,26 @@ export function HeroSlideForm({ slide, onSubmit, defaultOrder = 0 }: HeroSlideFo
             defaultValue={slide?.display_order ?? defaultOrder}
           />
         </div>
-        {isEdit && (
-          <div className="form-group">
-            <label className="form-label">Status</label>
-            <label className="status-toggle">
+        <div className="form-group">
+          <label className="form-label">Status</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <label className="toggle-switch">
               <input
                 type="checkbox"
                 name="is_active_checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="status-checkbox"
               />
-              <span className={`status-badge ${isActive ? 'active' : 'hidden'}`}>
-                {isActive ? 'Active' : 'Hidden'}
-              </span>
+              <span className="toggle-slider"></span>
             </label>
+            <span style={{
+              color: isActive ? 'var(--success)' : 'var(--text-muted)',
+              fontWeight: 500
+            }}>
+              {isActive ? 'Active (visible on website)' : 'Hidden (not visible on website)'}
+            </span>
           </div>
-        )}
+        </div>
         <button type="submit" className="btn btn-primary" disabled={submitting || !imageUrl}>
           {submitting ? (isEdit ? 'Saving...' : 'Adding...') : (isEdit ? 'Save Changes' : 'Add Slide')}
         </button>

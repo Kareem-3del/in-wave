@@ -34,6 +34,7 @@ async function handleUpdate(formData: FormData) {
   }
 
   revalidatePath('/dashboard/hero')
+  revalidatePath('/') // Refresh frontend
   redirect('/dashboard/hero?success=slide_updated')
 }
 

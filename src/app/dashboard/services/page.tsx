@@ -24,6 +24,7 @@ async function handleToggle(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('services').update({ is_active: isActive }).eq('id', id)
   revalidatePath('/dashboard/services')
+  revalidatePath('/') // Refresh frontend
 }
 
 async function handleDelete(formData: FormData) {
@@ -32,6 +33,7 @@ async function handleDelete(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('services').delete().eq('id', id)
   revalidatePath('/dashboard/services')
+  revalidatePath('/') // Refresh frontend
 }
 
 async function handleCreate(formData: FormData) {
@@ -57,6 +59,7 @@ async function handleCreate(formData: FormData) {
   }
 
   revalidatePath('/dashboard/services')
+  revalidatePath('/') // Refresh frontend
   redirect('/dashboard/services?success=service_created')
 }
 

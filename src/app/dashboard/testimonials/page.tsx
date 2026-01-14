@@ -13,6 +13,7 @@ async function handleToggle(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('testimonials').update({ is_active: isActive }).eq('id', id)
   revalidatePath('/dashboard/testimonials')
+  revalidatePath('/') // Refresh frontend
 }
 
 async function handleDelete(formData: FormData) {
@@ -21,6 +22,7 @@ async function handleDelete(formData: FormData) {
   const supabase = await createClient()
   await supabase.from('testimonials').delete().eq('id', id)
   revalidatePath('/dashboard/testimonials')
+  revalidatePath('/') // Refresh frontend
 }
 
 export default async function TestimonialsPage({ searchParams }: { searchParams: Promise<{ success?: string; error?: string; msg?: string }> }) {

@@ -24,6 +24,7 @@ interface SocialLinksManagerProps {
 export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialLinksManagerProps) {
   const [activeLinks, setActiveLinks] = useState<Link[]>(existingLinks)
   const [saving, setSaving] = useState(false)
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
   const [search, setSearch] = useState('')
@@ -93,11 +94,20 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
 
   const handleSave = async () => {
     setSaving(true)
-    await onSave(activeLinks.map((link, index) => ({
-      ...link,
-      display_order: index,
-    })))
-    setSaving(false)
+    setSaveStatus('idle')
+    try {
+      await onSave(activeLinks.map((link, index) => ({
+        ...link,
+        display_order: index,
+      })))
+      setSaveStatus('success')
+      // Auto-hide success message after 3 seconds
+      setTimeout(() => setSaveStatus('idle'), 3000)
+    } catch {
+      setSaveStatus('error')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const getPlatform = (id: string) => platforms.find(p => p.id === id)
@@ -151,14 +161,26 @@ export function SocialLinksManager({ existingLinks, platforms, onSave }: SocialL
         </div>
       )}
 
-      {/* Save Button */}
-      <button
-        onClick={handleSave}
-        disabled={saving}
-        className="btn btn-primary save-btn"
-      >
-        {saving ? 'Saving...' : 'Save Changes'}
-      </button>
+      {/* Save Button and Status */}
+      <div className="save-section" style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="btn btn-primary"
+        >
+          {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+        {saveStatus === 'success' && (
+          <span className="save-success" style={{ color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontWeight: 700 }}>✓</span> Social links saved successfully!
+          </span>
+        )}
+        {saveStatus === 'error' && (
+          <span style={{ color: 'var(--error)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontWeight: 700 }}>✕</span> Failed to save. Please try again.
+          </span>
+        )}
+      </div>
 
       {/* Available Platforms */}
       <h3 className="section-title">Available Platforms ({availablePlatforms.length})</h3>
