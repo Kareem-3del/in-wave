@@ -84,10 +84,10 @@ export default function Header() {
                   </li>
                 );
               })}
-              <li>
+              <li className='menu-item'>
                 <PhoneDropdown />
               </li>
-              <li>
+              <li className='menu-item'>
                 <LanguageSwitcher />
               </li>
             </ul>

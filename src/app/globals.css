@@ -1123,7 +1123,7 @@ body.show .hero__scroller {
   text-transform: lowercase;
   margin-right: 1rem;
   display: block;
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
   font-weight: 200;
   font-family: 'Tussilago El';
@@ -8330,27 +8330,27 @@ select:focus-visible {
 }
 
 /* Ensure all form-group children in grid take full height and align symmetrically */
-.form-grid > .form-group,
-.form-grid > .bilingual-input {
+.form-grid>.form-group,
+.form-grid>.bilingual-input {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 /* Make regular form-group match bilingual-input height when side by side */
-.form-grid > .form-group:not(.bilingual-input) {
+.form-grid>.form-group:not(.bilingual-input) {
   justify-content: flex-start;
 }
 
 /* Spacer for regular inputs to match bilingual tabs height (only when grid contains bilingual inputs) */
-.form-grid:has(.bilingual-input) > .form-group:not(.bilingual-input) .form-label {
+.form-grid:has(.bilingual-input)>.form-group:not(.bilingual-input) .form-label {
   margin-bottom: calc(0.5rem + 37px);
 }
 
 /* The input should take remaining space */
-.form-grid > .form-group .form-input,
-.form-grid > .form-group .form-select,
-.form-grid > .form-group .toggle-group {
+.form-grid>.form-group .form-input,
+.form-grid>.form-group .form-select,
+.form-grid>.form-group .toggle-group {
   flex-shrink: 0;
 }
 
@@ -8496,11 +8496,11 @@ select:focus-visible {
   border-radius: 50%;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
   background-color: rgba(229, 204, 168, 0.3);
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
+.toggle-switch input:checked+.toggle-slider:before {
   transform: translateX(20px);
   background-color: #E5CCA8;
 }
@@ -9177,10 +9177,100 @@ select:focus-visible {
 
 /* Spin Animation */
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spin {
   animation: spin 1s linear infinite;
+}
+
+.process-step__title {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media(min-width:1025px) {
+
+
+  .process-step-mobile {
+    display: none;
+  }
+}
+
+@media(max-width:1024px) {
+  /* .hero__sticky {
+    opacity: 1 !important;
+  } */
+
+  .header__logo {
+    top: -25px !important
+  }
+
+  .hero__track {
+    min-height: 100vh;
+  }
+
+  .hero__sticky {
+    height: 100vh;
+  }
+
+  .hero__cta,
+  .hero-contact {
+    position: static !important;
+    transform: unset !important;
+  }
+
+  .hero__track .hero__cont {
+    display: flex;
+    text-align: center !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px
+  }
+
+  .hero__cont__title {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .hero__cont__title__item {
+    padding-right: 0 !important;
+  }
+
+  .header__nav ul.menu li {
+    justify-content: center !important;
+  }
+
+  .lang-dropdown {
+    padding: 15px 0;
+  }
+
+  .quote {
+    overflow-x: hidden;
+  }
+
+  .quote__item {
+    margin-bottom: 2.5rem;
+  }
+
+  .quote__cover--bot,
+  .quote__cover {
+    display: none !important;
+  }
+
+  .process-step {
+    flex-wrap: wrap;
+  }
+
+  .process-step-desktop {
+    display: none;
+  }
 }

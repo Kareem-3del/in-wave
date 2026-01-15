@@ -759,6 +759,11 @@
     left: 18px;
   }
 
+  [dir="rtl"] .header__logo {
+    left: auto;
+    right: 3rem;
+  }
+
   /* Mobile Arabic menu text - even larger */
   [dir="rtl"] .header__nav ul.menu li a {
     font-size: 2.2rem;

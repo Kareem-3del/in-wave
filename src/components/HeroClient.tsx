@@ -40,6 +40,9 @@ export function HeroClient({ slides }: HeroClientProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
   useEffect(() => {
+
+    console.log('isDesk:', window.innerWidth >= 1280);
+
     if (!heroTrackRef.current || !heroStickyRef.current || !heroContRef.current) return;
 
     const isDesk = window.innerWidth >= 1280;
@@ -50,8 +53,17 @@ export function HeroClient({ slides }: HeroClientProps) {
     const duration = window.innerHeight * (isDesk ? 0.7 : 1);
     // Match original ScrollTrigger: start when (top + heroTrackHeight - viewportHeight) reaches viewport bottom
     // This equals: scrollY = heroTrackHeight - 2 * viewportHeight
+    // const triggerStart = Math.max(0, heroTrackHeight - 2 * window.innerHeight);
     const triggerStart = Math.max(0, heroTrackHeight - 2 * window.innerHeight);
+
     const triggerEnd = triggerStart + duration;
+
+    if (!isDesk) {
+      gsap.set(heroStickyRef.current, { opacity: 1 });
+      gsap.set(heroContRef.current, { y: 0 });
+      gsap.set(heroSliderRef.current, { scale: 1 });
+    }
+
 
     // Helper function to apply hero state based on scroll position
     const updateHeroState = () => {
@@ -89,7 +101,7 @@ export function HeroClient({ slides }: HeroClientProps) {
       }
 
       // Handle visibility
-      if (heroSection) {
+      if (heroSection && isDesk) {
         if (progress >= 1) {
           heroSection.style.pointerEvents = 'none';
           heroSection.style.visibility = 'hidden';
@@ -98,6 +110,7 @@ export function HeroClient({ slides }: HeroClientProps) {
           heroSection.style.visibility = 'visible';
         }
       }
+
     };
 
     // Apply initial state immediately
@@ -121,6 +134,7 @@ export function HeroClient({ slides }: HeroClientProps) {
           end: () => `+=${duration}`,
           scrub: true,
           onUpdate: (self) => {
+            if (!isDesk) return;
             const progress = self.progress;
 
             gsap.to(heroStickyRef.current, {

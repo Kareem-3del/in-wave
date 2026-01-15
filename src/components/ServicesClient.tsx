@@ -303,7 +303,7 @@ function ServiceCard({
         <span className="service-card__link">
           {t('learnMore')}
           <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
-            <path d="M19.3536 4.35355C19.5488 4.15829 19.5488 3.84171 19.3536 3.64645L16.1716 0.464466C15.9763 0.269204 15.6597 0.269204 15.4645 0.464466C15.2692 0.659728 15.2692 0.976311 15.4645 1.17157L18.2929 4L15.4645 6.82843C15.2692 7.02369 15.2692 7.34027 15.4645 7.53553C15.6597 7.7308 15.9763 7.7308 16.1716 7.53553L19.3536 4.35355ZM0 4.5H19V3.5H0V4.5Z" fill="currentColor"/>
+            <path d="M19.3536 4.35355C19.5488 4.15829 19.5488 3.84171 19.3536 3.64645L16.1716 0.464466C15.9763 0.269204 15.6597 0.269204 15.4645 0.464466C15.2692 0.659728 15.2692 0.976311 15.4645 1.17157L18.2929 4L15.4645 6.82843C15.2692 7.02369 15.2692 7.34027 15.4645 7.53553C15.6597 7.7308 15.9763 7.7308 16.1716 7.53553L19.3536 4.35355ZM0 4.5H19V3.5H0V4.5Z" fill="currentColor" />
           </svg>
         </span>
         <span className="service-card__number">
@@ -321,21 +321,21 @@ function ServicesGrid({ services, locale }: { services?: Service[]; locale?: 'en
   // Use database services if available, otherwise fallback to translation keys
   const displayServices = services && services.length > 0
     ? services.map((service) => ({
-        id: service.id,
-        titleEn: service.name_en || service.name,
-        titleAr: service.name_ar || '',
-        descriptionEn: service.description_en || '',
-        descriptionAr: service.description_ar || '',
-        icon: service.icon || 'mdi:home-city-outline',
-      }))
+      id: service.id,
+      titleEn: service.name_en || service.name,
+      titleAr: service.name_ar || '',
+      descriptionEn: service.description_en || '',
+      descriptionAr: service.description_ar || '',
+      icon: service.icon || 'mdi:home-city-outline',
+    }))
     : fallbackServices.map((service) => ({
-        id: service.key,
-        titleEn: t(service.key),
-        titleAr: '',
-        descriptionEn: t(`${service.key}Desc`),
-        descriptionAr: '',
-        icon: service.icon,
-      }));
+      id: service.key,
+      titleEn: t(service.key),
+      titleAr: '',
+      descriptionEn: t(`${service.key}Desc`),
+      descriptionAr: '',
+      icon: service.icon,
+    }));
 
   return (
     <section className="section services-grid-section">
@@ -401,15 +401,30 @@ function ProcessStep({
   }, [index]);
 
   return (
-    <div className={`process-step ${isLast ? 'process-step--last' : ''}`} ref={stepRef}>
-      <div className="process-step__dot"></div>
-      <div className="process-step__icon">
-        <Icon icon={icon} width={24} height={24} />
+    <>
+
+      <div className={`process-step process-step-desktop ${isLast ? 'process-step--last' : ''}`} ref={stepRef}>
+        <div className="process-step__dot"></div>
+        <div className="process-step__icon">
+          <Icon icon={icon} width={24} height={24} />
+        </div>
+        <span className="process-step__num">{number}</span>
+        <h3 className="process-step__title">{title}</h3>
+        <p className="process-step__desc">{description}</p>
       </div>
-      <span className="process-step__num">{number}</span>
-      <h3 className="process-step__title">{title}</h3>
-      <p className="process-step__desc">{description}</p>
-    </div>
+      <div className={`process-step  process-step-mobile ${isLast ? 'process-step--last' : ''}`} ref={stepRef}>
+        <div className="process-step__dot"></div>
+        <div className="process-step__title">
+          <div className="process-step__icon">
+            <Icon icon={icon} width={24} height={24} />
+          </div>
+          <span className="process-step__num">{number}</span>
+          <h3 className="process-step__title">{title}</h3>
+        </div>
+        <p className="process-step__desc">{description}</p>
+      </div>
+    </>
+
   );
 }
 
@@ -513,17 +528,31 @@ function CTASection() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(titleRef.current, {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none none',
-        },
-      });
+      // gsap.from(titleRef.current, {
+      //   y: 60,
+      //   opacity: 0,
+      //   duration: 2,
+      //   ease: 'power2.out',
+      //   scrollTrigger: {
+      //     trigger: sectionRef.current,
+      //     start: 'top 70%',
+      //     toggleActions: 'play none none none',
+      //   },
+      // });
+      gsap.fromTo(
+        titleRef.current,
+        { y: 80, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 2.2,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          },
+        }
+      );
 
       gsap.to('.services-cta .services-floating-shape', {
         y: -80,
