@@ -9209,12 +9209,17 @@ select:focus-visible {
     opacity: 1 !important;
   } */
 
+  .phone-dropdown a {
+    font-size: 14px !important;
+  }
+
   .header__logo {
     top: -25px !important
   }
 
   .hero__track {
     min-height: 100vh;
+    height: 100vh;
   }
 
   .hero__sticky {
