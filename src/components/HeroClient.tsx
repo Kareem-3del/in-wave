@@ -297,7 +297,10 @@ export function HeroClient({ slides }: HeroClientProps) {
             </h1>
           </div>
 
-          <div className="hero__scroller"></div>
+          <div className="hero__scroller">
+            <div className='hero__scroller-top'></div>
+            <div className='hero__scroller-bottom'></div>
+          </div>
         </div>
       </div>
     </section>

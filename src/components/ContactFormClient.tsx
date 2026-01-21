@@ -59,7 +59,7 @@ export function ContactFormClient({ services }: ContactFormClientProps) {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: formRef.current,
-        start: `top-=${window.innerHeight / 4} 70%`,
+        start: `top-=${window.innerHeight / 2} 90%`,
         end: `+=${window.innerHeight / 2}`,
         scrub: 1,
         onUpdate: (self) => {
@@ -126,11 +126,24 @@ export function ContactFormClient({ services }: ContactFormClientProps) {
     <section className="section home-form-section" id="home-form">
       <div className="container">
         <div className="form" ref={formRef}>
-          <div className="title title--inline form__title">
+          {/* <div className="title title--inline form__title">
             <span className="title__item">
               <span>{t('title1')} <i>{t('title1Italic')}</i></span>
             </span>
             <span className="title__item">
+              <span>{t('title2')}</span>
+            </span>
+          </div> */}
+
+          <div className="title title--inline form__title">
+            <span className="title__item top-f-title">
+              <span>{t('title1')} {t('title1Italic')}</span>
+            </span>
+            <span className="title__item title__item-scroll">
+              <div className="hero__scroller-hr">
+                <div className='hero__scroller-left'></div>
+                <div className='hero__scroller-right'></div>
+              </div>
               <span>{t('title2')}</span>
             </span>
           </div>

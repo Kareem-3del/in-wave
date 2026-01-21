@@ -45,7 +45,7 @@ function StarIcon() {
       xmlns="http://www.w3.org/2000/svg"
       className="slide-block-star"
     >
-      <path d="M11 0L13.4697 7.60081H21.4616L14.996 12.2984L17.4656 19.8992L11 15.2016L4.53436 19.8992L7.00402 12.2984L0.538379 7.60081H8.53035L11 0Z"/>
+      <path d="M11 0L13.4697 7.60081H21.4616L14.996 12.2984L17.4656 19.8992L11 15.2016L4.53436 19.8992L7.00402 12.2984L0.538379 7.60081H8.53035L11 0Z" />
     </svg>
   );
 }
@@ -86,20 +86,23 @@ function TestimonialCard({ name, rating, text, imageUrl, readMoreText, hideText 
         )}
       </div>
       <div className="slide-block-cont">
+        <div className='t-content-top'></div>
         <p>
           {expanded ? text : shortText}
-          {text.length > 200 && (
-            <a
-              className="read-more"
-              onClick={() => setExpanded(!expanded)}
-              style={{ cursor: 'pointer' }}
-            >
-              {expanded ? hideText : readMoreText}
-            </a>
-          )}
         </p>
+        {text.length > 200 && (
+          <a
+            className="read-more"
+            onClick={() => setExpanded(!expanded)}
+            style={{ cursor: 'pointer' }}
+          >
+            {expanded ? hideText : readMoreText}
+            <img style={{ width: "60%" }} src="/images/as-3.png" />
+          </a>
+        )}
+        <div className='t-content-bottom'></div>
       </div>
-      <StarRating count={rating} />
+      {/* <StarRating count={rating} /> */}
     </div>
   );
 }
@@ -156,12 +159,12 @@ export function TestimonialsClient({ testimonials }: TestimonialsClientProps) {
             <div className="testimonial-controls">
               <div className="testimonial-arrow-prev nextend-arrow nextend-arrow-previous">
                 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.433 15.992L22.69 5.712c.393-.39.393-1.03 0-1.42-.393-.39-1.03-.39-1.423 0l-11.98 10.94c-.21.21-.3.49-.285.76-.015.28.075.56.284.77l11.98 10.94c.393.39 1.03.39 1.424 0 .393-.4.393-1.03 0-1.42l-11.257-10.29" fill="#ffffff" opacity="0.8" fillRule="evenodd"/>
+                  <path d="M11.433 15.992L22.69 5.712c.393-.39.393-1.03 0-1.42-.393-.39-1.03-.39-1.423 0l-11.98 10.94c-.21.21-.3.49-.285.76-.015.28.075.56.284.77l11.98 10.94c.393.39 1.03.39 1.424 0 .393-.4.393-1.03 0-1.42l-11.257-10.29" fill="#ffffff" opacity="0.8" fillRule="evenodd" />
                 </svg>
               </div>
               <div className="testimonial-arrow-next nextend-arrow nextend-arrow-next">
                 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.722 4.293c-.394-.39-1.032-.39-1.427 0-.393.39-.393 1.03 0 1.42l11.283 10.28-11.283 10.29c-.393.39-.393 1.02 0 1.42.395.39 1.033.39 1.427 0l12.007-10.94c.21-.21.3-.49.284-.77.014-.27-.076-.55-.286-.76L10.72 4.293z" fill="#ffffff" opacity="0.8" fillRule="evenodd"/>
+                  <path d="M10.722 4.293c-.394-.39-1.032-.39-1.427 0-.393.39-.393 1.03 0 1.42l11.283 10.28-11.283 10.29c-.393.39-.393 1.02 0 1.42.395.39 1.033.39 1.427 0l12.007-10.94c.21-.21.3-.49.284-.77.014-.27-.076-.55-.286-.76L10.72 4.293z" fill="#ffffff" opacity="0.8" fillRule="evenodd" />
                 </svg>
               </div>
             </div>

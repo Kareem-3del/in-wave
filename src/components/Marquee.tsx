@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface MarqueeProps {
   children: React.ReactNode;
@@ -42,7 +42,7 @@ export default function Marquee({ children, className = '' }: MarqueeProps) {
 }
 
 // Simple marquee for "work stages" and "about us" sections
-export function SimpleMarquee({ text, italicPart }: { text: string; italicPart?: string }) {
+export function SimpleMarquee({ text, italicPart, children }: { text: string; italicPart?: string, children?: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
   const MARQUEE_AMOUNT_REPEAT = 20;
 
@@ -64,7 +64,9 @@ export function SimpleMarquee({ text, italicPart }: { text: string; italicPart?:
       <div className={`marquee-title__inner js-marquee ${isReady ? 'ready' : ''}`}>
         {repeatedItems}
       </div>
-      <div className="marquee-title__overlay"></div>
+      <div className="marquee-title__overlay">
+        {children}
+      </div>
     </div>
   );
 }
