@@ -1,9 +1,27 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useRef, useState } from 'react';
 
+const phoneNumbers = [
+  {
+    label: '+962 79 300 7888',
+    value: '962793007888',
+  },
+  {
+    label: '+966 595 594 686',
+    value: '966595594686',
+  },
+  {
+    label: '+20 111 227 6768',
+    value: '201112276768',
+  }
+];
 export default function FixedButtons() {
   const t = useTranslations('contact');
+
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -12,10 +30,10 @@ export default function FixedButtons() {
       </div> */}
 
       <a
-        href="https://wa.me/19542715832"
         className="wa-block"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => setOpen((prev) => !prev)}
         style={{
           display: "flex",
           backgroundColor: "#222326",
@@ -46,7 +64,29 @@ export default function FixedButtons() {
         >
           {t("whatsapp")}
         </p> */}
+
+        {open && (
+          <div className="lang-menu" role="listbox">
+            {phoneNumbers.map((phone) => (
+
+              <a
+                style={{ direction: "ltr" }}
+                key={phone.value}
+                href={`https://wa.me/${phone.value}`}
+                className="lang-item"
+                role="option"
+                onClick={() => setOpen(false)}
+                target="_blank"
+              >
+                {phone.label}
+              </a>
+            ))}
+          </div>
+        )}
       </a>
+
+
+
     </>
   );
 }

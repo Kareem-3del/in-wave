@@ -1507,6 +1507,7 @@ body.show .hero__scroller {
   width: 1px;
   background-color: rgba(229, 204, 168, .4);
   transform: translateY(-50%) rotate(45deg);
+  display: none;
 }
 
 .form .title::before {
@@ -3698,7 +3699,7 @@ html {
 .wa-block:hover {
   animation-play-state: paused;
   transform: scale(1.15);
-  filter: drop-shadow(0 4px 12px rgba(71, 173, 42, 0.4));
+  filter: drop-shadow(0 4px 12px rgba(229, 204, 168, 0.4));
 }
 
 .wa-block:active {
@@ -9604,6 +9605,23 @@ body {
   width: 200px;
   top: calc(50% + 10rem);
   left: -120px;
+}
+
+.wa-block .lang-menu {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  left: unset !important;
+  right: 60px !important;
+  top: -25px !important
+}
+
+[dir="rtl"] .wa-block .lang-menu {
+  width: 180px;
+}
+
+.wa-block .lang-item:hover {
+  color: #e5cca8 !important;
 }
 
 /* Animation أفقي */
