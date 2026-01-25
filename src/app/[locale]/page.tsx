@@ -38,8 +38,19 @@ export default async function Home({ params }: Props) {
           <WorkStages />
           <HomeOwners teamInfo={teamInfo} locale={locale as 'en' | 'ar'} />
           <MapSection />
-          <Testimonials />
-          <ContactForm />
+          <div className='t-c-container'>
+            <div className="t-c-container-text-sec">
+              <img alt='sh-right' src="/images/text.png" />
+            </div>
+            <div className='t-c-container-frame t-c-container-frame-top'>
+              <img alt='sh-right' src="/images/sh-right.png" />
+            </div>
+            <div className='t-c-container-frame t-c-container-frame-bottom'>
+              <img alt='sh-right' src="/images/sh-left.png" />
+            </div>
+            <Testimonials />
+            <ContactForm />
+          </div>
           <Footer />
         </div>
       </main>

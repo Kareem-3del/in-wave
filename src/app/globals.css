@@ -2655,10 +2655,10 @@ body.loaded.show .preloader__progress {
     min-height: 28.5rem;
   }
 
-  .work-stages__item:nth-child(1),
+  /* .work-stages__item:nth-child(1),
   .work-stages__item:nth-child(2) {
     transform: translateY(15rem);
-  }
+  } */
 
   .work-stages__item__num {
     font-size: 4rem;
@@ -2683,7 +2683,7 @@ body.loaded.show .preloader__progress {
 .order-a-call {
   position: fixed;
   /* top: auto; */
-  z-index: 199;
+  z-index: 9999;
   color: #fff;
   padding: 10px 25px;
   text-transform: uppercase;
@@ -2908,7 +2908,7 @@ html {
 /* ===== Testimonials Section ===== */
 .quote-testimonial {
   margin: 0 auto;
-  padding: 5rem 0;
+  padding: 10rem 0;
   background-color: #000000;
 }
 
@@ -2949,7 +2949,7 @@ html {
   display: flex;
   gap: 30px;
   justify-content: center;
-  padding: 0 50px;
+  padding: 0 100px;
 }
 
 .testimonial-slide-content .slide-block {
@@ -3036,6 +3036,8 @@ html {
   padding: 0 15px;
   pointer-events: none;
   z-index: 10;
+  width: 95%;
+  margin: auto;
 }
 
 .testimonial-arrow-prev,
@@ -3085,7 +3087,7 @@ html {
 
   .testimonial-slide-content {
     flex-direction: column;
-    padding: 0 20px;
+    padding: 0 40px;
   }
 
   .slide-block {
@@ -3723,6 +3725,12 @@ html {
   border-color: rgba(229, 204, 168, 0.5);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
+
+.work-stages__item:nth-child(1):hover,
+.work-stages__item:nth-child(2):hover {
+  transform: translateY(50px) !important;
+}
+
 
 .work-stages__item__title {
   transition: color 0.3s ease;
@@ -9496,6 +9504,108 @@ select:focus-visible {
   animation: scrollLeftRight 2.2s ease-in-out infinite;
 }
 
+.hero-frame {
+  position: absolute;
+  height: 80%;
+  z-index: 999;
+  width: 200px;
+}
+
+/* .order-a-call {
+  position: relative;
+  z-index: 9999;
+} */
+
+.hero-frame-top img {
+  position: absolute;
+  right: 0;
+}
+
+.hero-frame img {
+  height: 100%;
+  width: 100%;
+}
+
+.hero-frame-top {
+  top: -20%;
+  right: -130px;
+}
+
+.hero-frame-bottom {
+  bottom: -20%;
+  left: -130px;
+}
+
+.hero-contact-us {
+  padding: 15px 10px;
+  right: 0;
+  z-index: 999;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: #E5CCA8;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-text-sec {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+}
+
+.quote-testimonial,
+.home-form-section {
+  position: relative;
+  z-index: 99999;
+  background-color: transparent;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* IE & old Edge */
+body {
+  -ms-overflow-style: none;
+}
+
+.t-c-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.t-c-container-frame {
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 999;
+  overflow: hidden
+}
+
+.t-c-container-text-sec {
+  top: calc(50% - 10rem);
+  position: absolute;
+  z-index: 990;
+}
+
+.t-c-container-frame-top {
+  width: 200px;
+  top: calc(50% - 10rem);
+  right: -120px;
+}
+
+.t-c-container-frame-bottom {
+  width: 200px;
+  top: calc(50% + 10rem);
+  left: -120px;
+}
+
 /* Animation أفقي */
 @keyframes scrollLeftRight {
   0% {
@@ -9514,8 +9624,30 @@ select:focus-visible {
   }
 }
 
+@media (min-width: 1400px) {
+
+  .hero-frame-top,
+  .t-c-container-frame-top {
+    right: -100px;
+  }
+
+  .hero-frame-bottom,
+  .t-c-container-frame-bottom {
+    left: -100px;
+  }
+
+}
+
+
+
 /* Responsive نسخة موبايل */
 @media (max-width: 768px) {
+
+  .testimonial-controls {
+    width: 100% !important;
+    padding: 0;
+  }
+
   .hero__scroller-hr {
     width: 8rem;
     --bar-width: 1.5rem;
@@ -9524,5 +9656,35 @@ select:focus-visible {
 
   .hero__scroller-hr::after {
     width: var(--bar-width);
+  }
+
+  .hero-contact-us {
+    display: none;
+  }
+
+  .hero-frame {
+    height: 70%;
+    width: 100px;
+  }
+
+  .hero-frame-top {
+    top: -20%;
+    right: -30px;
+  }
+
+
+  .hero-frame-bottom {
+    bottom: -20%;
+    left: -30px;
+  }
+
+
+  .t-c-container-frame-top {
+    right: -120px;
+  }
+
+
+  .t-c-container-frame-bottom {
+    left: -120px;
   }
 }

@@ -149,7 +149,7 @@ function GallerySection({ item, marqueeText, locale }: { item: GalleryItem; marq
               <div className="title-link__dateplace">
                 <span>{location} / {item.year}</span>
                 <svg viewBox="0 0 80 10" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0 5H78M78 5L73 0M78 5L73 10" stroke="currentColor" strokeWidth="1" fill="none"/>
+                  <path d="M0 5H78M78 5L73 0M78 5L73 10" stroke="currentColor" strokeWidth="1" fill="none" />
                 </svg>
               </div>
             </Link>

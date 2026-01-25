@@ -26,15 +26,13 @@ export default function Quote() {
       const vertical2 = quoteRef.current?.querySelector('.quote__vertical--2');
 
       /* =======================
-         📱 MOBILE FIX
+         📱 MOBILE
       ======================= */
       if (!isDesk) {
-        // 1️⃣ امسح أي transforms قديمة
         gsap.set('.quote__item', {
           clearProps: 'x,y,rotate'
         });
 
-        // 2️⃣ حركة X خفيفة
         const mobileOffset = window.innerWidth * 0.35;
 
         oddItems?.forEach((elem) => {
@@ -47,9 +45,9 @@ export default function Quote() {
 
         ScrollTrigger.create({
           trigger: quoteRef.current,
-          start: 'top 60%',
-          end: `+=${window.innerHeight / 2}`,
-          scrub: 1,
+          start: 'top bottom', // 🔥 يبدأ من أول ما يظهر في الشاشة
+          end: 'center center', // 🔥 يكمل لحد ما يوصل النص
+          scrub: 2, // 🔥 أبطأ عشان تشوفه كويس
           onUpdate: (self) => {
             const progress = self.progress;
 
@@ -81,7 +79,7 @@ export default function Quote() {
       }
 
       /* =======================
-         🖥️ DESKTOP (زي ما هو)
+         🖥️ DESKTOP
       ======================= */
 
       const item2Inner = quoteRef.current?.querySelector(
@@ -110,9 +108,9 @@ export default function Quote() {
 
       ScrollTrigger.create({
         trigger: quoteRef.current,
-        start: `top-=${10 * rem} 50%`,
-        end: `+=${window.innerHeight / 2}`,
-        scrub: 1,
+        start: 'top bottom', // 🔥 يبدأ من أول ما يظهر
+        end: 'center center', // 🔥 يكمل لحد النص
+        scrub: 2, // 🔥 أبطأ وأنعم
         onUpdate: (self) => {
           const progress = self.progress;
 
@@ -145,7 +143,7 @@ export default function Quote() {
           }
 
           if (coverBot) {
-            gsap.to(coverBot, { marginRight: progress * -27 * rem, duration: 0.1 });
+            gsap.to(coverBot, { marginRight: progress * -70 * rem, duration: 0.1 });
           }
 
           if (coverTop) {
@@ -167,23 +165,24 @@ export default function Quote() {
 
       const quoteHeight = quoteRef.current?.offsetHeight || 500;
 
-      ScrollTrigger.create({
-        trigger: quoteRef.current,
-        start: `top+=${quoteHeight / 2} 40%`,
-        end: `+=${window.innerHeight / 2}`,
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const itemCount = quoteItems?.length || 0;
+      // ScrollTrigger.create({
+      //   trigger: quoteRef.current,
+      //   start: 'top 45%',          // 🔥 يبدأ بدري
+      //   end: 'top 10%',            // 🔥 يخلص قبل ما السكشن يطلع
+      //   scrub: 0.15,
+      //   onUpdate: (self) => {
+      //     const progress = self.progress;
+      //     const itemCount = quoteItems?.length || 0;
 
-          quoteItems?.forEach((elem, i) => {
-            gsap.to(elem, {
-              y: progress * (itemCount - i) * -5 * rem,
-              duration: 0.1
-            });
-          });
-        }
-      });
+      //     quoteItems?.forEach((elem, i) => {
+      //       gsap.set(elem, {
+      //         y: progress * (itemCount - i) * -3 * rem
+      //       });
+      //     });
+      //   }
+      // });
+
+
     }, quoteRef);
 
     return () => ctx.revert();

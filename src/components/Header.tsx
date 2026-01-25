@@ -15,6 +15,7 @@ type MenuItem = {
 
 export default function Header() {
   const t = useTranslations('nav');
+  const tContact = useTranslations('contact');
 
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,58 +60,65 @@ export default function Header() {
   ].filter(Boolean).join(' ');
 
   return (
-    <header className={`${headerClasses} header-container`}>
-      <div className="container header__cont">
-        <div className="header__logo">
-          <Link href="/">
-            <img src="/images/logo.svg" alt="IN-WAVE Architects" />
-          </Link>
-        </div>
+    <>
+      <Link href="/contacts" className="hero-contact-us">
+        <span>{tContact('contactUs')}</span>
+      </Link>
 
-        <nav className={`header__nav ${isMenuOpen ? 'open' : ''}`}>
-          <div className="header__nav__inner">
-            <ul className="menu">
-              {menuItems.map((item) => {
-                // Check if current page matches this menu item
-                const isActive = pathname.includes(item.href);
+      <header className={`${headerClasses} header-container`}>
+        <div className="container header__cont">
+          <div className="header__logo">
+            <Link href="/">
+              <img src="/images/logo.svg" alt="IN-WAVE Architects" />
+            </Link>
+          </div>
 
-                return (
-                  <li
-                    key={item.href}
-                    className={`menu-item ${isActive ? 'current-menu-item' : ''}`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Link href={item.href}>{item.label}</Link>
-                  </li>
-                );
-              })}
-              <li className='menu-item'>
-                <PhoneDropdown />
-              </li>
-              <li className='menu-item'>
-                <LanguageSwitcher />
-              </li>
-            </ul>
-            {/* <div className="header__nav__tel">
+          <nav className={`header__nav ${isMenuOpen ? 'open' : ''}`}>
+            <div className="header__nav__inner">
+              <ul className="menu">
+                {menuItems.map((item) => {
+                  // Check if current page matches this menu item
+                  const isActive = pathname.includes(item.href);
+
+                  return (
+                    <li
+                      key={item.href}
+                      className={`menu-item ${isActive ? 'current-menu-item' : ''}`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link href={item.href}>{item.label}</Link>
+                    </li>
+                  );
+                })}
+                <li className='menu-item'>
+                  <PhoneDropdown />
+                </li>
+                <li className='menu-item'>
+                  <LanguageSwitcher />
+                </li>
+              </ul>
+              {/* <div className="header__nav__tel">
               <a href="tel:+966595594686" className="num">+966 595 594 686</a>
             </div> */}
-            {/* <div className="header__nav__lang">
+              {/* <div className="header__nav__lang">
               <LanguageSwitcher />
             </div> */}
-          </div>
-        </nav>
+            </div>
+          </nav>
 
-        <div className="header__right">
-          {/* <div className="header__lang-desktop">
+          <div className="header__right">
+            {/* <div className="header__lang-desktop">
             <LanguageSwitcher />
           </div> */}
-          <div
-            className="header__burger"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          />
+            <div
+              className="header__burger"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
+
   );
 }

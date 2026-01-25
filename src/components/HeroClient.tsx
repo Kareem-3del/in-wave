@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import { Icon } from '@iconify/react';
 import { scale } from 'motion';
+import Link from 'next/link';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -210,6 +211,17 @@ export function HeroClient({ slides }: HeroClientProps) {
       </a>
       <div className="hero__track" ref={heroTrackRef}>
         <div className="hero__sticky" ref={heroStickyRef}>
+
+          <div className="hero-text-sec">
+            <img alt='sh-right' src="/images/text.png" />
+          </div>
+          <div className='hero-frame hero-frame-top'>
+            <img alt='sh-right' src="/images/sh-right.png" />
+          </div>
+          <div className='hero-frame hero-frame-bottom'>
+            <img alt='sh-right' src="/images/sh-left.png" />
+
+          </div>
           <div className="hero__slider" ref={heroSliderRef}>
             <div className="swiper-container">
               <Swiper
