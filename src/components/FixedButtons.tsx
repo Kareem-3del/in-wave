@@ -1,24 +1,31 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 
-const phoneNumbers = [
-  {
-    label: '+962 79 300 7888',
-    value: '962793007888',
-  },
-  {
-    label: '+966 595 594 686',
-    value: '966595594686',
-  },
-  {
-    label: '+20 111 227 6768',
-    value: '201112276768',
-  }
-];
+function phoneNumbers(locale: string) {
+  return [
+    {
+      label: locale === "en" ? "Jordan" : "الأردن",
+      value: '962793007888',
+    },
+    {
+      label: locale === "en" ? "KSA" : "السعودية",
+      value: '966595594686',
+    },
+    {
+      label: locale === "en" ? "Egypt" : "مصر",
+      value: '201112276768',
+    }
+  ]
+};
 export default function FixedButtons() {
+
+  const { locale } = useParams();
+
   const t = useTranslations('contact');
+  const tContact = useTranslations('contact');
 
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -28,6 +35,12 @@ export default function FixedButtons() {
       {/* <div className="fixed-connect">
         <span>{t('contactUs')}</span>
       </div> */}
+
+
+
+      <a href="#home-form" className="order-a-call-overlay">
+        {tContact('orderCall')}
+      </a>
 
       <a
         className="wa-block"
@@ -67,8 +80,7 @@ export default function FixedButtons() {
 
         {open && (
           <div className="lang-menu" role="listbox">
-            {phoneNumbers.map((phone) => (
-
+            {phoneNumbers(locale?.toString() || "en").map((phone) => (
               <a
                 style={{ direction: "ltr" }}
                 key={phone.value}

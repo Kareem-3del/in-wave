@@ -6,6 +6,7 @@ import { Icon } from '@iconify/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from '@/i18n/routing';
+import { UploadCvModal } from './UploadCvModal';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -302,6 +303,7 @@ export function CareersClient() {
   const journeyRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
   const ctaRef = useRef<HTMLElement>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!benefitsRef.current) return;
@@ -424,7 +426,10 @@ export function CareersClient() {
               </p>
             </div>
 
-            <Link href="/contacts" className='get-in-touch'>
+            <div
+              className='get-in-touch'
+              onClick={() => setOpen(true)}
+            >
               <div>{t("get")}</div>
               <div>{t("in")}</div>
               <div style={{ marginBottom: "8px" }}>{t("touch")}</div>
@@ -443,7 +448,7 @@ export function CareersClient() {
                   </linearGradient>
                 </defs>
               </svg>
-            </Link>
+            </div>
           </div>
         </div>
         {/* </div> */}
@@ -498,6 +503,9 @@ export function CareersClient() {
           </div>
         </div>
       </section>
+
+      <UploadCvModal open={open} onClose={() => setOpen(false)} />
+
 
       {/* Journey Section */}
       {/* <section className="section careers-section journey-section" ref={journeyRef}>

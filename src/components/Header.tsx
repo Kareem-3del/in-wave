@@ -48,7 +48,7 @@ export default function Header() {
     { href: '/services', label: t('services') },
     { href: '/about-us', label: t('aboutUs') },
     { href: '/careers', label: t('careers') },
-    { href: '/articles', label: t('blog') },
+    // { href: '/articles', label: t('blog') },
     { href: '/contacts', label: t('contacts') },
   ];
 
@@ -90,9 +90,9 @@ export default function Header() {
                     </li>
                   );
                 })}
-                <li className='menu-item'>
+                {/* <li className='menu-item'>
                   <PhoneDropdown />
-                </li>
+                </li> */}
                 <li className='menu-item'>
                   <LanguageSwitcher />
                 </li>
