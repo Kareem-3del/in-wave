@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import { SplashScreen } from './loading-screen/splash-screen';
+import { MotionLazy } from './loading-screen/motion-lazy';
 
 export default function Preloader() {
   useEffect(() => {
@@ -42,17 +44,25 @@ export default function Preloader() {
   }, []);
 
   return (
+    // <div className="preloader">
+    //   <div className="preloader__logo">
+    //     <div className="preloader__logo__item">
+    //       <img
+    //         src="/images/logo.svg"
+    //         alt="IN-WAVE Architects"
+    //         style={{ width: 84, height: 'auto' }}
+    //       />
+    //     </div>
+    //   </div>
+    //   {/* <div className="preloader__progress"></div> */}
+    // </div>
     <div className="preloader">
-      <div className="preloader__logo">
-        <div className="preloader__logo__item">
-          <img
-            src="/images/logo.svg"
-            alt="IN-WAVE Architects"
-            style={{ width: 84, height: 'auto' }}
-          />
-        </div>
-      </div>
-      <div className="preloader__progress"></div>
+      {/* <MotionLazy> */}
+      <SplashScreen />
+      {/* </MotionLazy> */}
     </div>
+
+
+
   );
 }

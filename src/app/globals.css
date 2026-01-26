@@ -1847,7 +1847,7 @@ body.show .hero__scroller {
   background-color: transparent;
   top: 0;
   left: 0;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   transition: 0s;
@@ -1915,6 +1915,8 @@ body.show .hero__scroller {
 body.loaded.show .preloader {
   background-color: transparent;
   pointer-events: none;
+  transition: .5s linear;
+  opacity: 0;
 }
 
 body.loaded.show .preloader__logo {
@@ -9754,7 +9756,7 @@ body {
 }
 
 footer {
-  z-index: 9999999999;
+  z-index: 99;
 }
 
 .slide-block {
