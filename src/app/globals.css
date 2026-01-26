@@ -9703,6 +9703,15 @@ body {
     padding: 0;
   }
 
+  .hero-contact-us {
+    display: flex;
+    font-size: 1rem;
+    right: 45px;
+    padding: 20px 10px;
+  }
+
+
+
   .hero__scroller-hr {
     width: 8rem;
     --bar-width: 1.5rem;
