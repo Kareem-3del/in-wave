@@ -7755,6 +7755,16 @@ select:focus-visible {
   color: rgba(229, 204, 168, 0.08);
 }
 
+[dir="ltr"] .service-card__number {
+  left: 2rem;
+  right: unset
+}
+
+
+[dir="ltr"] .service-card__link {
+  justify-content: flex-end;
+}
+
 /* Services Floating Shapes */
 .services-floating-shapes {
   position: absolute;
