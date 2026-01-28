@@ -10184,7 +10184,14 @@ footer {
 }
 
 @media(max-width:102px) {
-  [dir="rtl"] .home-gallery-section-0 .title-link {
+
+  [dir="rtl"] .home-gallery-section-0 .title-link,
+  [dir="rtl"] .home-gallery-section-3 .title-link {
     padding-right: 90px
+  }
+
+  [dir=rtl] .gallery-title-shape-4 {
+    right: 0;
+    left: unset;
   }
 }
