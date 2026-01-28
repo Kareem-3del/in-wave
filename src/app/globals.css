@@ -10182,3 +10182,9 @@ footer {
 .cta-content__desc {
   padding-bottom: 0 !important;
 }
+
+@media(max-width:102px) {
+  [dir="rtl"] .home-gallery-section-0 .title-link {
+    padding-right: 90px
+  }
+}
