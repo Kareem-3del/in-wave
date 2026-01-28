@@ -10183,7 +10183,7 @@ footer {
   padding-bottom: 0 !important;
 }
 
-@media(max-width:102px) {
+@media(min-width:1025px) {
 
   [dir="rtl"] .home-gallery-section-0 .title-link,
   [dir="rtl"] .home-gallery-section-3 .title-link {
@@ -10192,6 +10192,7 @@ footer {
 
   [dir=rtl] .gallery-title-shape-4 {
     right: 0;
-    left: unset;
+    left: unset !important;
+    transform: scaleX(-1)
   }
 }
