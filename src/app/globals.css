@@ -1913,6 +1913,7 @@ body.show .hero__scroller {
 /* Preloader */
 .preloader {
   position: fixed;
+  z-index: 9999999999999999;
   width: 100vw;
   height: 100vh;
   z-index: 1000;
