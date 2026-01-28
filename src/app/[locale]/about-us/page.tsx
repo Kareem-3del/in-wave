@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
 import { AboutUsClient } from '@/components/AboutUsClient';
+import FixedButtons from '@/components/FixedButtons';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -27,6 +28,7 @@ export default async function AboutUsPage({ params }: Props) {
     <>
       <SmoothScroll />
       <main className="about-page wp-singular page-template page wp-theme-nk">
+        <FixedButtons />
         <Header />
         <div className="main-wrap">
           <AboutUsClient />

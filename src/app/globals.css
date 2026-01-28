@@ -5319,6 +5319,12 @@ select:focus-visible {
   bottom: 0;
 }
 
+[dir="rtl"] .cr-shape {
+  left: -20px;
+  transform: scale(0.8);
+  right: unset
+}
+
 /* Section Title Enhanced */
 .section-title-enhanced {
   font-size: 2.4rem;
@@ -6284,6 +6290,42 @@ select:focus-visible {
   grid-template-columns: 1fr;
   gap: 3rem;
   align-items: center;
+}
+
+.about-page .wa-block {
+  top: 50%;
+  bottom: unset;
+  transform: translateY(-50%);
+}
+
+.cr-shape-1 {
+  position: absolute;
+  left: 0
+}
+
+.cr-shape-2 {
+  position: absolute;
+  transform: scaleX(-1);
+  right: 0;
+}
+
+.cr-shape-3 {
+  position: absolute;
+  left: 0;
+  bottom: 0
+}
+
+@media(max-width:1024px) {
+
+  .cr-shape-1,
+  .cr-shape-3 {
+    transform: scale(0.8);
+  }
+
+  .cr-shape-2 {
+    transform: scale(-0.8, 0.8);
+  }
+
 }
 
 @media (min-width: 1024px) {

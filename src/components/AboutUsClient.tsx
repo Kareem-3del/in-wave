@@ -140,7 +140,10 @@ function AboutHero() {
   }, []);
 
   return (
-    <section className="section about-hero-section" ref={heroRef}>
+    <section className="section about-hero-section cr-cont-section" ref={heroRef}>
+      <div className='cr-shape-1'>
+        <img src="/images/sh-12.png" />
+      </div>
       <div className="about-hero__bg">
         <div className="about-hero__gradient"></div>
         <div className="about-hero__noise"></div>
@@ -150,14 +153,14 @@ function AboutHero() {
         className="about-hero__diagonal about-hero__diagonal--1"
         ref={(el) => { diagonalsRef.current[0] = el; }}
       ></div>
-      <div
+      {/* <div
         className="about-hero__diagonal about-hero__diagonal--2"
         ref={(el) => { diagonalsRef.current[1] = el; }}
-      ></div>
-      <div
+      ></div> */}
+      {/* <div
         className="about-hero__diagonal about-hero__diagonal--3"
         ref={(el) => { diagonalsRef.current[2] = el; }}
-      ></div>
+      ></div> */}
 
       <div className="container">
         <div className="about-hero__content" ref={contentRef}>
@@ -306,9 +309,13 @@ function StorySection() {
   }, []);
 
   return (
-    <section className="section about-story-section" ref={sectionRef}>
+    <section className="section about-story-section cr-cont-section" ref={sectionRef}>
+      <div className='cr-shape-2'>
+        <img src="/images/sh-12.png" />
+      </div>
       <div className="container">
-        <div className="about-story__header">
+        <div className="about-story__header cr-cont-section">
+
           <span className="about-story__label">{t('ourStoryLabel')}</span>
           <h2 className="about-story__title">{t('ourStory')}</h2>
         </div>
@@ -449,7 +456,10 @@ function VisionSection() {
   }, []);
 
   return (
-    <section className="section about-story-section" ref={sectionRef}>
+    <section className="section about-story-section  cr-cont-section" ref={sectionRef}>
+      <div className='cr-shape-3'>
+        <img src="/images/sh-12.png" />
+      </div>
       <div className="container">
         <div className="about-story__header">
           <span className="about-story__label">{t('ourVisionLabel')}</span>
