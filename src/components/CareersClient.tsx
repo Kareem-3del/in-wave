@@ -386,7 +386,7 @@ export function CareersClient() {
   return (
     <>
       {/* Marquee Section */}
-      <CareersMarquee text={t('marqueeText')} italicText={t('marqueeItalic')} />
+      {/* <CareersMarquee text={t('marqueeText')} italicText={t('marqueeItalic')} /> */}
 
       {/* <section className="section careers-section oppe-section-enhanced" ref={ctaRef}>
         <div className="container">
@@ -397,11 +397,15 @@ export function CareersClient() {
         style={{
           background: "linear-gradient(#0a0a0a 0%, #111 50%, #0a0a0a 100%)"
         }}
-        className="section about-story-section"
+        className="section  about-story-section"
       >
+
         <div
-          className='cust-container'
+          className='cust-container cr-cont-section'
         >
+          <div className='cr-shape'>
+            <img src="/images/sh-12.png" />
+          </div>
           <div className="about-story__header">
             <h2 className="about-story__title">{t('openPos')}</h2>
           </div>
@@ -410,7 +414,7 @@ export function CareersClient() {
             <a
               style={{ position: "static", flexShrink: 0 }}
               href="#home-form"
-              className="order-a-call">
+              className="career-btn">
               {t('architect')}
             </a>
 
@@ -449,6 +453,12 @@ export function CareersClient() {
                 </defs>
               </svg>
             </div>
+          </div>
+
+          <div
+            onClick={() => setOpen(true)}
+            className="career-btn rs-button">
+            {t('uploadResume')}
           </div>
         </div>
         {/* </div> */}
@@ -494,7 +504,7 @@ export function CareersClient() {
       </section>
 
       {/* Stats Section */}
-      <section className="section careers-section stats-section-enhanced" ref={statsRef}>
+      {/* <section className="section careers-section stats-section-enhanced" ref={statsRef}>
         <div className="container">
           <div className="career-stats-grid">
             <AnimatedCounter value={t('stat1Value')} label={t('stat1Label')} index={0} />
@@ -502,7 +512,7 @@ export function CareersClient() {
             <AnimatedCounter value={t('stat3Value')} label={t('stat3Label')} index={2} />
           </div>
         </div>
-      </section>
+      </section> */}
 
       <UploadCvModal open={open} onClose={() => setOpen(false)} />
 

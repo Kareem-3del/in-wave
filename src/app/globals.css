@@ -5284,6 +5284,41 @@ select:focus-visible {
   overflow: visible;
 }
 
+.career-btn {
+  border: 1px solid #FFF;
+  color: #fff;
+  padding: 10px 25px;
+  text-transform: uppercase;
+  font-size: 14px;
+  opacity: 1;
+  background: transparent;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 1px solid #fff;
+  width: fit-content;
+  flex-shrink: 0
+}
+
+.rs-button {
+  margin: 16px auto;
+  border-color: #E5CCA8;
+}
+
+.cr-cont-section {
+  position: relative;
+}
+
+.cr-shape {
+  position: absolute;
+  right: -20px;
+  transform: scale(-0.8, 0.8);
+  bottom: 0;
+}
+
 /* Section Title Enhanced */
 .section-title-enhanced {
   font-size: 2.4rem;
@@ -5956,7 +5991,7 @@ select:focus-visible {
 
 /* Careers Hero Section */
 .careers-hero-section {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6035,7 +6070,7 @@ select:focus-visible {
 .careers-hero {
   text-align: center;
   z-index: 2;
-  padding: 8rem 0;
+  padding: 8rem 0 0;
 }
 
 .careers-hero__lines {
