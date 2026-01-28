@@ -6640,6 +6640,7 @@ select:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  direction: ltr !important;
 }
 
 .office-card__phone,
