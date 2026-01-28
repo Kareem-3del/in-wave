@@ -206,9 +206,7 @@ export function HeroClient({ slides }: HeroClientProps) {
 
   return (
     <section className="section hero-section">
-      <a href="#home-form" className="order-a-call">
-        {tContact('orderCall')}
-      </a>
+
       <div className="hero__track" ref={heroTrackRef}>
         <div className="hero__sticky" ref={heroStickyRef}>
 
@@ -258,6 +256,10 @@ export function HeroClient({ slides }: HeroClientProps) {
           </div>
 
           <div className="hero__cont" ref={heroContRef}>
+            <a href="#home-form" className="order-a-call triangle-order-a-call">
+              <span>{tContact('order')} <br />  {tContact('aCall')}</span>
+              {/* <div className='triangle-order-a-call'> </div> */}
+            </a>
             <a href="#home-form" className="hero__cta js-anchor-scroll">
               {/* <span>{tContact('send')}<br />{tContact('title1Italic')}</span> */}
 

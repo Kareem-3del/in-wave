@@ -966,6 +966,7 @@ body.show .hero__scroller {
 }
 
 /* Home gallery section */
+
 .home-gallery-section {
   overflow: visible;
 }
@@ -1136,6 +1137,56 @@ body.show .hero__scroller {
 .home-galleries .btn {
   max-width: 100%;
   margin: 0 auto 5rem auto;
+}
+
+.gallery-title {
+  position: relative;
+}
+
+.gallery-title-shape {
+  position: absolute;
+  left: -13em;
+  bottom: -11em
+}
+
+[dir="rtl"] .gallery-title-shape {
+  transform: scaleX(-1);
+  left: unset;
+  right: 0
+}
+
+.gallery-title-shape-1,
+.gallery-title-shape-3 {
+  display: none;
+}
+
+.home-gallery-section {
+  padding-bottom: 100px;
+}
+
+.gallery-title-shape-4 {
+  bottom: -24em;
+}
+
+
+[dir="rtl"] .gallery-title-shape-4 {
+  left: 0;
+  bottom: -32em;
+
+}
+
+
+@media(min-width:768px) and (max-width:1024px) {
+  .gallery-title-shape {
+    display: none;
+  }
+
+}
+
+@media(max-width:767px) {
+  .gallery-title-shape {
+    display: none;
+  }
 }
 
 /* Marquee title */
@@ -2684,47 +2735,95 @@ body.loaded.show .preloader__progress {
 
 /* Order a call button */
 .order-a-call {
-  position: fixed;
-  /* top: auto; */
-  /* z-index: 9999; */
+  position: absolute;
   color: #fff;
-  padding: 10px 25px;
+  /* padding: 10px 25px; */
   text-transform: uppercase;
   font-size: 14px;
   opacity: 1;
-  border: 1px solid #fff;
   background: transparent;
   cursor: pointer;
-  bottom: 120px;
-  left: 30px;
-}
-
-.order-a-call-overlay {
-  position: fixed;
-
-  color: #fff;
-  padding: 10px 25px;
-  text-transform: uppercase;
-  font-size: 14px;
-  opacity: 1;
+  z-index: 10;
+  transition: opacity 0.3s;
+  top: 55%;
+  left: 25%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  transform: rotate(45deg);
+  width: 120px;
+  height: 120px;
   border: 1px solid #fff;
-  background: transparent;
-  cursor: pointer;
-  bottom: 120px;
-  left: 30px;
-  opacity: 0;
-  z-index: 99999;
+  border-right: none;
+  border-bottom: none;
+  z-index: 999999999999;
 }
 
-@media (max-width: 600px) {
-
-  .order-a-call,
-  .order-a-call-overlay {
-    bottom: 70px;
-    font-size: 11px;
-    padding: 10px;
-    left: 15px;
+@media(min-width:1025px) {
+  [dir="rtl"] .order-a-call {
+    left: 20%
   }
+
+}
+
+
+.order-a-call:hover {
+  box-shadow: 0 0 20px rgba(229, 204, 168, 0.3);
+  background: rgba(229, 204, 168, 0.1);
+}
+
+.order-a-call span {
+  transform: translate(-20px, -20px) rotate(-45deg);
+  font-size: 12px;
+}
+
+.order-a-call::before {
+  position: absolute;
+  content: "";
+  width: calc(1.41 * (120px + 1px));
+  border: 1px solid #fff;
+  transform: rotate(-45deg);
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .order-a-call {
+    bottom: 35px;
+    top: unset;
+    left: 37px;
+    height: 100px;
+    width: 100px;
+  }
+
+  .order-a-call::before {
+    width: calc(1.41 * (100px + 1px));
+  }
+
+  .order-a-call span {
+    font-size: 10px;
+    transform: translate(-18px, -18px) rotate(-45deg);
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .order-a-call {
+    bottom: 35px;
+    top: unset;
+    left: 37px;
+    height: 80px;
+    width: 80px;
+  }
+
+  .order-a-call::before {
+    width: calc(1.41 * (80px + 1px));
+  }
+
+  .order-a-call span {
+    font-size: 8px;
+    transform: translate(-15px, -15px) rotate(-45deg);
+  }
+
 }
 
 /* WhatsApp button */
@@ -3727,14 +3826,6 @@ html {
 }
 
 /* Order a Call Button Glow on Hover */
-.order-a-call {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.order-a-call:hover {
-  box-shadow: 0 0 20px rgba(229, 204, 168, 0.3);
-  background: rgba(229, 204, 168, 0.1);
-}
 
 /* Work Stages Card Hover Effect */
 .work-stages__item {
@@ -9533,11 +9624,6 @@ select:focus-visible {
   width: 200px;
 }
 
-/* .order-a-call {
-  position: relative;
-  z-index: 9999;
-} */
-
 .hero-frame-top img {
   position: absolute;
   right: 0;
@@ -9772,12 +9858,6 @@ footer {
   background-color: transparent !important;
 }
 
-.order-a-call {
-  position: fixed;
-  z-index: 10;
-  opacity: 0.5;
-  transition: opacity 0.3s;
-}
 
 .modal-overlay {
   position: fixed;
@@ -9816,4 +9896,97 @@ footer {
   background: #fff;
   color: #000;
   font-weight: 600;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.map-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Marker style */
+.marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #f5d28b;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(245, 210, 139, 0.9);
+}
+
+.marker::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #f5d28b;
+  border-radius: 50%;
+  top: -7px;
+  left: -7px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Positions (percentages) */
+.jordan {
+  top: 55%;
+  left: 56.5%;
+}
+
+.ksa {
+  top: 59%;
+  left: 58%;
+}
+
+.egypt {
+  top: 58%;
+  left: 54.5%;
+}
+
+@media(min-width:768px) and (max-width:1024px) {
+  .marker {
+    width: 5px;
+    height: 5px;
+  }
+
+  .marker::after {
+    width: 10px;
+    height: 10px;
+    top: -2.5px;
+    left: -2.5px;
+  }
+}
+
+@media(max-width:767px) {
+  .marker {
+    width: 3px;
+    height: 3px;
+  }
+
+  .marker::after {
+    width: 6px;
+    height: 6px;
+    top: -1.5px;
+    left: -1.5px;
+  }
 }

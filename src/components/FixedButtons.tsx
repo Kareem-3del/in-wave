@@ -36,11 +36,9 @@ export default function FixedButtons() {
         <span>{t('contactUs')}</span>
       </div> */}
 
-
-
-      <a href="#home-form" className="order-a-call-overlay">
+      {/* <a href="#home-form" className="order-a-call-overlay">
         {tContact('orderCall')}
-      </a>
+      </a> */}
 
       <a
         className="wa-block"

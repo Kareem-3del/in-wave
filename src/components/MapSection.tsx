@@ -8,8 +8,7 @@ export default function MapSection() {
   return (
     <section className="section section-map">
       <span className="quote__item__inner">{t('title')}</span>
-      <svg width="100%" height="auto" viewBox="0 0 3553 2110" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: '1200px', margin: '0 auto', display: 'block' }}>
-        {/* Simplified world map representation */}
+      {/* <svg width="100%" height="auto" viewBox="0 0 3553 2110" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: '1200px', margin: '0 auto', display: 'block' }}>
         <rect x="100" y="200" width="600" height="400" fill="#515151" opacity="0.3" rx="20"/>
         <rect x="800" y="150" width="800" height="500" fill="#515151" opacity="0.3" rx="20"/>
         <rect x="1700" y="200" width="700" height="400" fill="#515151" opacity="0.3" rx="20"/>
@@ -17,7 +16,6 @@ export default function MapSection() {
         <rect x="900" y="700" width="500" height="600" fill="#515151" opacity="0.3" rx="20"/>
         <rect x="2400" y="800" width="600" height="600" fill="#515151" opacity="0.3" rx="20"/>
 
-        {/* Location markers */}
         <circle cx="600" cy="400" r="15" fill="#E5CCA8"/>
         <circle cx="1200" cy="350" r="15" fill="#E5CCA8"/>
         <circle cx="1900" cy="400" r="15" fill="#E5CCA8"/>
@@ -28,7 +26,34 @@ export default function MapSection() {
         <text x="1776" y="1900" fill="#A5A5A5" fontSize="40" textAnchor="middle" fontFamily="'Tussilago El'">
           {t('stats')}
         </text>
-      </svg>
+      </svg> */}
+
+      <div className="map-wrapper">
+        <img src="/images/map.png" alt="World Map" className="map-image" />
+
+        <a
+          href="https://www.google.com/maps/place//@31.955197,35.8854479,651m/data=!3m1!1e3"
+          target="_blank"
+          className="marker jordan"
+          title="Jordan"
+        ></a>
+
+        <a
+          href="https://www.google.com/maps/place//@24.7136,46.6753,651m/data=!3m1!1e3"
+          target="_blank"
+          className="marker ksa"
+          title="Saudi Arabia"
+        ></a>
+
+        <a
+          href="https://www.google.com/maps?q=31.2564195,29.9807359&z=17"
+          target="_blank"
+          className="marker egypt"
+          title="Egypt"
+        ></a>
+      </div>
+
+
     </section>
   );
 }

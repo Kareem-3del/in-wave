@@ -77,6 +77,8 @@
     "sendAnother": "Send another message",
     "contactUs": "Contact us",
     "orderCall": "Order a call",
+    "order": "ORDER",
+    "aCall": "A CALL",
     "whatsapp": "WHATSAPP US"
   },
   "footer": {

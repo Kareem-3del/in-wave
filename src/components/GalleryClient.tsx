@@ -46,7 +46,7 @@ function getLocalizedValue(item: GalleryItem, field: 'title_italic' | 'title_reg
   return (item[localizedKey] as string) || (item[fallbackKey] as string) || (item[legacyKey] as string) || '';
 }
 
-function GallerySection({ item, marqueeText, locale }: { item: GalleryItem; marqueeText: string; locale: Locale }) {
+function GallerySection({ item, marqueeText, locale, index }: { item: GalleryItem; marqueeText: string; locale: Locale, index: number }) {
   const galleryRef = useRef<HTMLDivElement>(null);
 
   const titleItalic = getLocalizedValue(item, 'title_italic', locale);
@@ -109,7 +109,7 @@ function GallerySection({ item, marqueeText, locale }: { item: GalleryItem; marq
   const images = item.images || [];
 
   return (
-    <section className="section home-gallery-section">
+    <section className={`section home-gallery-section home-gallery-section-${index}`}>
       <div className="container">
         <Atropos
           className="gallery-card-atropos"
@@ -142,7 +142,10 @@ function GallerySection({ item, marqueeText, locale }: { item: GalleryItem; marq
                 />
               </div>
             )}
-            <Link href={item.href} className="title-link" data-atropos-offset="15">
+            <Link href={item.href} className="title-link gallery-title" data-atropos-offset="15">
+              <div className={`gallery-title-shape gallery-title-shape-${index + 1}`}>
+                <img src="/images/sh-12.png" alt='gallery-title-shape' />
+              </div>
               <div className="title-link__name">
                 <i>{titleItalic}</i> {titleRegular}
               </div>
@@ -168,8 +171,8 @@ export function GalleryClient({ items }: GalleryClientProps) {
 
   return (
     <div className="home-galleries">
-      {items.map((item) => (
-        <GallerySection key={item.id} item={item} marqueeText={t('marqueeText')} locale={locale} />
+      {items.map((item, index) => (
+        <GallerySection index={index} key={item.id} item={item} marqueeText={t('marqueeText')} locale={locale} />
       ))}
       <div className="container">
         <Link href="/portfolio" className="btn btn--default btn--borderdraw">
