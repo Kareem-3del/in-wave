@@ -92,19 +92,19 @@ export default function HomeOwners({ teamInfo, locale = 'en' }: HomeOwnersProps)
                     <span>{index % 2 === 0 ? <i>{line} </i> : <>{line} </>}</span>
                   </span>
                 ))
-              ) : (
-                <> */}
-              <span className="title__item">
-                <span><i>{t('title1Italic')}</i></span>
-              </span>
-              <span className="title__item">
-                <span>{t('title2')} <i>{t('title3Italic')}</i></span>
-              </span>
-              {/* <span className="title__item">
-                <span><i>{t('title3Italic')}</i></span>
-              </span> */}
-              {/* </>
-              )} */}
+              ) : ( */}
+              <>
+                <span className="title__item">
+                  <span><i>{t('title1Italic')} </i></span>
+                </span>
+                <span className="title__item">
+                  <span>{t('title2')} <i>{t('title3Italic')}</i></span>
+                </span>
+                {/* <span className="title__item">
+                    <span></span>
+                  </span> */}
+              </>
+              {/* )} */}
             </span>
 
             <div className="home-owners__desc">

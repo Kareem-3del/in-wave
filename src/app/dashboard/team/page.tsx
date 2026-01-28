@@ -21,11 +21,22 @@ async function handleSave(formData: FormData) {
   const supabase = await createClient()
 
   const titleLinesRaw = getField(formData, 'title_lines')
+  const titleLinesRawAr = getField(formData, 'title_lines_ar')
+  const titleLinesRawEN = getField(formData, 'title_lines_en')
+
   const descParagraphsRaw = getField(formData, 'description_paragraphs')
+  const descParagraphsRawAr = getField(formData, 'description_paragraphs_ar')
+  const descParagraphsRawEn = getField(formData, 'description_paragraphs_en')
 
   const data = {
     title_lines: titleLinesRaw.split('\n').filter(Boolean),
+    // title_lines_en: titleLinesRawEN.split('\n').filter(Boolean),
+    // title_lines_ar: titleLinesRawAr.split('\n').filter(Boolean),
+
     description_paragraphs: descParagraphsRaw.split('\n\n').filter(Boolean),
+    // description_paragraphs_ar: descParagraphsRawAr.split('\n\n').filter(Boolean),
+    // description_paragraphs_en: descParagraphsRawEn.split('\n\n').filter(Boolean),
+
     image_url: getField(formData, 'image_url'),
     years_experience: parseInt(getField(formData, 'years_experience')) || 10,
     projects_count: parseInt(getField(formData, 'projects_count')) || 90,
