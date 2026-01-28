@@ -24,6 +24,8 @@ export default async function Home({ params }: Props) {
 
   const teamInfo = await getTeamInfo();
 
+  console.log("teamInfo = ", teamInfo)
+
   return (
     <>
       <SmoothScroll />

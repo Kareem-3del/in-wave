@@ -40,7 +40,7 @@
   },
   "workStages": {
     "title": "مراحل العمل",
-    "marqueeText": "المراحل",
+    "marqueeText": "مراحل",
     "marqueeItalic": "العمل",
     "free3dTour": "جولة ثلاثية الأبعاد مجانية"
   },
@@ -150,7 +150,8 @@
     "ctaTitle2": "في ذهنك؟",
     "ctaDesc": "يسعدنا مناقشة مشروعك. لنصنع شيئاً رائعاً معاً.",
     "ctaButton": "تواصل معنا",
-    "marqueeText": "الخدمات"
+    "marqueeText": "الخدمات",
+    "srText": "العمارة / التصميم الداخلي / التصميم / التصور البصري /"
   },
   "careers": {
     "pageTitle": "الوظائف | IN-WAVE للهندسة المعمارية",

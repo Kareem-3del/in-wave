@@ -194,7 +194,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
         <div className="container">
           <Link href="/portfolio" className="project-hero__back">
             <svg viewBox="0 0 80 10" xmlns="http://www.w3.org/2000/svg" width="30" style={{ transform: 'rotate(180deg)' }}>
-              <path d="M0 5H78M78 5L73 0M78 5L73 10" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <path d="M0 5H78M78 5L73 0M78 5L73 10" stroke="currentColor" strokeWidth="1" fill="none" />
             </svg>
             {t('backToPortfolio')}
           </Link>
@@ -292,8 +292,8 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
                       <h3 className="project-content__subtitle">
                         <span className="project-content__icon">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 8v4M12 16h.01"/>
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
                           </svg>
                         </span>
                         {t('theChallenge') || 'The Challenge'}
@@ -311,8 +311,8 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
                       <h3 className="project-content__subtitle">
                         <span className="project-content__icon">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M9 12l2 2 4-4"/>
-                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9 12l2 2 4-4" />
+                            <circle cx="12" cy="12" r="10" />
                           </svg>
                         </span>
                         {t('ourSolution') || 'Our Solution'}
@@ -333,7 +333,10 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
 
       {/* Project Gallery Section */}
       {allGalleryImages.length > 0 && (
-        <section className="section project-gallery-section" ref={galleryRef}>
+        <section
+          className="section project-gallery-section"
+        // ref={galleryRef}
+        >
           <div className="container">
             <h2 className="section-title">{t('projectGallery')}</h2>
             <div className="project-gallery">
@@ -347,16 +350,17 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
                     src={image}
                     alt={`${titleItalic} ${titleRegular} - ${index + 1}`}
                     fill
+
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: 'cover' }}
                   />
-                  <div className="project-gallery__overlay">
+                  {/* <div className="project-gallery__overlay">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <circle cx="11" cy="11" r="8"/>
                       <path d="M21 21l-4.35-4.35"/>
                       <path d="M11 8v6M8 11h6"/>
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>
@@ -388,7 +392,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
         <div className="project-lightbox" onClick={closeLightbox}>
           <button className="project-lightbox__close" onClick={closeLightbox}>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12"/>
+              <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>
 
@@ -397,7 +401,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
           >
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6"/>
+              <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
 
@@ -416,7 +420,7 @@ export function ProjectDetailClient({ project, relatedProjects }: ProjectDetailC
             onClick={(e) => { e.stopPropagation(); nextImage(); }}
           >
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6"/>
+              <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
 

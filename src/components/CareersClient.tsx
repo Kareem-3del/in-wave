@@ -494,9 +494,9 @@ export function CareersClient() {
             <p className="cta-content__desc">{t('sendCVDesc')}</p>
             <div className="cta-content__email">
               <span className="cta-content__email-label">{t('emailUs')}</span>
-              <a href="mailto:careers@in-wavearchitects.com" className="cta-content__email-link">
+              <a href="mailto:Info@iwarchitects.com" className="cta-content__email-link">
                 <Icon icon="mdi:email-outline" width={24} height={24} />
-                <span>careers@in-wavearchitects.com</span>
+                <span>Info@iwarchitects.com</span>
               </a>
             </div>
           </div>

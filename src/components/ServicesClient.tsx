@@ -513,7 +513,7 @@ function MarqueeSection() {
 
   return (
     <section className="section services-marquee-section">
-      <SimpleMarquee text="architecture / interior / design / visualization / " />
+      <SimpleMarquee text={t("srText")} />
     </section>
   );
 }

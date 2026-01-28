@@ -4,6 +4,8 @@ import { GalleryClient } from './GalleryClient';
 export default async function Gallery() {
   const projects = await getProjects();
 
+  console.log("projects = ", projects)
+
   // If no projects in DB, use fallback
   if (projects.length === 0) {
     const fallbackItems = [

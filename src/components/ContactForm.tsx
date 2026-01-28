@@ -4,6 +4,8 @@ import { ContactFormClient } from './ContactFormClient';
 export default async function ContactForm() {
   const services = await getServices();
 
+  console.log("services = ", services)
+
   // If no services in DB, use fallback
   if (services.length === 0) {
     const fallbackServices = [

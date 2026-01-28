@@ -283,7 +283,7 @@
 
 [dir="rtl"] .title-link {
   text-align: right;
-  align-items: flex-end;
+  /* align-items: flex-end; */
 }
 
 [dir="rtl"] .title-link__name {
@@ -291,9 +291,9 @@
   align-items: flex-end;
 }
 
-[dir="rtl"] .title-link__dateplace {
+/* [dir="rtl"] .title-link__dateplace {
   flex-direction: row-reverse;
-}
+} */
 
 [dir="rtl"] .title-link__dateplace svg {
   transform: scaleX(-1);
@@ -562,15 +562,15 @@
 }
 
 [dir="rtl"] .footer__contacts__item {
-  text-align: right;
+  text-align: center;
 }
 
 [dir="rtl"] .footer__contacts__title {
-  text-align: right;
+  text-align: center;
 }
 
 [dir="rtl"] .footer__contacts__item ul {
-  text-align: right;
+  text-align: center;
 }
 
 [dir="rtl"] .footer__menu .menu {

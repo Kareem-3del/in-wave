@@ -86,39 +86,39 @@ export default function HomeOwners({ teamInfo, locale = 'en' }: HomeOwnersProps)
         <div className="home-owners">
           <div className="home-owners__info">
             <span className="title">
-              {titleLines && titleLines.length > 0 ? (
+              {/* {titleLines && titleLines.length > 0 ? (
                 titleLines.map((line, index) => (
                   <span key={index} className="title__item">
                     <span>{index % 2 === 0 ? <i>{line} </i> : <>{line} </>}</span>
                   </span>
                 ))
               ) : (
-                <>
-                  <span className="title__item">
-                    <span><i>{t('title1Italic')} </i></span>
-                  </span>
-                  <span className="title__item">
-                    <span>{t('title2')} </span>
-                  </span>
-                  <span className="title__item">
-                    <span><i>{t('title3Italic')}</i></span>
-                  </span>
-                </>
-              )}
+                <> */}
+              <span className="title__item">
+                <span><i>{t('title1Italic')}</i></span>
+              </span>
+              <span className="title__item">
+                <span>{t('title2')} <i>{t('title3Italic')}</i></span>
+              </span>
+              {/* <span className="title__item">
+                <span><i>{t('title3Italic')}</i></span>
+              </span> */}
+              {/* </>
+              )} */}
             </span>
 
             <div className="home-owners__desc">
-              {descParagraphs && descParagraphs.length > 0 ? (
+              {/* {descParagraphs && descParagraphs.length > 0 ? (
                 descParagraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))
               ) : (
-                <>
-                  <p>{t('desc1')}</p>
-                  <p>{t('desc2')}</p>
-                  <p>{t('desc3')}</p>
-                </>
-              )}
+                <> */}
+              <p>{t('desc1')}</p>
+              <p>{t('desc2')}</p>
+              <p>{t('desc3')}</p>
+              {/* </>
+              )} */}
             </div>
           </div>
           <div className="home-owners__photo">

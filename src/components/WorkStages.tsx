@@ -3,7 +3,6 @@ import { WorkStagesClient } from './WorkStagesClient';
 
 export default async function WorkStages() {
   const stages = await getWorkStages();
-
   // If no stages in DB, use fallback
   if (stages.length === 0) {
     const fallbackStages = [
